@@ -1,0 +1,198 @@
+@import url('https://fonts.googleapis.com/css2?family=Vibes&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --primary: #0069D9;
+  --secondary: #03A9F4;
+  --accent: #FF4081;
+  --background: #FFFFFF;
+  --text: #212121;
+  --secondary-hover: #079fe3;
+  --gray: #ccc;
+  --accent-hover: #f15389;
+}
+
+body {
+  font-family: 'Noto Sans Arabic', sans-serif;
+  overflow-x: hidden;
+}
+
+/* start navbar styles  */
+
+.navbar {
+  background-color: var(--background);
+  color: var(--text);
+}
+
+.navbar .logo {
+  font-family: 'Vibes', cursive;
+  font-size: 36px;
+}
+
+.navbar .nav-options .mode {
+  background-color: var(--accent);
+}
+
+.navbar .nav-options .mode svg {
+  color: #fff;
+}
+
+.navbar .nav-options .mode .light-mode {
+  padding: 3px 10px;
+  border-right: 1px solid #fff;
+}
+
+.navbar .nav-options .mode .dark-mode {
+  padding: 3px 12px;
+  border-left: 1px solid #fff;
+}
+
+.navbar .nav-options svg {
+  color: var(--text);
+}
+
+.navbar .nav-options .slider .menu {
+  background-color: var(--background);
+  color: var(--text);
+  top: 75.17px;
+  left: -236px;
+  width: 220px;
+  height: calc(100vh - 75.15px);
+  transition: all 0.3s;
+}
+
+.navbar .nav-options .slider .menu.active {
+  left: -16px;
+}
+
+.navbar .nav-options .slider .menu a {
+  color: var(--text);
+}
+
+.navbar .nav-options .slider .menu a:hover,
+.navbar .nav-options .slider .menu a:focus,
+.navbar .nav-options .slider .menu a:active,
+.navbar .nav-options .slider .menu a.active {
+  color: var(--accent);
+}
+
+/* end navbar styles  */
+
+/* start add table styles */
+
+.add-table {
+  min-height: 200px;
+}
+
+.add-table .table {
+  width: 126.3px;
+  max-height: 37.8px;
+  padding: 6px 12px;
+  background-color: var(--secondary);
+  color: var(--background);
+  border: 1px solid var(--secondary);
+}
+
+.add-table .table:hover,
+.add-table .table:focus,
+.add-table .table:active {
+  background-color: var(--secondary-hover);
+  border-color: var(--secondary-hover);
+}
+
+.add-table button {
+  border: 1px solid var(--background);
+  background-color: var(--background);
+  color: var(--text);
+}
+
+.add-table button:active,
+.add-table button:hover,
+.add-table button:focus {
+  background-color: var(--gray);
+  border-color: var(--gray);
+  color: var(--text);
+}
+
+.add-table button svg,
+.add-table button span {
+  color: var(--text);
+  pointer-events: none;
+}
+
+/* end add table styles */
+
+/* start add table modal styles */
+
+.tables-modal-overlay {
+  background-color: #ffffff0a;
+  align-items: center;
+  justify-content: center;
+  display: none;
+}
+
+.tables-modal-overlay.active {
+  display: flex;
+}
+
+.tables-modal-overlay .add-table-modal {
+  width: 320px;
+  background-color: var(--background);
+  border: 1px solid var(--secondary);
+  color: var(--text);
+  animation: showModal .6s linear alternate;
+}
+
+.tables-modal-overlay .close-modal {
+  top: -15px;
+  right: -7.5px;
+  font-size: 30px;
+}
+
+.tables-modal-overlay .close-modal svg {
+  color: var(--accent);
+  pointer-events: none;
+}
+
+.tables-modal-overlay .add-table-modal label {
+  color: var(--secondary);
+  font-size: 24px;
+}
+
+.tables-modal-overlay .add-table-modal p {
+  color: var(--text);
+}
+
+.tables-modal-overlay .add-table-modal button {
+  color: var(--background);
+  background-color: var(--accent);
+}
+
+.tables-modal-overlay .add-table-modal button:active,
+.tables-modal-overlay .add-table-modal button:hover,
+.tables-modal-overlay .add-table-modal button:focus {
+  color: var(--background);
+  background-color: var(--accent-hover);
+}
+
+@keyframes showModal {
+  0% {
+    transform: translateY(150px);
+  }
+
+  80% {
+    transform: translateY(-50px);
+  }
+
+  100% {
+    transform: translateY(0);
+  }
+}
+
+/* end add table modal styles */

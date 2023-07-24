@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Al-cashier</title>
+  <link rel="stylesheet" href="./css/all.min.css">
+  <link rel="stylesheet" href="./css/bootstrap.rtl.min.css">
+  <link rel="stylesheet" href="./css/master.css">
+</head>
+
+<body class="bg-primary">
+
+  <!-- start navbar -->
+
+  <nav class="navbar p-0">
+    <div class="container-fluid p-3">
+      <h1 class="logo m-0 fw-bold">الكاشير</h1>
+      <div class="nav-options d-flex align-items-center">
+        <div class="mode me-3 rounded d-flex align-items-center">
+          <div id="dark" class="dark-mode" role="button">
+            <i class="fa-regular fa-moon"></i>
+          </div>
+          <div id="light" class="light-mode" role="button">
+            <i class="fa-regular fa-sun"></i>
+          </div>
+        </div>
+        <div class="slider position-relative">
+          <div id="bars" class="bars fs-1 d-flex align-items-center" role="button">
+            <i class="fa-solid fa-bars"></i>
+          </div>
+          <aside id="slide-menu" class="menu position-fixed py-3 text-center">
+            <ul class="m-0 list-unstyled d-flex align-items-center flex-column">
+              <li class="w-100 p-2">
+                <a class="active text-decoration-none" href="#" role="button">الصفحة الرئيسية</a>
+              </li>
+              <li class="w-100 p-2">
+                <a class="text-decoration-none" href="#" role="button">إضافة حساب</a>
+              </li>
+              <li class="w-100 p-2">
+                <a class="text-decoration-none" href="#" role="button">قائمة الطعام</a>
+              </li>
+              <li class="w-100 p-2">
+                <a class="text-decoration-none" href="#" role="button">التقارير</a>
+              </li>
+              <li class="w-100 p-2">
+                <a class="text-decoration-none" href="#" role="button">المخزون</a>
+              </li>
+              <li class="w-100 p-2">
+                <a class="text-decoration-none" href="#" role="button">إنهاء الشيفت</a>
+              </li>
+            </ul>
+          </aside>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- end navbar -->
+
+  <!-- start add button -->
+
+  <div class="container px-4 my-4">
+    <section class="add-table d-flex align-items-center justify-content-center flex-column">
+      <div id="tables-container" class="tables d-flex align-items-center justify-content-center flex-wrap"></div>
+      <button id="add-table" class="btn shadow-lg rounded d-flex align-items-center m-2" type="button">
+        <i class="fa-solid fa-circle-plus"></i>
+        <span class="ms-2">إضافة طاولة</span>
+      </button>
+    </section>
+  </div>
+
+  <!-- end add button -->
+
+  <!-- start add table modal  -->
+
+  <div id="tables-modal" class="tables-modal-overlay position-absolute w-100 h-100 top-0 left-0">
+    <form class="add-table-modal p-3 top-0 rounded text-center position-relative">
+      <div id="close-table-button" class="close-modal position-absolute" role="button">
+        <i class="fa-solid fa-circle-xmark"></i>
+      </div>
+      <label for="add-table-input" class="form-label">أضف طاولة</label>
+      <input id="add-table-input" class="form-control shadow-none text-center" type="text">
+      <p class="form-text">اجعلها كلمتين فقط</p>
+      <button id="add-table-submit" class="btn" type="submit">إضافة الطاولة</button>
+    </form>
+  </div>
+
+  <!-- end add table modal  -->
+
+  <script src="./js/all.min.js"></script>
+  <script src="./js/bootstrap.bundle.min.js"></script>
+  <script src="./js/master.js"></script>
+</body>
+
+</html>
