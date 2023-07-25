@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Al-cashier Login</title>
+  <link rel="stylesheet" href="./css/all.min.css">
+  <link rel="stylesheet" href="./css/bootstrap.rtl.min.css">
+  <link rel="stylesheet" href="./css/master.css">
+</head>
+
+<body class="bg-primary">
+
+  <!-- start navbar -->
+
+  <nav class="navbar p-0">
+    <div class="container-fluid p-3">
+      <h1 class="logo m-0 fw-bold">الكاشير</h1>
+      <div class="nav-options d-flex align-items-center">
+        <div class="mode rounded d-flex align-items-center">
+          <div id="dark" class="dark-mode" role="button">
+            <i class="fa-regular fa-moon"></i>
+          </div>
+          <div id="light" class="light-mode" role="button">
+            <i class="fa-regular fa-sun"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- end navbar -->
+
+  <!-- start login form -->
+
+  <section class="login client-data d-flex align-items-center justify-content-center">
+    <div class="container">
+      <form id="login" class="p-3 mx-auto text-center" action="./index.html">
+        <div class="form-input mb-3">
+          <label for="login-cashier-name" class="form-label">اسم الكاشير أو رقم الهاتف</label>
+          <input id="login-cashier-name" class="form-control shadow-none text-center" type=" text" data-from="name">
+          <p id="login-warning-name" class="form-text my-2"></p>
+        </div>
+        <div class="form-input mb-3">
+          <label for="login-cashier-password" class="form-label">الرقم السري</label>
+          <input id="login-cashier-password" class="form-control shadow-none text-center" type="password"
+            data-from="password">
+          <p id="login-warning-password" class="form-text my-2"></p>
+        </div>
+        <button id="login-cashier-submit" class="btn" type="submit">تسجيل الدخول</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- end login form -->
+
+  <script src="./js/all.min.js"></script>
+  <script src="./js/bootstrap.bundle.min.js"></script>
+  <script src="./js/master.js"></script>
+</body>
+
+</html>

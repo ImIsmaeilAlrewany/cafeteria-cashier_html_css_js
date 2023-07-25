@@ -196,3 +196,42 @@ body {
 }
 
 /* end add table modal styles */
+
+/* start login and register sections styles using client-data class */
+
+.client-data {
+  height: calc(100vh - 75.17px);
+}
+
+.client-data form {
+  max-width: 370px;
+}
+
+.client-data form .form-input label,
+.client-data form button[type="submit"] {
+  color: var(--background);
+}
+
+.client-data form .form-input input {
+  border-color: #fff;
+}
+
+.client-data form .form-input input,
+.client-data form .form-text {
+  color: var(--text);
+}
+
+.client-data form button[type="submit"] {
+  background-color: var(--accent);
+  border-color: var(--accent);
+}
+
+.client-data form button[type="submit"]:hover,
+.client-data form button[type="submit"]:focus,
+.client-data form button[type="submit"]:active {
+  background-color: var(--accent-hover);
+  border-color: var(--accent-hover);
+  color: var(--background);
+}
+
+/* end login and register sections styles using client-data class */

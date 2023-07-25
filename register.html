@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Al-cashier Homepage</title>
+  <title>Al-cashier Register</title>
   <link rel="stylesheet" href="./css/all.min.css">
   <link rel="stylesheet" href="./css/bootstrap.rtl.min.css">
   <link rel="stylesheet" href="./css/master.css">
@@ -12,8 +12,6 @@
     window.onload = function () {
       const isLoggedIn = JSON.parse(sessionStorage.getItem('isLoggedIn'));
       if (!isLoggedIn) location.href = './login.html';
-
-      //window.open('./login.html', '_self')
     };
   </script>
 </head>
@@ -41,13 +39,13 @@
           <aside id="slide-menu" class="menu position-fixed py-3 text-center">
             <ul class="m-0 list-unstyled d-flex align-items-center flex-column">
               <li class="w-100 p-2">
-                <a class="active text-decoration-none" href="./index.html" role="button">الصفحة الرئيسية</a>
+                <a class="text-decoration-none" href="./index.html" role="button">الصفحة الرئيسية</a>
               </li>
               <li class="w-100 p-2">
                 <a class="text-decoration-none" href="#" role="button">تعديل الحساب</a>
               </li>
               <li class="w-100 p-2">
-                <a class="text-decoration-none" href="./register.html" role="button">إضافة حساب</a>
+                <a class="active text-decoration-none" href="./register.html" role="button">إضافة حساب</a>
               </li>
               <li class="w-100 p-2">
                 <a class="text-decoration-none" href="#" role="button">قائمة الطعام</a>
@@ -59,7 +57,7 @@
                 <a class="text-decoration-none" href="#" role="button">المخزون</a>
               </li>
               <li class="w-100 p-2">
-                <a id="logout" class="text-decoration-none" role="button">إنهاء الشيفت</a>
+                <a class="text-decoration-none" href="#" role="button">إنهاء الشيفت</a>
               </li>
             </ul>
           </aside>
@@ -70,35 +68,34 @@
 
   <!-- end navbar -->
 
-  <!-- start add button -->
+  <!-- start register form -->
 
-  <div class="container px-4 my-4">
-    <section class="add-table d-flex align-items-center justify-content-center flex-column">
-      <div id="tables-container" class="tables d-flex align-items-center justify-content-center flex-wrap"></div>
-      <button id="add-table" class="btn shadow-lg rounded d-flex align-items-center m-2" type="button">
-        <i class="fa-solid fa-circle-plus"></i>
-        <span class="ms-2">إضافة طاولة</span>
-      </button>
-    </section>
-  </div>
+  <section id="register" class="register client-data d-flex align-items-center justify-content-center">
+    <div class="container">
+      <form class="p-3 mx-auto text-center" action="./index.html">
+        <div class="form-input mb-3">
+          <label for="register-cashier-name" class="form-label">اسم الكاشير</label>
+          <input id="register-cashier-name" class="form-control shadow-none text-center" type=" text" data-from="name">
+          <p class="form-text my-2"></p>
+        </div>
+        <div class="form-input mb-3">
+          <label for="register-cashier-phone" class="form-label">رقم الهاتف</label>
+          <input id="register-cashier-phone" class="form-control shadow-none text-center" type=" text"
+            data-from="phone">
+          <p class="form-text my-2"></p>
+        </div>
+        <div class="form-input mb-3">
+          <label for="register-cashier-password" class="form-label">الرقم السري</label>
+          <input id="register-cashier-password" class="form-control shadow-none text-center" type="password"
+            data-from="password">
+          <p class="form-text my-2"></p>
+        </div>
+        <button id="register-cashier-submit" class="btn" type="submit">إنشاء حساب</button>
+      </form>
+    </div>
+  </section>
 
-  <!-- end add button -->
-
-  <!-- start add table modal  -->
-
-  <div id="tables-modal" class="tables-modal-overlay position-absolute w-100 h-100 top-0 left-0">
-    <form class="add-table-modal p-3 top-0 rounded text-center position-relative">
-      <div id="close-table-button" class="close-modal position-absolute" role="button">
-        <i class="fa-solid fa-circle-xmark"></i>
-      </div>
-      <label for="add-table-input" class="form-label">أضف طاولة</label>
-      <input id="add-table-input" class="form-control shadow-none text-center" type="text">
-      <p class="form-text">اجعلها كلمتين فقط</p>
-      <button id="add-table-submit" class="btn" type="submit">إضافة الطاولة</button>
-    </form>
-  </div>
-
-  <!-- end add table modal  -->
+  <!-- end register form -->
 
   <script src="./js/all.min.js"></script>
   <script src="./js/bootstrap.bundle.min.js"></script>
