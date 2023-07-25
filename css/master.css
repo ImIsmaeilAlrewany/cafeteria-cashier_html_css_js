@@ -216,7 +216,7 @@ body {
   border-color: #fff;
 }
 
-.client-data form .form-input input,
+/* .client-data form .form-input input, */
 .client-data form .form-text {
   color: var(--text);
 }

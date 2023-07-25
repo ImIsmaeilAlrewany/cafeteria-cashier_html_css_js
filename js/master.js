@@ -269,4 +269,19 @@ if (logout) logout.addEventListener('click', () => {
 
 //===================================================//
 
+// start work with edit profiles data
+const profile = document.getElementById('profile');
+const profileName = document.getElementById('profile-cashier-name');
+const profilePhone = document.getElementById('profile-cashier-phone');
+const profilePassword = document.getElementById('profile-cashier-password');
+const profileNewPassword = document.getElementById('profile-cashier-newpassword');
+
+// set cashier data
+const profileData = JSON.parse(sessionStorage.getItem('onlineClient'));
+if (profileName) profileName.value = profileData.name;
+if (profilePhone) profilePhone.value = profileData.phone;
+if (profilePassword) profilePassword.value = '*'.repeat(profileData.password.length);
+
+
+
 

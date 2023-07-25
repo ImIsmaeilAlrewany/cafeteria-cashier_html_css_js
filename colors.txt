@@ -5,6 +5,7 @@ Secondary: #03A9F4
 Accent: #FF4081
 Background: #FFFFFF
 Text: #212121
+Close Button: #FF4081
 
 Dark Mode
 
@@ -13,20 +14,6 @@ Secondary: #0369A8
 Accent: #FF8C00
 Background: #121212
 Text: #F0F0F0
-
+Close Button: #FF8C00
 
 ===================================
-
-Light Mode:
-Background: #FFFFFF
-Text: #212121
-Border: #0069D9
-Header: #0069D9
-Close Button: #FF4081
-
-Dark Mode:
-Background: #121212
-Text: #F0F0F0
-Border: #003049
-Header: #003049
-Close Button: #FF8C00
