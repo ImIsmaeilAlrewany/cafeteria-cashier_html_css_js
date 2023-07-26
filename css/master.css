@@ -16,6 +16,8 @@
   --secondary-hover: #079fe3;
   --gray: #ccc;
   --accent-hover: #f15389;
+  --green: #018b4b;
+  --green-hover: #3f946c;
 }
 
 body {
@@ -112,9 +114,9 @@ body {
   color: var(--text);
 }
 
-.add-table button:active,
-.add-table button:hover,
-.add-table button:focus {
+.add-table #add-table:active,
+.add-table #add-table:hover,
+.add-table #add-table:focus {
   background-color: var(--gray);
   border-color: var(--gray);
   color: var(--text);
@@ -179,6 +181,7 @@ body {
 .tables-modal-overlay .add-table-modal button:focus {
   color: var(--background);
   background-color: var(--accent-hover);
+  border-color: var(--accent-hover);
 }
 
 @keyframes showModal {
@@ -221,17 +224,34 @@ body {
   color: var(--text);
 }
 
-.client-data form button[type="submit"] {
+.client-data form button[type="submit"],
+.client-data form button {
   background-color: var(--accent);
   border-color: var(--accent);
+  color: var(--background);
 }
 
 .client-data form button[type="submit"]:hover,
 .client-data form button[type="submit"]:focus,
-.client-data form button[type="submit"]:active {
+.client-data form button[type="submit"]:active,
+.client-data form div #profile-cashier-delete:hover,
+.client-data form div #profile-cashier-delete:focus,
+.client-data form div #profile-cashier-delete:active {
   background-color: var(--accent-hover);
   border-color: var(--accent-hover);
   color: var(--background);
+}
+
+.client-data form button.green-button {
+  background-color: var(--green);
+  border-color: var(--green);
+}
+
+.client-data form button.green-button:hover,
+.client-data form button.green-button:focus,
+.client-data form button.green-button:active {
+  background-color: var(--green-hover);
+  border-color: var(--green-hover);
 }
 
 /* end login and register sections styles using client-data class */
