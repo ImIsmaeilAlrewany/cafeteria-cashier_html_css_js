@@ -9,10 +9,9 @@
   <link rel="stylesheet" href="./css/bootstrap.rtl.min.css">
   <link rel="stylesheet" href="./css/master.css">
   <script>
-    window.onload = function () {
-      const isLoggedIn = JSON.parse(sessionStorage.getItem('isLoggedIn'));
-      if (!isLoggedIn) location.href = './login.html';
-    };
+    // check if client is logged in
+    const isLoggedIn = JSON.parse(sessionStorage.getItem('isLoggedIn'));
+    if (!isLoggedIn) location.href = './login.html';
   </script>
 </head>
 
@@ -51,7 +50,7 @@
                 <a class="text-decoration-none" href="#" role="button">قائمة الطعام</a>
               </li>
               <li class="w-100 p-2">
-                <a class="text-decoration-none" href="#" role="button">التقارير</a>
+                <a class="text-decoration-none" href="#" role="button">التقارير اليومية</a>
               </li>
               <li class="w-100 p-2">
                 <a class="text-decoration-none" href="#" role="button">المخزون</a>

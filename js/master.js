@@ -42,17 +42,30 @@ const colors = {
   }
 };
 
-// ***change css variables function
-const changeVar = (button, colors) => {
-  button.addEventListener('click', () => {
-    for (const prop in colors) {
-      document.documentElement.style.setProperty(prop, colors[prop]);
-    }
-  });
+// ***change css variables function and save in local storage
+const changeVar = (colors, mode) => {
+  for (const prop in colors) {
+    document.documentElement.style.setProperty(prop, colors[prop]);
+    localStorage.setItem('mode', mode);
+  }
 };
 
-changeVar(light, colors.light);
-changeVar(dark, colors.dark);
+light.addEventListener('click', () => {
+  changeVar(colors.light, 'light');
+});
+
+dark.addEventListener('click', () => {
+  changeVar(colors.dark, 'dark');
+});
+
+// check mode while loading pages
+document.addEventListener('DOMContentLoaded', () => {
+  const colorsMode = localStorage.getItem('mode');
+
+  if (colorsMode)
+    if (colorsMode === 'light') changeVar(colors.light, 'light');
+    else changeVar(colors.dark, 'dark');
+});
 
 //===================================================//
 
