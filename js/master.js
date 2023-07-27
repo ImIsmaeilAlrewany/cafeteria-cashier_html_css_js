@@ -303,10 +303,8 @@ if (profilePassword) profilePassword.value = '*'.repeat(profileData.password.len
 
 // submit new data will be after clicking on edit profile button
 if (profile) profile.addEventListener('submit', (e) => {
-  const clients = JSON.parse(localStorage.getItem('clients'));
-  let newNameCorrect = false;
-  let newPhoneCorrect = false;
-  let newPasswordCorrect = false;
+  const clients = JSON.parse(localStorage.getItem('clients')) || [];
+  let isFormValid = true;
   let clientIndex;
 
   for (let i = 0; i < clients.length; i++) {
@@ -321,10 +319,9 @@ if (profile) profile.addEventListener('submit', (e) => {
 
   // check new data is correct and unique function
   // to check unique you need to put a boolean value
-  const checkData = (key, condition, warningEle, warningMes, unique, uniqueMes, variable) => {
+  const checkData = (key, condition, warningEle, warningMes, unique, uniqueMes) => {
     if (data[key] && data[key] !== profileData[key]) {
       e.preventDefault();
-
       if (condition) {
         e.preventDefault();
         warningEle.innerHTML = warningMes;
@@ -333,15 +330,11 @@ if (profile) profile.addEventListener('submit', (e) => {
           for (let i = 0; i < clients.length; i++) {
             if (data[key] === clients[i][key]) {
               e.preventDefault();
-              variable = false;
+              isFormValid = false;
               profileWarnings[0].innerHTML = uniqueMes;
               break;
-            } else {
-              variable = true;
             }
           }
-        } else {
-          variable = true;
         }
       }
     } else {
@@ -355,22 +348,18 @@ if (profile) profile.addEventListener('submit', (e) => {
       key: 'name',
       condition: data.name.length < 3 || Number(data.name),
       unique: true,
-      uniqueMessage: 'هذا الإسم استخدم من قبل',
-      var: newNameCorrect
+      uniqueMessage: 'هذا الإسم استخدم من قبل'
     },
     {
       key: 'phone',
       condition: data.phone.length != 11 || !Number(data.phone),
       unique: true,
-      uniqueMessage: 'هذا الرقم استخدم من قبل',
-      var: newPhoneCorrect
+      uniqueMessage: 'هذا الرقم استخدم من قبل'
     },
     {
       key: 'password',
       condition: data.password.length < 7 || Number(data.password),
-      unique: false,
-      uniqueMessage: '',
-      var: newPasswordCorrect
+      unique: false
     }
   ];
 
@@ -387,8 +376,7 @@ if (profile) profile.addEventListener('submit', (e) => {
         profileWarnings[i],
         warningMessages[i],
         argument.unique,
-        argument.uniqueMessage,
-        argument.var
+        argument.uniqueMessage
       );
     });
 
@@ -398,10 +386,10 @@ if (profile) profile.addEventListener('submit', (e) => {
   }
 
   // after checking all data (unique and correct) time to save it 
-  if (newNameCorrect || newPhoneCorrect || newPasswordCorrect) {
-    if (newNameCorrect) clients[clientIndex].name = data.name;
-    if (newPhoneCorrect) clients[clientIndex].phone = data.phone;
-    if (newPasswordCorrect) clients[clientIndex].password = data.password;
+  if (isFormValid) {
+    for (const prop in clients[clientIndex]) {
+      if (data[prop]) clients[clientIndex][prop] = data[prop];
+    }
 
     localStorage.setItem('clients', JSON.stringify(clients));
     sessionStorage.setItem('onlineClient', JSON.stringify(clients[clientIndex]));
