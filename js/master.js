@@ -304,8 +304,9 @@ if (profilePassword) profilePassword.value = '*'.repeat(profileData.password.len
 // submit new data will be after clicking on edit profile button
 if (profile) profile.addEventListener('submit', (e) => {
   const clients = JSON.parse(localStorage.getItem('clients'));
-  let dataCorrect = false;
-  let dataUnique = false;
+  let newNameCorrect = false;
+  let newPhoneCorrect = false;
+  let newPasswordCorrect = false;
   let clientIndex;
 
   for (let i = 0; i < clients.length; i++) {
@@ -318,64 +319,90 @@ if (profile) profile.addEventListener('submit', (e) => {
   const data = collectData([profileName, profilePhone, profileNewPassword]);
   const oldPassword = profilePassword.value.trim();
 
-  // this is the start of the problem
-  // array to use in checkCorrect function
-  const funcArguments = [
-    data.name.length < 3 || Number(data.name),
-    data.phone.length != 11 || !Number(data.phone),
-    data.password.length < 7 || Number(data.password)
-  ];
+  // check new data is correct and unique function
+  // to check unique you need to put a boolean value
+  const checkData = (key, condition, warningEle, warningMes, unique, uniqueMes, variable) => {
+    if (data[key] && data[key] !== profileData[key]) {
+      e.preventDefault();
 
-  // ***check if this data is unique
-  const checkUnique = (check, warningEle, warningMes) => {
-    clients.forEach(client => {
-      if (client[check] === data[check]) {
+      if (condition) {
         e.preventDefault();
-        dataUnique = false;
         warningEle.innerHTML = warningMes;
       } else {
-        dataUnique = true;
-        warningEle.innerHTML = '';
+        if (unique) {
+          for (let i = 0; i < clients.length; i++) {
+            if (data[key] === clients[i][key]) {
+              e.preventDefault();
+              variable = false;
+              profileWarnings[0].innerHTML = uniqueMes;
+              break;
+            } else {
+              variable = true;
+            }
+          }
+        } else {
+          variable = true;
+        }
       }
-    });
+    } else {
+      data[key] = '';
+    }
   };
+
+  // array to use in checkCorrect function
+  const funcArguments = [
+    {
+      key: 'name',
+      condition: data.name.length < 3 || Number(data.name),
+      unique: true,
+      uniqueMessage: 'هذا الإسم استخدم من قبل',
+      var: newNameCorrect
+    },
+    {
+      key: 'phone',
+      condition: data.phone.length != 11 || !Number(data.phone),
+      unique: true,
+      uniqueMessage: 'هذا الرقم استخدم من قبل',
+      var: newPhoneCorrect
+    },
+    {
+      key: 'password',
+      condition: data.password.length < 7 || Number(data.password),
+      unique: false,
+      uniqueMessage: '',
+      var: newPasswordCorrect
+    }
+  ];
+
 
   // current password must be right if you want to edit anything
   if (oldPassword === profileData.password) {
     profileWarnings[2].innerHTML = '';
 
-    // check if name is correct
-    if (data.name && data.name !== profileData.name) {
-      checkData(funcArguments[0], e, profileWarnings[0], warningMessages[0]);
-
-      // check if this name is unique
-      checkUnique('name', profileWarnings[0], 'هذا الإسم استخدم من قبل');
-    }
-
-    // check if phone is correct
-    if (data.phone && data.phone !== profileData.phone) {
-      checkData(funcArguments[1], e, profileWarnings[1], warningMessages[1]);
-
-      // check if this phone is unique
-      checkUnique('phone', profileWarnings[1], 'هذا الرقم استخدم من قبل');
-    }
-
-    // check if phone is correct
-    if (data.password && data.password !== profileData.password) {
-      checkData(funcArguments[2], e, profileWarnings[3], warningMessages[2]);
-    }
+    // use checkData function
+    funcArguments.forEach((argument, i) => {
+      checkData(
+        argument.key,
+        argument.condition,
+        profileWarnings[i],
+        warningMessages[i],
+        argument.unique,
+        argument.uniqueMessage,
+        argument.var
+      );
+    });
 
   } else {
     e.preventDefault();
     profileWarnings[2].innerHTML = 'الرقم السري خطأ حاول من جديد';
   }
-  // until here
 
   // after checking all data (unique and correct) time to save it 
-  if (dataCorrect && dataUnique) {
-    for (const prop in data) {
-      if (data[prop]) clients[clientIndex][prop] = data[prop];
-    }
+  if (newNameCorrect || newPhoneCorrect || newPasswordCorrect) {
+    if (newNameCorrect) clients[clientIndex].name = data.name;
+    if (newPhoneCorrect) clients[clientIndex].phone = data.phone;
+    if (newPasswordCorrect) clients[clientIndex].password = data.password;
+
     localStorage.setItem('clients', JSON.stringify(clients));
     sessionStorage.setItem('onlineClient', JSON.stringify(clients[clientIndex]));
   }
