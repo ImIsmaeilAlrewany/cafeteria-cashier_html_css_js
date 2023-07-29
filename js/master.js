@@ -304,7 +304,7 @@ if (profilePassword) profilePassword.value = '*'.repeat(profileData.password.len
 // submit new data will be after clicking on edit profile button
 if (profile) profile.addEventListener('submit', (e) => {
   const clients = JSON.parse(localStorage.getItem('clients')) || [];
-  let isFormValid = true;
+  let isFormValid = false;
   let clientIndex;
 
   for (let i = 0; i < clients.length; i++) {
@@ -330,11 +330,14 @@ if (profile) profile.addEventListener('submit', (e) => {
           for (let i = 0; i < clients.length; i++) {
             if (data[key] === clients[i][key]) {
               e.preventDefault();
-              isFormValid = false;
               profileWarnings[0].innerHTML = uniqueMes;
               break;
+            } else {
+              isFormValid = true;
             }
           }
+        } else {
+          isFormValid = true;
         }
       }
     } else {
@@ -393,8 +396,11 @@ if (profile) profile.addEventListener('submit', (e) => {
 
     localStorage.setItem('clients', JSON.stringify(clients));
     sessionStorage.setItem('onlineClient', JSON.stringify(clients[clientIndex]));
+    profile.submit();
   }
 });
+
+//===============================================//
 
 
 
