@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Al-cashier Edit Profile</title>
+  <title>Al-cashier Homepage</title>
   <link rel="stylesheet" href="./css/all.min.css">
   <link rel="stylesheet" href="./css/bootstrap.rtl.min.css">
   <link rel="stylesheet" href="./css/master.css">
@@ -38,10 +38,10 @@
           <aside id="slide-menu" class="menu position-fixed py-3 text-center">
             <ul class="m-0 list-unstyled d-flex align-items-center flex-column">
               <li class="w-100 p-2">
-                <a class="text-decoration-none" href="./index.html" role="button">الصفحة الرئيسية</a>
+                <a class="active text-decoration-none" href="./index.html" role="button">الصفحة الرئيسية</a>
               </li>
               <li class="w-100 p-2">
-                <a class="active text-decoration-none" href="./profile.html" role="button">تعديل الحساب</a>
+                <a class="text-decoration-none" href="./profile.html" role="button">تعديل الحساب</a>
               </li>
               <li class="w-100 p-2">
                 <a class="text-decoration-none" href="./register.html" role="button">إضافة حساب</a>
@@ -67,46 +67,7 @@
 
   <!-- end navbar -->
 
-  <!-- start profile edit form -->
 
-  <section class="profile client-data d-flex align-items-center justify-content-center">
-    <div class="container">
-      <form id="profile" class="p-3 mx-auto text-center" action="./index.html">
-        <div class="form-input mb-3">
-          <label for="profile-cashier-name" class="form-label">اسم الكاشير</label>
-          <input id="profile-cashier-name" class="form-control shadow-none text-center" type=" text" data-from="name">
-          <p class="form-text my-2"></p>
-        </div>
-        <div class="form-input mb-3">
-          <label for="profile-cashier-phone" class="form-label">رقم الهاتف</label>
-          <input id="profile-cashier-phone" class="form-control shadow-none text-center" type=" text" data-from="phone">
-          <p class="form-text my-2"></p>
-        </div>
-        <div class="form-input mb-3">
-          <label for="profile-cashier-password" class="form-label">الرقم السري</label>
-          <input id="profile-cashier-password" class="form-control shadow-none text-center" type="password"
-            data-from="password">
-          <p class="form-text my-2"></p>
-        </div>
-        <div class="form-input mb-3">
-          <label for="profile-cashier-newpassword" class="form-label">الرقم السري الجديد</label>
-          <input id="profile-cashier-newpassword" class="form-control shadow-none text-center" type="password"
-            data-from="password">
-          <p class="form-text my-2"></p>
-        </div>
-        <div class="text-center">
-          <button id="profile-cashier-edit" class="btn green-button shadow-lg" type="submit">
-            تعديل الحساب
-          </button>
-          <button id="profile-cashier-delete" class="btn" type="button">
-            حذف الحساب
-          </button>
-        </div>
-      </form>
-    </div>
-  </section>
-
-  <!-- end profile edit form -->
 
   <script src="./js/all.min.js"></script>
   <script src="./js/bootstrap.bundle.min.js"></script>
