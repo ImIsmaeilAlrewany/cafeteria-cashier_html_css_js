@@ -16,8 +16,8 @@
   --secondary-hover: #079fe3;
   --gray: #ccc;
   --accent-hover: #f15389;
-  --green: #018b4b;
-  --green-hover: #3f946c;
+  --green: #43B365;
+  --green-hover: #50C878;
 }
 
 body {
@@ -255,3 +255,44 @@ body {
 }
 
 /* end login and register sections styles using client-data class */
+
+/* start menu and categories page styles */
+.menu {
+  margin: 0 !important;
+}
+
+.menu .categories {
+  overflow-x: auto;
+}
+
+.menu .categories .category {
+  width: 200px;
+  color: var(--background);
+  flex-shrink: 0;
+}
+
+.menu .categories .category .control,
+.menu .categories .category .data {
+  flex-grow: 1;
+}
+
+.menu .categories .category .control .delete-category {
+  background-color: var(--accent);
+}
+
+.menu .categories .category .control .edit-category {
+  background-color: var(--green);
+}
+
+.menu .categories .category .control .delete-category,
+.menu .categories .category .control .edit-category,
+.menu .categories .category .data {
+  padding: 20px 0;
+}
+
+.menu .categories .category .data {
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+/* end menu and categories page styles */

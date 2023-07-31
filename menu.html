@@ -38,7 +38,7 @@
           <aside id="slide-menu" class="menu position-fixed py-3 text-center">
             <ul class="m-0 list-unstyled d-flex align-items-center flex-column">
               <li class="w-100 p-2">
-                <a class="active text-decoration-none" href="./index.html" role="button">الصفحة الرئيسية</a>
+                <a class="text-decoration-none" href="./index.html" role="button">الصفحة الرئيسية</a>
               </li>
               <li class="w-100 p-2">
                 <a class="text-decoration-none" href="./profile.html" role="button">تعديل الحساب</a>
@@ -47,13 +47,10 @@
                 <a class="text-decoration-none" href="./register.html" role="button">إضافة حساب</a>
               </li>
               <li class="w-100 p-2">
-                <a class="text-decoration-none" href="./menu.html" role="button">قائمة الطعام</a>
+                <a class="active text-decoration-none" href="./menu.html" role="button">قائمة الطعام</a>
               </li>
               <li class="w-100 p-2">
                 <a class="text-decoration-none" href="#" role="button">التقارير اليومية</a>
-              </li>
-              <li class="w-100 p-2">
-                <a class="text-decoration-none" href="#" role="button">المخزون</a>
               </li>
               <li class="w-100 p-2">
                 <a id="logout" class="text-decoration-none" role="button">إنهاء الشيفت</a>
@@ -69,7 +66,31 @@
 
   <!-- start menu add and edit -->
 
-
+  <div class="container">
+    <main class="menu row justify-content-between">
+      <section class="categories py-3 px-0 col-12 d-flex">
+        <div class="category row shadow rounded me-3 ms-0 overflow-hidden">
+          <div class="control col-3 row flex-column">
+            <div id="delete-category" class="delete-category col-6 w-100"></div>
+            <div id="edit-category" class="edit-category col-6 w-100"></div>
+          </div>
+          <div class="data col-9 d-flex justify-content-center align-items-center">
+            مشروبات غازية
+          </div>
+        </div>
+        <div class="category row shadow rounded me-3 ms-0 overflow-hidden">
+          <div class="control col-3 row flex-column">
+            <div id="delete-category" class="delete-category col-6 w-100"></div>
+            <div id="edit-category" class="edit-category col-6 w-100"></div>
+          </div>
+          <div class="data col-9 d-flex justify-content-center align-items-center">
+            مشروبات غازية
+          </div>
+        </div>
+      </section>
+      <section class="category-items mt-3 col-12"></section>
+    </main>
+  </div>
 
   <!-- end menu add and edit -->
 
