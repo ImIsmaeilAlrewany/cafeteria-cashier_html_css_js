@@ -71,20 +71,19 @@
       <section class="categories py-3 px-0 col-12 d-flex">
         <div class="category row shadow rounded me-3 ms-0 overflow-hidden">
           <div class="control col-3 row flex-column">
-            <div id="delete-category" class="delete-category col-6 w-100"></div>
-            <div id="edit-category" class="edit-category col-6 w-100"></div>
+            <div id="delete-category" class="delete-category col-6 w-100" role="button"></div>
+            <div id="edit-category" class="edit-category col-6 w-100" role="button"></div>
           </div>
-          <div class="data col-9 d-flex justify-content-center align-items-center">
+          <div class="data col-9 d-flex justify-content-center align-items-center" role="button">
             مشروبات غازية
           </div>
         </div>
-        <div class="category row shadow rounded me-3 ms-0 overflow-hidden">
-          <div class="control col-3 row flex-column">
-            <div id="delete-category" class="delete-category col-6 w-100"></div>
-            <div id="edit-category" class="edit-category col-6 w-100"></div>
-          </div>
-          <div class="data col-9 d-flex justify-content-center align-items-center">
-            مشروبات غازية
+        <div id="add-category-button"
+          class="add-category shadow rounded me-3 ms-0 overflow-hidden d-flex justify-content-center align-items-center"
+          role="button">
+          <div class="category-button">
+            <i class="fa-solid fa-circle-plus"></i>
+            <span class="ms-2">أضف فئة أو صنف</span>
           </div>
         </div>
       </section>
@@ -93,6 +92,22 @@
   </div>
 
   <!-- end menu add and edit -->
+
+  <!-- start add category modal  -->
+
+  <!-- <div id="category-modal" class="category-modal-overlay position-absolute w-100 h-100 top-0 left-0">
+    <form class="add-category-modal p-3 top-0 rounded text-center position-relative">
+      <div id="close-category-button" class="close-modal position-absolute" role="button">
+        <i class="fa-solid fa-circle-xmark"></i>
+      </div>
+      <label for="add-category-input" class="form-label">أضف فئة أو صنف</label>
+      <input id="add-category-input" class="form-control shadow-none text-center" type="text">
+      <p class="form-text">لا تزيد عن ثلاث كلمات</p>
+      <button id="add-category-submit" class="btn" type="submit">إضافة فئة أو صنف</button>
+    </form>
+  </div> -->
+
+  <!-- end add category modal  -->
 
   <script src="./js/all.min.js"></script>
   <script src="./js/bootstrap.bundle.min.js"></script>

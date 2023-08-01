@@ -271,6 +271,14 @@ body {
   flex-shrink: 0;
 }
 
+.menu .categories .add-category {
+  width: 200px;
+  color: var(--text);
+  flex-shrink: 0;
+  padding: 20px;
+  background-color: var(--background);
+}
+
 .menu .categories .category .control,
 .menu .categories .category .data {
   flex-grow: 1;

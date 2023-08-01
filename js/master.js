@@ -438,5 +438,75 @@ if (deleteProfile) deleteProfile.addEventListener('click', () => {
 
 //===============================================//
 
+// start work in menu
+// add category modal
+/*
+// work with adding tables and save it in local storage
+const addTable = document.getElementById('add-table');
+const tablesModal = document.getElementById('tables-modal');
+const addTableInput = document.getElementById('add-table-input');
+const addTableButton = document.getElementById('add-table-submit');
+const closeTableModal = document.getElementById('close-table-button');
+const tablesContainer = document.getElementById('tables-container');
 
+let tables = [
+  {
+    id: 1,
+    name: "طاولة 1",
+  }
+];
+
+if (!localStorage.getItem('cafeteria-tables')) {
+  // save tables in local storage
+  localStorage.setItem('cafeteria-tables', JSON.stringify(tables));
+} else {
+  // get tables from local storage after loading the page
+  tables = JSON.parse(localStorage.getItem('cafeteria-tables'));
+}
+
+// show up tables restoring from local storage
+const output = tables.map((t) => {
+  return `<a class="table m-2 rounded text-center overflow-hidden text-decoration-none" href="#" role="button">
+    <i class="fa-solid fa-chair"></i>
+    <span class="ms-2">${t.name}</span>
+  </a>`;
+});
+
+if (tablesContainer) tablesContainer.innerHTML = output.join(' ');
+
+// open modal to add new tables for cafeteria
+if (addTable) toggleActive(addTable, tablesModal);
+
+// close modal display none the overlay
+if (closeTableModal) toggleActive(closeTableModal, tablesModal);
+
+// ***get data and create elements function
+const collectAndCreate = (submit, input, outputEle, callback) => {
+
+  // return callback func to other func to invoke it
+  const effect = (data) => callback(data);
+  let inputData = '';
+
+  submit.onclick = function (e) {
+    e.preventDefault();
+    inputData = input.value;
+    input.value = '';
+
+    const output = effect(inputData);
+    outputEle.innerHTML = outputEle.innerHTML + output;
+  };
+};
+
+if (addTableButton)
+  collectAndCreate(addTableButton, addTableInput, tablesContainer, (data) => {
+    tables.push({ id: tables.length + 1, name: data });
+    localStorage.setItem('cafeteria-tables', JSON.stringify(tables));
+
+    return `<a class="table m-2 rounded text-center overflow-hidden text-decoration-none" href="#" role="button">
+    <i class="fa-solid fa-chair"></i>
+    <span class="ms-2">${data}</span>
+  </a>`;
+  });
+
+*/
 
