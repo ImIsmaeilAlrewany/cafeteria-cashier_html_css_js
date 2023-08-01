@@ -132,18 +132,19 @@ body {
 
 /* start add table modal styles */
 
-.tables-modal-overlay {
+.modal-overlay {
   background-color: #ffffff0a;
   align-items: center;
   justify-content: center;
   display: none;
 }
 
-.tables-modal-overlay.active {
+.modal-overlay.active {
   display: flex;
 }
 
-.tables-modal-overlay .add-table-modal {
+.modal-overlay .add-table-modal,
+.modal-overlay .add-category-modal {
   width: 320px;
   background-color: var(--background);
   border: 1px solid var(--secondary);
@@ -151,34 +152,40 @@ body {
   animation: showModal .6s linear alternate;
 }
 
-.tables-modal-overlay .close-modal {
+.modal-overlay .close-modal {
   top: -15px;
   right: -7.5px;
   font-size: 30px;
 }
 
-.tables-modal-overlay .close-modal svg {
+.modal-overlay .close-modal svg {
   color: var(--accent);
   pointer-events: none;
 }
 
-.tables-modal-overlay .add-table-modal label {
+.modal-overlay .add-table-modal label,
+.modal-overlay .add-category-modal label {
   color: var(--secondary);
   font-size: 24px;
 }
 
-.tables-modal-overlay .add-table-modal p {
+.modal-overlay .add-table-modal p,
+.modal-overlay .add-category-modal p {
   color: var(--text);
 }
 
-.tables-modal-overlay .add-table-modal button {
+.modal-overlay .add-table-modal button,
+.modal-overlay .add-category-modal button {
   color: var(--background);
   background-color: var(--accent);
 }
 
-.tables-modal-overlay .add-table-modal button:active,
-.tables-modal-overlay .add-table-modal button:hover,
-.tables-modal-overlay .add-table-modal button:focus {
+.modal-overlay .add-table-modal button:active,
+.modal-overlay .add-table-modal button:hover,
+.modal-overlay .add-table-modal button:focus,
+.modal-overlay .add-category-modal button:active,
+.modal-overlay .add-category-modal button:hover,
+.modal-overlay .add-category-modal button:focus {
   color: var(--background);
   background-color: var(--accent-hover);
   border-color: var(--accent-hover);
@@ -265,16 +272,16 @@ body {
   overflow-x: auto;
 }
 
-.menu .categories .category {
+.menu .categories .category,
+.menu .categories .add-category {
   width: 200px;
+  height: 80px;
   color: var(--background);
   flex-shrink: 0;
 }
 
 .menu .categories .add-category {
-  width: 200px;
   color: var(--text);
-  flex-shrink: 0;
   padding: 20px;
   background-color: var(--background);
 }

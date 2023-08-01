@@ -438,75 +438,57 @@ if (deleteProfile) deleteProfile.addEventListener('click', () => {
 
 //===============================================//
 
-// start work in menu
-// add category modal
-/*
-// work with adding tables and save it in local storage
-const addTable = document.getElementById('add-table');
-const tablesModal = document.getElementById('tables-modal');
-const addTableInput = document.getElementById('add-table-input');
-const addTableButton = document.getElementById('add-table-submit');
-const closeTableModal = document.getElementById('close-table-button');
-const tablesContainer = document.getElementById('tables-container');
+// start work in menu add category modal
+const categoriesContainer = document.getElementById('categories-container');
+const categoryModal = document.getElementById('category-modal');
+const addCategoryInput = document.getElementById('add-category-input');
+const submitCategoryInput = document.getElementById('add-category-submit');
 
-let tables = [
-  {
-    id: 1,
-    name: "طاولة 1",
-  }
-];
+const addCategoryElement = `<div id="add-category-button"
+class="add-category shadow rounded me-3 ms-0 overflow-hidden d-flex justify-content-center align-items-center"
+role="button">
+<div class="category-button">
+<i class="fa-solid fa-circle-plus"></i>
+<span class="ms-2">أضف فئة أو صنف</span>
+</div>
+</div>`;
 
-if (!localStorage.getItem('cafeteria-tables')) {
-  // save tables in local storage
-  localStorage.setItem('cafeteria-tables', JSON.stringify(tables));
-} else {
-  // get tables from local storage after loading the page
-  tables = JSON.parse(localStorage.getItem('cafeteria-tables'));
-}
+// check if there is any category in local storage
+let categories = [];
+if (JSON.parse(localStorage.getItem('menu-categories')))
+  categories = JSON.parse(localStorage.getItem('menu-categories'));
 
-// show up tables restoring from local storage
-const output = tables.map((t) => {
-  return `<a class="table m-2 rounded text-center overflow-hidden text-decoration-none" href="#" role="button">
-    <i class="fa-solid fa-chair"></i>
-    <span class="ms-2">${t.name}</span>
-  </a>`;
+let allCategories = [];
+categories.forEach(category => {
+  allCategories.push(`<div class="category row shadow rounded me-3 ms-0 overflow-hidden">
+    <div class="control col-3 row flex-column">
+      <div id="delete-category" class="delete-category col-6 w-100" role="button"></div>
+      <div id="edit-category" class="edit-category col-6 w-100" role="button"></div>
+    </div>
+    <div class="data col-9 d-flex justify-content-center align-items-center" role="button">
+      ${category.name}
+    </div>
+  </div>`);
 });
 
-if (tablesContainer) tablesContainer.innerHTML = output.join(' ');
+categoriesContainer.innerHTML = [...allCategories, addCategoryElement].join(' ');
 
-// open modal to add new tables for cafeteria
-if (addTable) toggleActive(addTable, tablesModal);
+// open modal to add new categories to menu
+const addCategory = document.querySelector('#add-category-button');
+if (addCategory) toggleActive(addCategory, categoryModal);
 
 // close modal display none the overlay
-if (closeTableModal) toggleActive(closeTableModal, tablesModal);
+const closeCategoryModal = document.getElementById('close-category-button');
+if (closeCategoryModal) toggleActive(closeCategoryModal, categoryModal);
 
-// ***get data and create elements function
-const collectAndCreate = (submit, input, outputEle, callback) => {
 
-  // return callback func to other func to invoke it
-  const effect = (data) => callback(data);
-  let inputData = '';
 
-  submit.onclick = function (e) {
-    e.preventDefault();
-    inputData = input.value;
-    input.value = '';
-
-    const output = effect(inputData);
-    outputEle.innerHTML = outputEle.innerHTML + output;
-  };
-};
-
-if (addTableButton)
-  collectAndCreate(addTableButton, addTableInput, tablesContainer, (data) => {
-    tables.push({ id: tables.length + 1, name: data });
-    localStorage.setItem('cafeteria-tables', JSON.stringify(tables));
-
-    return `<a class="table m-2 rounded text-center overflow-hidden text-decoration-none" href="#" role="button">
-    <i class="fa-solid fa-chair"></i>
-    <span class="ms-2">${data}</span>
-  </a>`;
-  });
-
-*/
-
+{/* <div class="category row shadow rounded me-3 ms-0 overflow-hidden">
+  <div class="control col-3 row flex-column">
+    <div id="delete-category" class="delete-category col-6 w-100" role="button"></div>
+    <div id="edit-category" class="edit-category col-6 w-100" role="button"></div>
+  </div>
+  <div class="data col-9 d-flex justify-content-center align-items-center" role="button">
+    مشروبات غازية
+  </div>
+</div> */}
