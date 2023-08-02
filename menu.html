@@ -68,7 +68,17 @@
 
   <div class="container">
     <main class="menu row justify-content-between">
-      <section id="categories-container" class="categories py-3 px-0 col-12 d-flex"></section>
+      <section class="categories py-3 px-0 col-12 d-flex">
+        <div id="categories-container" class="d-flex"></div>
+        <div id="add-category-button"
+          class="add-category shadow rounded me-3 ms-0 overflow-hidden d-flex justify-content-center align-items-center"
+          role="button">
+          <div class="category-button">
+            <i class="fa-solid fa-circle-plus"></i>
+            <span class="ms-2">أضف فئة أو صنف</span>
+          </div>
+        </div>
+      </section>
       <section class="category-items mt-3 col-12"></section>
     </main>
   </div>
@@ -78,14 +88,14 @@
   <!-- start add category modal  -->
 
   <div id="category-modal" class="modal-overlay position-absolute w-100 h-100 top-0 left-0">
-    <form id="category-modal-form" class="add-category-modal p-3 top-0 rounded text-center position-relative">
+    <form class="add-category-modal p-3 top-0 rounded text-center position-relative">
       <div id="close-category-button" class="close-modal position-absolute" role="button">
         <i class="fa-solid fa-circle-xmark"></i>
       </div>
       <label for="add-category-input" class="form-label">أضف فئة أو صنف</label>
       <input id="add-category-input" class="form-control shadow-none text-center" type="text">
-      <p class="form-text">لا تزيد عن ثلاث كلمات</p>
-      <button class="btn" type="submit">إضافة فئة أو صنف</button>
+      <p id="warning-text" class="form-text">اجعلها كلمتين فقط</p>
+      <button id="category-modal-submit" class="btn" type="submit">إضافة فئة أو صنف</button>
     </form>
   </div>
 

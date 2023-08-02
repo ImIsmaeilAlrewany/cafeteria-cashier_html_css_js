@@ -76,6 +76,7 @@ const addTableInput = document.getElementById('add-table-input');
 const addTableButton = document.getElementById('add-table-submit');
 const closeTableModal = document.getElementById('close-table-button');
 const tablesContainer = document.getElementById('tables-container');
+const tableModalWarning = document.querySelector('#tables-modal #warning-text');
 
 let tables = [
   {
@@ -109,24 +110,37 @@ if (addTable) toggleActive(addTable, tablesModal);
 if (closeTableModal) toggleActive(closeTableModal, tablesModal);
 
 // ***get data and create elements function
-const collectAndCreate = (submit, input, outputEle, callback) => {
-
+const collectAndCreate = (submit, input, warningMes, outputEle, callback) => {
   // return callback func to other func to invoke it
   const effect = (data) => callback(data);
   let inputData = '';
+  let isWarning = false;
 
   submit.onclick = function (e) {
     e.preventDefault();
-    inputData = input.value;
+    inputData = input.value.trim();
     input.value = '';
 
-    const output = effect(inputData);
-    outputEle.innerHTML = outputEle.innerHTML + output;
+    for (let i = 0; i < warningMes.arr.length; i++) {
+      if (warningMes.arr[i].name === inputData) {
+        warningMes.ele.innerHTML = 'استخدم من قبل';
+        isWarning = true;
+        break;
+      } else {
+        warningMes.ele.innerHTML = 'اجعلها كلمتين فقط';
+        isWarning = false;
+      }
+    }
+
+    if (!isWarning) {
+      const output = effect(inputData);
+      outputEle.innerHTML = outputEle.innerHTML + output;
+    }
   };
 };
 
 if (addTableButton)
-  collectAndCreate(addTableButton, addTableInput, tablesContainer, (data) => {
+  collectAndCreate(addTableButton, addTableInput, { arr: tables, ele: tableModalWarning }, tablesContainer, (data) => {
     tables.push({ id: tables.length + 1, name: data });
     localStorage.setItem('cafeteria-tables', JSON.stringify(tables));
 
@@ -439,24 +453,15 @@ if (deleteProfile) deleteProfile.addEventListener('click', () => {
 
 // start work in menu add category modal
 const categoriesContainer = document.getElementById('categories-container');
-const addCategoryElement = `<div id="add-category-button"
-class="add-category shadow rounded me-3 ms-0 overflow-hidden d-flex justify-content-center align-items-center"
-role="button">
-<div class="category-button">
-<i class="fa-solid fa-circle-plus"></i>
-<span class="ms-2">أضف فئة أو صنف</span>
-</div>
-</div>`;
+const categoryModalWarning = document.querySelector('#category-modal #warning-text');
 
 // check if there is any category in local storage
 let allCategories = [];
 if (JSON.parse(localStorage.getItem('menu-categories')))
   allCategories = JSON.parse(localStorage.getItem('menu-categories'));
 
-// const createCategories = () => {
-let categories = [];
-allCategories.forEach(category => {
-  categories.push(`<div class="category row shadow rounded me-3 ms-0 overflow-hidden">
+const savedCategories = allCategories.map(category => {
+  return `<div class="category row shadow rounded me-3 ms-0 overflow-hidden">
     <div class="control col-3 row flex-column">
     <div id="delete-category" class="delete-category col-6 w-100" role="button"></div>
     <div id="edit-category" class="edit-category col-6 w-100" role="button"></div>
@@ -464,30 +469,10 @@ allCategories.forEach(category => {
     <div class="data col-9 d-flex justify-content-center align-items-center" role="button">
     ${category.name}
     </div>
-    </div>`);
+    </div>`;
 });
 
-categoriesContainer.innerHTML = [...categories, addCategoryElement].join(' ');
-// };
-
-// createCategories();
-
-// add new category and save in local storage
-const categoryModalForm = document.getElementById('category-modal-form');
-const addCategoryInput = document.getElementById('add-category-input');
-
-if (categoryModalForm)
-  categoryModalForm.addEventListener('submit', (e) => {
-    e.preventDefault();
-    const category = { name: addCategoryInput.value.trim(), content: [] };
-    allCategories.push(category);
-
-    // save categories in local storage
-    localStorage.setItem('menu-categories', JSON.stringify(allCategories));
-
-    addCategoryInput.value = '';
-    // createCategories();
-  });
+if (categoriesContainer) categoriesContainer.innerHTML = savedCategories.join(' ');
 
 // open modal to add new categories to menu
 const addCategory = document.querySelector('#add-category-button');
@@ -497,4 +482,25 @@ if (addCategory) toggleActive(addCategory, categoryModal);
 // close modal display none the overlay
 const closeCategoryModal = document.getElementById('close-category-button');
 if (closeCategoryModal) toggleActive(closeCategoryModal, categoryModal);
+
+// add new category and save in local storage
+const categoryModalSubmit = document.getElementById('category-modal-submit');
+const addCategoryInput = document.getElementById('add-category-input');
+
+if (categoryModalSubmit)
+  collectAndCreate(categoryModalSubmit, addCategoryInput, { arr: allCategories, ele: categoryModalWarning }, categoriesContainer, (data) => {
+    allCategories.push({ id: allCategories.length + 1, name: data, content: [] });
+    localStorage.setItem('menu-categories', JSON.stringify(allCategories));
+
+    return `<div class="category row shadow rounded me-3 ms-0 overflow-hidden">
+    <div class="control col-3 row flex-column">
+    <div id="delete-category" class="delete-category col-6 w-100" role="button"></div>
+    <div id="edit-category" class="edit-category col-6 w-100" role="button"></div>
+    </div>
+    <div class="data col-9 d-flex justify-content-center align-items-center" role="button">
+    ${data}
+    </div>
+    </div>`;
+  });
+
 
