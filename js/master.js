@@ -5,8 +5,7 @@ const slideMenu = document.getElementById('slide-menu');
 // ***custom function to toggle active class
 function toggleActive(button, element) {
   button.addEventListener('click', () => {
-    if (element.classList.contains('active')) element.classList.remove('active');
-    else element.classList.add('active');
+    element.classList.toggle('active');
   });
 };
 
@@ -440,10 +439,6 @@ if (deleteProfile) deleteProfile.addEventListener('click', () => {
 
 // start work in menu add category modal
 const categoriesContainer = document.getElementById('categories-container');
-const categoryModal = document.getElementById('category-modal');
-const addCategoryInput = document.getElementById('add-category-input');
-const submitCategoryInput = document.getElementById('add-category-submit');
-
 const addCategoryElement = `<div id="add-category-button"
 class="add-category shadow rounded me-3 ms-0 overflow-hidden d-flex justify-content-center align-items-center"
 role="button">
@@ -454,41 +449,52 @@ role="button">
 </div>`;
 
 // check if there is any category in local storage
-let categories = [];
-if (JSON.parse(localStorage.getItem('menu-categories')))
-  categories = JSON.parse(localStorage.getItem('menu-categories'));
-
 let allCategories = [];
-categories.forEach(category => {
-  allCategories.push(`<div class="category row shadow rounded me-3 ms-0 overflow-hidden">
+if (JSON.parse(localStorage.getItem('menu-categories')))
+  allCategories = JSON.parse(localStorage.getItem('menu-categories'));
+
+// const createCategories = () => {
+let categories = [];
+allCategories.forEach(category => {
+  categories.push(`<div class="category row shadow rounded me-3 ms-0 overflow-hidden">
     <div class="control col-3 row flex-column">
-      <div id="delete-category" class="delete-category col-6 w-100" role="button"></div>
-      <div id="edit-category" class="edit-category col-6 w-100" role="button"></div>
+    <div id="delete-category" class="delete-category col-6 w-100" role="button"></div>
+    <div id="edit-category" class="edit-category col-6 w-100" role="button"></div>
     </div>
     <div class="data col-9 d-flex justify-content-center align-items-center" role="button">
-      ${category.name}
+    ${category.name}
     </div>
-  </div>`);
+    </div>`);
 });
 
-categoriesContainer.innerHTML = [...allCategories, addCategoryElement].join(' ');
+categoriesContainer.innerHTML = [...categories, addCategoryElement].join(' ');
+// };
+
+// createCategories();
+
+// add new category and save in local storage
+const categoryModalForm = document.getElementById('category-modal-form');
+const addCategoryInput = document.getElementById('add-category-input');
+
+if (categoryModalForm)
+  categoryModalForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const category = { name: addCategoryInput.value.trim(), content: [] };
+    allCategories.push(category);
+
+    // save categories in local storage
+    localStorage.setItem('menu-categories', JSON.stringify(allCategories));
+
+    addCategoryInput.value = '';
+    // createCategories();
+  });
 
 // open modal to add new categories to menu
 const addCategory = document.querySelector('#add-category-button');
+const categoryModal = document.getElementById('category-modal');
 if (addCategory) toggleActive(addCategory, categoryModal);
 
 // close modal display none the overlay
 const closeCategoryModal = document.getElementById('close-category-button');
 if (closeCategoryModal) toggleActive(closeCategoryModal, categoryModal);
 
-
-
-{/* <div class="category row shadow rounded me-3 ms-0 overflow-hidden">
-  <div class="control col-3 row flex-column">
-    <div id="delete-category" class="delete-category col-6 w-100" role="button"></div>
-    <div id="edit-category" class="edit-category col-6 w-100" role="button"></div>
-  </div>
-  <div class="data col-9 d-flex justify-content-center align-items-center" role="button">
-    مشروبات غازية
-  </div>
-</div> */}
