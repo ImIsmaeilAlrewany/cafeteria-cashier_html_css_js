@@ -95,7 +95,7 @@ if (!localStorage.getItem('cafeteria-tables')) {
 
 // show up tables restoring from local storage
 const output = tables.map((t) => {
-  return `<a class="table m-2 rounded text-center overflow-hidden text-decoration-none" href="#" role="button">
+  return `<a class="table m-2 rounded text-center overflow-hidden text-decoration-none" href="#" data-id="${t.id}" role="button">
     <i class="fa-solid fa-chair"></i>
     <span class="ms-2">${t.name}</span>
   </a>`;
@@ -144,7 +144,7 @@ if (addTableButton)
     tables.push({ id: tables.length + 1, name: data });
     localStorage.setItem('cafeteria-tables', JSON.stringify(tables));
 
-    return `<a class="table m-2 rounded text-center overflow-hidden text-decoration-none" href="#" role="button">
+    return `<a class="table m-2 rounded text-center overflow-hidden text-decoration-none" href="#" data-id="${t.id}" role="button">
     <i class="fa-solid fa-chair"></i>
     <span class="ms-2">${data}</span>
   </a>`;
@@ -461,12 +461,12 @@ if (JSON.parse(localStorage.getItem('menu-categories')))
   allCategories = JSON.parse(localStorage.getItem('menu-categories'));
 
 const savedCategories = allCategories.map(category => {
-  return `<div class="category row shadow rounded me-3 ms-0 overflow-hidden">
+  return `<div id="category" class="category row shadow rounded me-3 ms-0 overflow-hidden" data-id="${category.id}">
     <div class="control col-3 row flex-column">
     <div id="delete-category" class="delete-category col-6 w-100" role="button"></div>
     <div id="edit-category" class="edit-category col-6 w-100" role="button"></div>
     </div>
-    <div class="data col-9 d-flex justify-content-center align-items-center" role="button">
+    <div id="data" class="data col-9 d-flex justify-content-center align-items-center" role="button">
     ${category.name}
     </div>
     </div>`;
@@ -492,15 +492,45 @@ if (categoryModalSubmit)
     allCategories.push({ id: allCategories.length + 1, name: data, content: [] });
     localStorage.setItem('menu-categories', JSON.stringify(allCategories));
 
-    return `<div class="category row shadow rounded me-3 ms-0 overflow-hidden">
+    console.log(categoriesContainer.children);
+
+    return `<div id="category" class="category row shadow rounded me-3 ms-0 overflow-hidden" data-id="${category.id}">
     <div class="control col-3 row flex-column">
     <div id="delete-category" class="delete-category col-6 w-100" role="button"></div>
     <div id="edit-category" class="edit-category col-6 w-100" role="button"></div>
     </div>
-    <div class="data col-9 d-flex justify-content-center align-items-center" role="button">
+    <div id="data" class="data col-9 d-flex justify-content-center align-items-center" role="button">
     ${data}
     </div>
     </div>`;
   });
 
+// work on delete category from categories list
+const deleteCategories = document.querySelectorAll('#delete-category');
 
+if (deleteCategories) deleteCategories.forEach(category => {
+  category.addEventListener('click', (e) => {
+    const category = e.target.parentElement.parentElement;
+    const categoriesList = JSON.parse(localStorage.getItem('menu-categories'));
+    const index = categoriesList[category.dataset.id - 1];
+
+    categoriesList.splice(index, 1);
+    // change id for each element to be specific for this array & don't cause issues
+    categoriesList.forEach((category, index) => category.id = index + 1);
+    category.parentElement.removeChild(category); // remove() === removeChild()
+    localStorage.setItem('menu-categories', JSON.stringify(categoriesList));
+  });
+});
+
+
+
+// work on toggle active and show each cafeteria category content
+
+// if (deleteCategory) deleteCategory.forEach(category => {
+//   category.addEventListener('click', (e) => {
+//     const category = e.target.parentElement.parentElement;
+//     const selectEle = document.querySelector(`#${category.id} #data`);
+
+//     selectEle.innerHTML;
+//   });
+// });

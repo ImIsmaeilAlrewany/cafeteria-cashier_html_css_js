@@ -280,6 +280,10 @@ body {
   flex-shrink: 0;
 }
 
+.menu .categories .category.active {
+  border: 1px solid var(--background);
+}
+
 .menu .categories .add-category {
   color: var(--text);
   padding: 20px;
