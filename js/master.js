@@ -69,6 +69,24 @@ document.addEventListener('DOMContentLoaded', () => {
 
 //===================================================//
 
+// generate ids function
+let allIds = [];
+if (localStorage.getItem('allIds'))
+  allIds = JSON.parse(localStorage.getItem('allIds'));
+
+const generateId = () => {
+  const generate = () => Math.floor(Math.random() * (999999 - 0)) + 100000;
+
+  const id = generate();
+  for (let i = 0; i < allIds.length; i++) if (allIds[i] === id) generateId();
+
+  allIds.push(id);
+  localStorage.setItem('allIds', JSON.stringify(allIds));
+  return id;
+};
+
+//===================================================//
+
 // work with adding tables and save it in local storage
 const addTable = document.getElementById('add-table');
 const tablesModal = document.getElementById('tables-modal');
@@ -79,10 +97,10 @@ const tablesContainer = document.getElementById('tables-container');
 const tableModalWarning = document.querySelector('#tables-modal #warning-text');
 
 let tables = [
-  {
-    id: 1,
-    name: "طاولة 1",
-  }
+  // {
+  //   id: generateId(),
+  //   name: "طاولة 1",
+  // }
 ];
 
 if (!localStorage.getItem('cafeteria-tables')) {
@@ -135,16 +153,23 @@ const collectAndCreate = (submit, input, warningMes, outputEle, callback) => {
     if (!isWarning) {
       const output = effect(inputData);
       outputEle.innerHTML = outputEle.innerHTML + output;
+
+      // add event listener to the new added category and delete when click
+      let deleteCategories = document.querySelectorAll('#delete-category');
+      if (deleteCategories) deleteCategories.forEach(category => {
+        addEventToNewDOM(category);
+      });
     }
   };
 };
 
 if (addTableButton)
   collectAndCreate(addTableButton, addTableInput, { arr: tables, ele: tableModalWarning }, tablesContainer, (data) => {
-    tables.push({ id: tables.length + 1, name: data });
+    const id = generateId();
+    tables.push({ id: id, name: data });
     localStorage.setItem('cafeteria-tables', JSON.stringify(tables));
 
-    return `<a class="table m-2 rounded text-center overflow-hidden text-decoration-none" href="#" data-id="${t.id}" role="button">
+    return `<a class="table m-2 rounded text-center overflow-hidden text-decoration-none" href="#" data-id="${id}" role="button">
     <i class="fa-solid fa-chair"></i>
     <span class="ms-2">${data}</span>
   </a>`;
@@ -489,12 +514,11 @@ const addCategoryInput = document.getElementById('add-category-input');
 
 if (categoryModalSubmit)
   collectAndCreate(categoryModalSubmit, addCategoryInput, { arr: allCategories, ele: categoryModalWarning }, categoriesContainer, (data) => {
-    allCategories.push({ id: allCategories.length + 1, name: data, content: [] });
+    const id = generateId();
+    allCategories.push({ id: id, name: data, content: [] });
     localStorage.setItem('menu-categories', JSON.stringify(allCategories));
 
-    console.log(categoriesContainer.children);
-
-    return `<div id="category" class="category row shadow rounded me-3 ms-0 overflow-hidden" data-id="${category.id}">
+    return `<div id="category" class="category row shadow rounded me-3 ms-0 overflow-hidden" data-id="${id}">
     <div class="control col-3 row flex-column">
     <div id="delete-category" class="delete-category col-6 w-100" role="button"></div>
     <div id="edit-category" class="edit-category col-6 w-100" role="button"></div>
@@ -508,29 +532,29 @@ if (categoryModalSubmit)
 // work on delete category from categories list
 const deleteCategories = document.querySelectorAll('#delete-category');
 
-if (deleteCategories) deleteCategories.forEach(category => {
+function addEventToNewDOM(category) {
   category.addEventListener('click', (e) => {
     const category = e.target.parentElement.parentElement;
-    const categoriesList = JSON.parse(localStorage.getItem('menu-categories'));
-    const index = categoriesList[category.dataset.id - 1];
 
-    categoriesList.splice(index, 1);
-    // change id for each element to be specific for this array & don't cause issues
-    categoriesList.forEach((category, index) => category.id = index + 1);
-    category.parentElement.removeChild(category); // remove() === removeChild()
+    let data_id = category.getAttribute('data-id');
+
+    let categoriesList = JSON.parse(localStorage.getItem('menu-categories'));
+    let idsList = JSON.parse(localStorage.getItem('allIds'));
+    // console.log("remove data with Id: ", data_id);
+    // console.log("before : ", categoriesList);
+    categoriesList = categoriesList.filter(val => parseInt(val.id) != parseInt(data_id));
+    idsList = idsList.filter(id => id != data_id);
+    // console.log("after : ", categoriesList);
+    category.remove(); // category.parentElement.removeChild(category)
+    localStorage.setItem('allIds', JSON.stringify(idsList));
     localStorage.setItem('menu-categories', JSON.stringify(categoriesList));
+
+    // to select element using attribute
+    // document.querySelectorAll('[data-id="value"]');
   });
+}
+
+if (deleteCategories) deleteCategories.forEach(category => {
+  addEventToNewDOM(category);
 });
 
-
-
-// work on toggle active and show each cafeteria category content
-
-// if (deleteCategory) deleteCategory.forEach(category => {
-//   category.addEventListener('click', (e) => {
-//     const category = e.target.parentElement.parentElement;
-//     const selectEle = document.querySelector(`#${category.id} #data`);
-
-//     selectEle.innerHTML;
-//   });
-// });
