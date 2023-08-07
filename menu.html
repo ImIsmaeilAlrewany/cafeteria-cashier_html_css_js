@@ -101,6 +101,22 @@
 
   <!-- end add category modal  -->
 
+  <!-- start add category modal  -->
+
+  <div id="edit-modal" class="modal-overlay position-absolute w-100 h-100 top-0 left-0">
+    <form class="add-category-modal p-3 top-0 rounded text-center position-relative">
+      <div id="close-edit-button" class="close-modal position-absolute" role="button">
+        <i class="fa-solid fa-circle-xmark"></i>
+      </div>
+      <label for="edit-modal-input" class="form-label">عدل فئة أو صنف</label>
+      <input id="edit-modal-input" class="form-control shadow-none text-center" type="text">
+      <p id="warning-edit-text" class="form-text">اجعلها كلمتين فقط</p>
+      <button id="edit-modal-submit" class="btn" type="submit">تعديل الفئة أو الصنف</button>
+    </form>
+  </div>
+
+  <!-- end add category modal  -->
+
   <script src="./js/all.min.js"></script>
   <script src="./js/bootstrap.bundle.min.js"></script>
   <script src="./js/master.js"></script>

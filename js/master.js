@@ -137,28 +137,36 @@ const collectAndCreate = (submit, input, warningMes, outputEle, callback) => {
   submit.onclick = function (e) {
     e.preventDefault();
     inputData = input.value.trim();
-    input.value = '';
+    if (inputData.length > 2) {
+      input.value = '';
 
-    for (let i = 0; i < warningMes.arr.length; i++) {
-      if (warningMes.arr[i].name === inputData) {
-        warningMes.ele.innerHTML = 'استخدم من قبل';
-        isWarning = true;
-        break;
-      } else {
-        warningMes.ele.innerHTML = 'اجعلها كلمتين فقط';
-        isWarning = false;
+      for (let i = 0; i < warningMes.arr.length; i++) {
+        if (warningMes.arr[i].name === inputData) {
+          warningMes.ele.innerHTML = 'استخدم من قبل';
+          isWarning = true;
+          break;
+        } else {
+          warningMes.ele.innerHTML = 'اجعلها كلمتين فقط';
+          isWarning = false;
+        }
       }
-    }
 
-    if (!isWarning) {
-      const output = effect(inputData);
-      outputEle.innerHTML = outputEle.innerHTML + output;
+      if (!isWarning) {
+        const output = effect(inputData);
+        outputEle.innerHTML = outputEle.innerHTML + (output || '');
 
-      // add event listener to the new added category and delete when click
-      let deleteCategories = document.querySelectorAll('#delete-category');
-      if (deleteCategories) deleteCategories.forEach(category => {
-        addEventToNewDOM(category);
-      });
+        // add event listener to the new added category and delete when click
+        let deleteCategories = document.querySelectorAll('#delete-category');
+        if (deleteCategories) deleteCategories.forEach(category => {
+          eventDeleteFromNewDOM(category);
+        });
+
+        // add event listener to the new added category and edit when click
+        let editCategories = document.querySelectorAll('#edit-category');
+        if (editCategories) editCategories.forEach(category => {
+          eventEditToNewDOM(category);
+        });
+      }
     }
   };
 };
@@ -532,29 +540,67 @@ if (categoryModalSubmit)
 // work on delete category from categories list
 const deleteCategories = document.querySelectorAll('#delete-category');
 
-function addEventToNewDOM(category) {
+function eventDeleteFromNewDOM(category) {
   category.addEventListener('click', (e) => {
     const category = e.target.parentElement.parentElement;
-
     let data_id = category.getAttribute('data-id');
-
     let categoriesList = JSON.parse(localStorage.getItem('menu-categories'));
     let idsList = JSON.parse(localStorage.getItem('allIds'));
-    // console.log("remove data with Id: ", data_id);
-    // console.log("before : ", categoriesList);
+
     categoriesList = categoriesList.filter(val => parseInt(val.id) != parseInt(data_id));
     idsList = idsList.filter(id => id != data_id);
-    // console.log("after : ", categoriesList);
+
     category.remove(); // category.parentElement.removeChild(category)
     localStorage.setItem('allIds', JSON.stringify(idsList));
     localStorage.setItem('menu-categories', JSON.stringify(categoriesList));
-
-    // to select element using attribute
+    allCategories = categoriesList;
+    allIds = idsList;
     // document.querySelectorAll('[data-id="value"]');
   });
 }
-
 if (deleteCategories) deleteCategories.forEach(category => {
-  addEventToNewDOM(category);
+  eventDeleteFromNewDOM(category);
 });
+
+// work on edit category and save it after
+const editCategories = document.querySelectorAll('#edit-category');
+const editModalSubmit = document.querySelector('#edit-modal-submit');
+const editModalInput = document.querySelector('#edit-modal-input');
+const editModalWarning = document.querySelector('#warning-edit-text');
+const editModal = document.getElementById('edit-modal');
+
+function eventEditToNewDOM(category) {
+  category.addEventListener('click', (e) => {
+    const category = e.target.parentElement.parentElement;
+    let categoriesList = JSON.parse(localStorage.getItem('menu-categories'));
+    let data_id = category.getAttribute('data-id');
+    let categoryIndex;
+
+    for (let i = 0; i < categoriesList.length; i++) {
+      if (categoriesList[i].id == data_id) {
+        categoryIndex = i;
+        break;
+      }
+    }
+
+    // open modal to edit the category
+    editModal.classList.toggle('active');
+
+    // edit new category and save in local storage
+    collectAndCreate(editModalSubmit, editModalInput, { arr: categoriesList, ele: editModalWarning }, categoriesContainer, (data) => {
+      categoriesList[categoryIndex].name = data;
+      allCategories = categoriesList;
+      document.querySelector(`[data-id="${data_id}"] #data`).innerHTML = data;
+      localStorage.setItem('menu-categories', JSON.stringify(allCategories));
+    });
+  });
+}
+
+if (editCategories) editCategories.forEach(category => {
+  eventEditToNewDOM(category);
+});
+
+// close edit modal
+const closeModal = document.querySelector('#close-edit-button');
+if (closeModal) toggleActive(closeModal, editModal);
 
