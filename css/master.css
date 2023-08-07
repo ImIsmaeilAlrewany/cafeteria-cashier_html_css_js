@@ -315,3 +315,18 @@ body {
 }
 
 /* end menu and categories page styles */
+
+/* start scrollbar styles */
+
+::-webkit-scrollbar {
+  scroll-behavior: smooth;
+  background-color: #fff;
+  border-radius: 6px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--primary);
+  border-radius: 6px;
+}
+
+/* end scrollbar styles */
