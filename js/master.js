@@ -604,3 +604,5 @@ if (editCategories) editCategories.forEach(category => {
 const closeModal = document.querySelector('#close-edit-button');
 if (closeModal) toggleActive(closeModal, editModal);
 
+//===================================================//
+

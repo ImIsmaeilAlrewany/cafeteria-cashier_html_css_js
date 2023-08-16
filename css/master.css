@@ -314,19 +314,33 @@ body {
   overflow: hidden;
 }
 
-/* end menu and categories page styles */
-
 /* start scrollbar styles */
 
-::-webkit-scrollbar {
+.menu .categories::-webkit-scrollbar {
   scroll-behavior: smooth;
   background-color: #fff;
   border-radius: 6px;
 }
 
-::-webkit-scrollbar-thumb {
+.menu .categories::-webkit-scrollbar-thumb {
   background-color: var(--primary);
   border-radius: 6px;
 }
 
 /* end scrollbar styles */
+
+.menu .category-items .item,
+.menu .category-items .add-item {
+  color: var(--text);
+}
+
+.menu .category-items .item {
+  background-color: var(--secondary);
+  color: var(--background);
+}
+
+.menu .category-items .add-item {
+  background-color: var(--background);
+}
+
+/* end menu and categories page styles */
