@@ -332,6 +332,12 @@ body {
 .menu .category-items .item,
 .menu .category-items .add-item {
   color: var(--text);
+  border: 0;
+  height: 255.88px;
+}
+
+.menu .category-items .active {
+  display: none;
 }
 
 .menu .category-items .item {
@@ -339,8 +345,38 @@ body {
   color: var(--background);
 }
 
+.menu .category-items .item .control .delete-item,
+.menu .category-items .item .control .edit-item {
+  padding: 18px;
+}
+
+.menu .category-items .item .control .delete-item {
+  background-color: var(--accent);
+}
+
+.menu .category-items .item .control .edit-item {
+  background-color: var(--green);
+}
+
 .menu .category-items .add-item {
   background-color: var(--background);
+}
+
+.menu .category-items .add-item .add-item-button,
+.menu .category-items .edit-item .edit-item-button {
+  color: var(--background);
+  background-color: var(--accent);
+  padding: 6px 12px;
+}
+
+.menu .category-items .edit-item .edit-item-button,
+.menu .category-items .edit-item .back-button {
+  max-width: 120px;
+  color: var(--background);
+}
+
+.menu .category-items .edit-item .back-button {
+  background-color: var(--green);
 }
 
 /* end menu and categories page styles */
