@@ -606,3 +606,48 @@ if (closeModal) toggleActive(closeModal, editModal);
 
 //===================================================//
 
+// work on category items and add new items
+let menuCategories = document.querySelectorAll('#categories-container .category');
+const itemsContainer = document.querySelector('.category-items #items-container');
+const addItem = document.getElementById('add-item');
+console.log('all categories in local storage: ', allCategories);
+
+// add active to the first category then display all category items and add same it
+menuCategories[0].classList.add('active');
+addItem.setAttribute('data-id', allCategories[0].id);
+
+const categorySavedContent = allCategories[0].content.map(item => {
+  return `
+  <div id="item" class="rounded overflow-hidden mx-auto" data-id='${item.id}'>
+    <div class="item card text-center pt-3">
+      <div class="card-body d-flex flex-column justify-content-between align-items-center">
+        <h5 class="card-title">${item.name}</h5>
+        <h6 class="card-subtitle mb-4 text-body-secondary">الكمية: <span>${item.quantity}</span></h6>
+        <p class="card-text align-self-end">
+          السعر: <span>${item.price}</span>
+        </p>
+      </div>
+      <div class="control col-3 row w-100 mx-auto pt-3">
+        <div class="delete-item col-6 w-50" role="button"></div>
+        <div class="edit-item col-6 w-50" role="button"></div>
+      </div>
+    </div>
+    <form class="edit-item card-body card text-center p-3 active">
+      <div class="my-3">
+        <input type="text" class="form-control shadow border-0" id="item-name">
+      </div>
+      <div class="mb-3">
+        <input type="text" class="form-control shadow border-0" id="item-quantity">
+      </div>
+      <div class="mb-3">
+        <input type="text" class="form-control shadow border-0" id="item-price">
+      </div>
+      <div class="mb-3 d-flex justify-content-between">
+        <button type="button" class="back-button w-100 rounded border-0">الرجوع</button>
+        <button type="submit" class="edit-item-button w-100 rounded border-0">تعديل</button>
+      </div>
+    </form>
+  </div>`;
+});
+
+itemsContainer.innerHTML = categorySavedContent.join(' ');

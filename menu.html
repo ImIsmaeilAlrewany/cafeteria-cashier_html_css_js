@@ -80,53 +80,22 @@
         </div>
       </section>
       <section class="category-items mt-3 col-12">
-        <div class="row overflow-hidden g-3">
-          <div class="col-12 col-md-6 col-lg-4 col-xl-3">
-            <div class="item card text-center pt-3 rounded overflow-hidden">
-              <div class="card-body d-flex flex-column justify-content-between align-items-center">
-                <h5 class="card-title">مياة غازية</h5>
-                <h6 class="card-subtitle mb-4 text-body-secondary">الكمية: <span></span></h6>
-                <p class="card-text align-self-end">
-                  السعر: <span></span>
-                </p>
-              </div>
-              <div class="control col-3 row w-100 mx-auto pt-3">
-                <div class="delete-item col-6 w-50" role="button"></div>
-                <div class="edit-item col-6 w-50" role="button"></div>
-              </div>
+        <div class="d-flex overflow-hidden gap-3 flex-wrap">
+          <div id="items-container" class="d-flex gap-3 flex-wrap"></div>
+          <form id="add-item" class="add-item text-center p-3 rounded mx-auto mx-lg-0">
+            <div class="my-3">
+              <input type="text" class="form-control shadow border-0" id="item-name" placeholder="اسم السلعة">
             </div>
-            <form class="edit-item card-body card text-center p-3 rounded active">
-              <div class="my-3">
-                <input type="text" class="form-control shadow border-0" id="item-name">
-              </div>
-              <div class="mb-3">
-                <input type="text" class="form-control shadow border-0" id="item-quantity">
-              </div>
-              <div class="mb-3">
-                <input type="text" class="form-control shadow border-0" id="item-price">
-              </div>
-              <div class="mb-3 d-flex justify-content-between">
-                <button type="submit" class="back-button w-100 rounded border-0">الرجوع</button>
-                <button type="submit" class="edit-item-button w-100 rounded border-0">تعديل</button>
-              </div>
-            </form>
-          </div>
-          <div class="col-12 col-md-6 col-lg-4 col-xl-3">
-            <form class="add-item card-body card text-center p-3 rounded">
-              <div class="my-3">
-                <input type="text" class="form-control shadow border-0" id="item-name" placeholder="اسم السلعة">
-              </div>
-              <div class="mb-3">
-                <input type="text" class="form-control shadow border-0" id="item-quantity" placeholder="الكمية">
-              </div>
-              <div class="mb-3">
-                <input type="text" class="form-control shadow border-0" id="item-price" placeholder="الثمن">
-              </div>
-              <div class="mb-3">
-                <button type="submit" class="add-item-button w-100 rounded border-0">إضافة سلعة جديدة</button>
-              </div>
-            </form>
-          </div>
+            <div class="mb-3">
+              <input type="text" class="form-control shadow border-0" id="item-quantity" placeholder="الكمية">
+            </div>
+            <div class="mb-3">
+              <input type="text" class="form-control shadow border-0" id="item-price" placeholder="الثمن">
+            </div>
+            <div class="mb-3">
+              <button type="submit" class="add-item-button w-100 rounded border-0">إضافة سلعة جديدة</button>
+            </div>
+          </form>
         </div>
       </section>
     </main>
