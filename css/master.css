@@ -335,7 +335,7 @@ body {
   color: var(--text);
   border: 0;
   height: 255.88px;
-  width: 293.35px;
+  /* width: 293.35px; */
 }
 
 .menu .category-items .active {
@@ -380,6 +380,15 @@ body {
 
 .menu .category-items .edit-item .back-button {
   background-color: var(--green);
+}
+
+@media (max-width: 576px) {
+
+  .menu .category-items .item,
+  .menu .category-items .add-item,
+  .menu .category-items .edit-item {
+    width: 293.35px;
+  }
 }
 
 /* end menu and categories page styles */

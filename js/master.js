@@ -614,12 +614,11 @@ console.log('all categories in local storage: ', allCategories);
 
 // add active to the first category then display all category items and add same it
 menuCategories[0].classList.add('active');
-addItem.setAttribute('data-id', allCategories[0].id);
 
 const categorySavedContent = allCategories[0].content.map(item => {
   return `
-  <div id="item" class="rounded overflow-hidden mx-auto" data-id='${item.id}'>
-    <div class="item card text-center pt-3">
+  <div id="item" class="rounded col-sm-6 col-md-4 col-xl-3" data-id='${item.id}'>
+    <div class="item card text-center pt-3 overflow-hidden mx-auto">
       <div class="card-body d-flex flex-column justify-content-between align-items-center">
         <h5 class="card-title">${item.name}</h5>
         <h6 class="card-subtitle mb-4 text-body-secondary">الكمية: <span>${item.quantity}</span></h6>
@@ -632,7 +631,7 @@ const categorySavedContent = allCategories[0].content.map(item => {
         <div class="edit-item col-6 w-50" role="button"></div>
       </div>
     </div>
-    <form class="edit-item card-body card text-center p-3 active">
+    <form class="edit-item card-body card text-center p-3 active overflow-hidden mx-auto">
       <div class="my-3">
         <input type="text" class="form-control shadow border-0" id="item-name">
       </div>
@@ -650,4 +649,25 @@ const categorySavedContent = allCategories[0].content.map(item => {
   </div>`;
 });
 
-itemsContainer.innerHTML = categorySavedContent.join(' ');
+itemsContainer.innerHTML = categorySavedContent.join(' ') + formFunction(allCategories[0].id);
+
+function formFunction(id) {
+  return `<div class="col-sm-6 col-md-4 col-xl-3">
+    <form id="add-item" class="add-item text-center p-3 rounded mx-auto" data-id="${id}">
+      <div class="my-3">
+        <input type="text" class="form-control shadow border-0" id="item-name" placeholder="اسم السلعة">
+      </div>
+      <div class="mb-3">
+        <input type="text" class="form-control shadow border-0" id="item-quantity" placeholder="الكمية">
+      </div>
+      <div class="mb-3">
+        <input type="text" class="form-control shadow border-0" id="item-price" placeholder="الثمن">
+      </div>
+      <div class="mb-3">
+        <button type="submit" class="add-item-button w-100 rounded border-0">إضافة سلعة جديدة</button>
+      </div>
+    </form>
+  </div>`;
+};
+
+
