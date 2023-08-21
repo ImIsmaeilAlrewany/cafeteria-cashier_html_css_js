@@ -615,7 +615,7 @@ console.log('all categories in local storage: ', allCategories);
 // add active to the first category then display all category items and add same it
 menuCategories[0].classList.add('active');
 
-const categorySavedContent = allCategories[0].content.map(item => {
+function categoryItem(item) {
   return `
   <div id="item" class="rounded col-sm-6 col-md-4 col-xl-3" data-id='${item.id}'>
     <div class="item card text-center pt-3 overflow-hidden mx-auto">
@@ -647,9 +647,7 @@ const categorySavedContent = allCategories[0].content.map(item => {
       </div>
     </form>
   </div>`;
-});
-
-itemsContainer.innerHTML = categorySavedContent.join(' ') + formFunction(allCategories[0].id);
+}
 
 function formFunction(id) {
   return `<div class="col-sm-6 col-md-4 col-xl-3">
@@ -670,4 +668,14 @@ function formFunction(id) {
   </div>`;
 };
 
+// this function I made it to use it whenever I edit or delete or add new element
+const printElementsAndForm = (data) => {
+  const categorySavedContent = data.content.map(item => {
+    return categoryItem(item);
+  });
+
+  itemsContainer.innerHTML = categorySavedContent.join(' ') + formFunction(data.id);
+};
+
+printElementsAndForm(allCategories[0]);
 
