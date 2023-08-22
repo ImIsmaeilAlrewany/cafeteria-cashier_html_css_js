@@ -155,6 +155,16 @@ const collectAndCreate = (submit, input, warningMes, outputEle, callback) => {
         const output = effect(inputData);
         outputEle.innerHTML = outputEle.innerHTML + (output || '');
 
+        // print category data after adding a new one
+        const category = document.querySelector('#category');
+        if (category) category.classList.add('active');
+        printElementsAndForm(allCategories[0]);
+
+        // change selected category after adding a new one
+        document.querySelectorAll('#category').forEach(ele => {
+          selectCategory(ele);
+        });
+
         // add event listener to the new added category and delete when click
         let deleteCategories = document.querySelectorAll('#delete-category');
         if (deleteCategories) deleteCategories.forEach(category => {
@@ -613,7 +623,7 @@ const addItem = document.getElementById('add-item');
 console.log('all categories in local storage: ', allCategories);
 
 // add active to the first category then display all category items and add same it
-menuCategories[0].classList.add('active');
+if (menuCategories[0]) menuCategories[0].classList.add('active');
 
 function categoryItem(item) {
   return `
@@ -633,13 +643,13 @@ function categoryItem(item) {
     </div>
     <form class="edit-item card-body card text-center p-3 active overflow-hidden mx-auto">
       <div class="my-3">
-        <input type="text" class="form-control shadow border-0" id="item-name">
+        <input type="text" class="form-control shadow border-0" id="edit-item-name">
       </div>
       <div class="mb-3">
-        <input type="text" class="form-control shadow border-0" id="item-quantity">
+        <input type="text" class="form-control shadow border-0" id="edit-item-quantity">
       </div>
       <div class="mb-3">
-        <input type="text" class="form-control shadow border-0" id="item-price">
+        <input type="text" class="form-control shadow border-0" id="edit-item-price">
       </div>
       <div class="mb-3 d-flex justify-content-between">
         <button type="button" class="back-button w-100 rounded border-0">الرجوع</button>
@@ -669,13 +679,71 @@ function formFunction(id) {
 };
 
 // this function I made it to use it whenever I edit or delete or add new element
-const printElementsAndForm = (data) => {
+function printElementsAndForm(data) {
   const categorySavedContent = data.content.map(item => {
     return categoryItem(item);
   });
 
-  itemsContainer.innerHTML = categorySavedContent.join(' ') + formFunction(data.id);
-};
+  if (itemsContainer)
+    itemsContainer.innerHTML = categorySavedContent.join(' ') + formFunction(data.id);
 
-printElementsAndForm(allCategories[0]);
+  addNewItemToCategory();
+};
+if (allCategories[0]) printElementsAndForm(allCategories[0]);
+
+// select category
+function selectCategory(ele) {
+  ele.addEventListener('click', () => {
+    menuCategories.forEach(ele => ele.classList.remove('active'));
+
+    ele.classList.add('active');
+
+    // find the selected element from allCategories list
+    let selectedCategory;
+    allCategories.forEach(category => {
+      if (category.id === +ele.dataset.id) selectedCategory = category;
+    });
+    printElementsAndForm(selectedCategory);
+
+    addNewItemToCategory();
+  });
+}
+if (menuCategories) menuCategories.forEach(ele => {
+  selectCategory(ele);
+});
+
+// work on add items in categories using dataset.id
+function addNewItemToCategory() {
+  const addItemForm = document.getElementById('add-item');
+  const itemName = document.getElementById('item-name');
+  const itemQuantity = document.getElementById('item-quantity');
+  const itemPrice = document.getElementById('item-price');
+
+  addItemForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+
+    let selectedCategory;
+    let selectedCategoryIndex;
+    allCategories.forEach((category, index) => {
+      if (category.id === +e.target.dataset.id) {
+        selectedCategory = category;
+        selectedCategoryIndex = index;
+      }
+    });
+
+    const name = itemName.value.trim();
+    const quantity = itemQuantity.value.trim();
+    const price = itemPrice.value.trim();
+    if (name && quantity && price) {
+      const id = generateId();
+      selectedCategory.content.push({ id, name, quantity, price });
+
+      // save category in local storage again
+      allCategories[selectedCategoryIndex] = selectedCategory;
+      localStorage.setItem('menu-categories', JSON.stringify(allCategories));
+      printElementsAndForm(selectedCategory);
+    }
+  });
+}
+addNewItemToCategory();
 
