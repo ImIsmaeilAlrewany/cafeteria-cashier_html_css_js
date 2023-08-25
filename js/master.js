@@ -153,6 +153,7 @@ const collectAndCreate = (submit, input, warningMes, outputEle, callback) => {
 
       if (!isWarning) {
         const output = effect(inputData);
+        let allCategories = JSON.parse(localStorage.getItem('menu-categories'));
         outputEle.innerHTML = outputEle.innerHTML + (output || '');
 
         // print category data after adding a new one
@@ -161,7 +162,7 @@ const collectAndCreate = (submit, input, warningMes, outputEle, callback) => {
         printElementsAndForm(allCategories[0]);
 
         // change selected category after adding a new one
-        document.querySelectorAll('#category').forEach(ele => {
+        document.querySelectorAll('.category #data').forEach(ele => {
           selectCategory(ele);
         });
 
@@ -531,7 +532,8 @@ const categoryModalSubmit = document.getElementById('category-modal-submit');
 const addCategoryInput = document.getElementById('add-category-input');
 
 if (categoryModalSubmit)
-  collectAndCreate(categoryModalSubmit, addCategoryInput, { arr: allCategories, ele: categoryModalWarning }, categoriesContainer, (data) => {
+  collectAndCreate(categoryModalSubmit, addCategoryInput, { arr: JSON.parse(localStorage.getItem('menu-categories')), ele: categoryModalWarning }, categoriesContainer, (data) => {
+    console.log('allCategories from add function', allCategories);
     const id = generateId();
     allCategories.push({ id: id, name: data, content: [] });
     localStorage.setItem('menu-categories', JSON.stringify(allCategories));
@@ -556,6 +558,11 @@ function eventDeleteFromNewDOM(category) {
     let data_id = category.getAttribute('data-id');
     let categoriesList = JSON.parse(localStorage.getItem('menu-categories'));
     let idsList = JSON.parse(localStorage.getItem('allIds'));
+    let index;
+
+    for (let i = 0; i < categoriesList.length; i++) {
+      if (categoriesList[i].id === +data_id) index = i;
+    }
 
     categoriesList = categoriesList.filter(val => parseInt(val.id) != parseInt(data_id));
     idsList = idsList.filter(id => id != data_id);
@@ -563,11 +570,26 @@ function eventDeleteFromNewDOM(category) {
     category.remove(); // category.parentElement.removeChild(category)
     localStorage.setItem('allIds', JSON.stringify(idsList));
     localStorage.setItem('menu-categories', JSON.stringify(categoriesList));
-    allCategories = categoriesList;
+    // allCategories = categoriesList;
+    allCategories = JSON.parse(localStorage.getItem('menu-categories'));
     allIds = idsList;
+
+    console.log('allCategories from delete function', allCategories);
     // document.querySelectorAll('[data-id="value"]');
+
+    // after deleting a category
+    // it must select the next one and display its items
+    const categoriesContainer = document.querySelector('#categories-container');
+    const itemsContainer = document.querySelector('#items-container');
+    if (allCategories[index]) {
+      categoriesContainer.children[index].classList.add('active');
+      printElementsAndForm(allCategories[index]);
+    } else {
+      itemsContainer.innerHTML = '';
+    }
   });
 }
+
 if (deleteCategories) deleteCategories.forEach(category => {
   eventDeleteFromNewDOM(category);
 });
@@ -693,22 +715,25 @@ if (allCategories[0]) printElementsAndForm(allCategories[0]);
 
 // select category
 function selectCategory(ele) {
+  // this made a big issue in the code don't forget to reset variable
+  // or better put the used variable inside the function so anywhere will use it will work
+  const menuCategories = document.querySelectorAll('.category');
   ele.addEventListener('click', () => {
-    menuCategories.forEach(ele => ele.classList.remove('active'));
+    menuCategories.forEach(category => category.classList.remove('active'));
 
-    ele.classList.add('active');
+    ele.parentElement.classList.add('active');
 
     // find the selected element from allCategories list
     let selectedCategory;
     allCategories.forEach(category => {
-      if (category.id === +ele.dataset.id) selectedCategory = category;
+      if (category.id === +ele.parentElement.dataset.id) selectedCategory = category;
     });
-    printElementsAndForm(selectedCategory);
+    if (selectedCategory) printElementsAndForm(selectedCategory);
 
-    addNewItemToCategory();
+    // addNewItemToCategory();
   });
 }
-if (menuCategories) menuCategories.forEach(ele => {
+if (menuCategories) document.querySelectorAll('.category #data').forEach(ele => {
   selectCategory(ele);
 });
 
@@ -719,7 +744,7 @@ function addNewItemToCategory() {
   const itemQuantity = document.getElementById('item-quantity');
   const itemPrice = document.getElementById('item-price');
 
-  addItemForm.addEventListener('submit', (e) => {
+  if (addItemForm) addItemForm.addEventListener('submit', (e) => {
     e.preventDefault();
 
     let selectedCategory;
@@ -745,5 +770,8 @@ function addNewItemToCategory() {
     }
   });
 }
-addNewItemToCategory();
+// adding this will repeat the function, I already use it inside printElementsAndForm
+// addNewItemToCategory();
+
+
 
