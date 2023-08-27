@@ -177,6 +177,14 @@ const collectAndCreate = (submit, input, warningMes, outputEle, callback) => {
         if (editCategories) editCategories.forEach(category => {
           eventEditToNewDOM(category);
         });
+
+        // delete items from categories after adding a new category
+        let deleteItemElements = document.querySelectorAll('.control .delete-item');
+        if (deleteItemElements) deleteItemElements.forEach(ele => {
+          ele.addEventListener('click', (e) => {
+            deleteItemFromCategory(ele);
+          });
+        });
       }
     }
   };
@@ -532,7 +540,7 @@ const categoryModalSubmit = document.getElementById('category-modal-submit');
 const addCategoryInput = document.getElementById('add-category-input');
 
 if (categoryModalSubmit)
-  collectAndCreate(categoryModalSubmit, addCategoryInput, { arr: JSON.parse(localStorage.getItem('menu-categories')), ele: categoryModalWarning }, categoriesContainer, (data) => {
+  collectAndCreate(categoryModalSubmit, addCategoryInput, { arr: JSON.parse(localStorage.getItem('menu-categories')) || [], ele: categoryModalWarning }, categoriesContainer, (data) => {
     console.log('allCategories from add function', allCategories);
     const id = generateId();
     allCategories.push({ id: id, name: data, content: [] });
@@ -710,6 +718,22 @@ function printElementsAndForm(data) {
     itemsContainer.innerHTML = categorySavedContent.join(' ') + formFunction(data.id);
 
   addNewItemToCategory();
+
+  // delete items from categories after displaying them
+  let deleteItemElements = document.querySelectorAll('.control .delete-item');
+  if (deleteItemElements) deleteItemElements.forEach(ele => {
+    ele.addEventListener('click', (e) => {
+      deleteItemFromCategory(ele);
+    });
+  });
+
+  // edit items in categories after displaying them
+  let editItemButtons = document.querySelectorAll('.control .edit-item');
+  if (editItemButtons) editItemButtons.forEach(ele => {
+    ele.addEventListener('click', (e) => {
+      activateEditItem(ele);
+    });
+  });
 };
 if (allCategories[0]) printElementsAndForm(allCategories[0]);
 
@@ -773,5 +797,111 @@ function addNewItemToCategory() {
 // adding this will repeat the function, I already use it inside printElementsAndForm
 // addNewItemToCategory();
 
+// work on delete items from category then save it in local storage
+const deleteItemElements = document.querySelectorAll('.control .delete-item');
 
+function deleteItemFromCategory(element) {
+  const itemId = +element.parentElement.parentElement.parentElement.dataset.id;
+  const itemElement = element.parentElement.parentElement.parentElement;
+  let categoriesArray = JSON.parse(localStorage.getItem('menu-categories'));
+  let idsList = JSON.parse(localStorage.getItem('allIds'));
+
+  let itemIndexInCategory;
+  let categoryId;
+  let categoryIndex;
+
+  for (let i = 0; i < categoriesArray.length; i++) {
+    for (let n = 0; n < categoriesArray[i].content.length; n++) {
+      if (categoriesArray[i].content[n].id === itemId) {
+        itemIndexInCategory = n;
+        categoryId = categoriesArray[i].id;
+        categoryIndex = i;
+        break;
+      }
+    }
+  }
+
+  // delete item from category content and save it
+  categoriesArray[categoryIndex].content.splice(itemIndexInCategory, 1);
+  localStorage.setItem('menu-categories', JSON.stringify(categoriesArray));
+  allCategories = categoriesArray;
+
+  // delete itemId from allIds and save it
+  idsList = idsList.filter(id => id !== itemId);
+  localStorage.setItem('allIds', JSON.stringify(idsList));
+  allIds = idsList;
+
+  // remove the element from dom
+  itemElement.remove();
+}
+
+if (deleteItemElements) deleteItemElements.forEach(ele => {
+  ele.addEventListener('click', (e) => {
+    deleteItemFromCategory(ele);
+  });
+});
+
+// activate edit item button and edit data then save it or go back
+const editItemButtons = document.querySelectorAll('.control .edit-item');
+function activateEditItem(element) {
+  const itemId = +element.parentElement.parentElement.parentElement.dataset.id;
+  let categoriesArray = JSON.parse(localStorage.getItem('menu-categories'));
+  let itemIndexInCategory;
+  let categoryId;
+  let categoryIndex;
+
+  for (let i = 0; i < categoriesArray.length; i++) {
+    for (let n = 0; n < categoriesArray[i].content.length; n++) {
+      if (categoriesArray[i].content[n].id === itemId) {
+        itemIndexInCategory = n;
+        categoryId = categoriesArray[i].id;
+        categoryIndex = i;
+        break;
+      }
+    }
+  }
+
+  // select form and parentElement to toggle active
+  const formElement = document.querySelector(`[data-id="${itemId}"] form`);
+  const cardElement = element.parentElement.parentElement;
+
+  formElement.classList.toggle('active');
+  cardElement.classList.toggle('active');
+
+  // select all inputs in edit form
+  const inputName = document.querySelector(`[data-id="${itemId}"] #edit-item-name`);
+  const inputQuantity = document.querySelector(`[data-id="${itemId}"] #edit-item-quantity`);
+  const inputPrice = document.querySelector(`[data-id="${itemId}"] #edit-item-price`);
+
+  // put the data as default value in inputs
+  inputName.value = categoriesArray[categoryIndex].content[itemIndexInCategory].name;
+  inputQuantity.value = categoriesArray[categoryIndex].content[itemIndexInCategory].quantity;
+  inputPrice.value = categoriesArray[categoryIndex].content[itemIndexInCategory].price;
+
+  // get back after clicking on back button
+  const backElement = document.querySelectorAll(`.back-button`);
+
+  backElement.forEach(ele => {
+    ele.addEventListener('click', () => {
+      formElement.classList.toggle('active');
+      cardElement.classList.toggle('active');
+    });
+  });
+
+  // edit item in category content and save it
+  // categoriesArray[categoryIndex].content[itemIndexInCategory] = {
+  //   id: itemId,
+  //   name: newName,
+  //   price: newPrice,
+  //   quantity: newQuantity
+  // };
+  // localStorage.setItem('menu-categories', JSON.stringify(categoriesArray));
+  // allCategories = categoriesArray;
+
+  // if (newName && newQuantity && newPrice) {
+  //   console.log('new name is: ', newName);
+  //   console.log('new quantity is: ', newQuantity);
+  //   console.log('new price is: ', newPrice);
+  // }
+}
 
