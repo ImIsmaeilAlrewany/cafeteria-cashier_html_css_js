@@ -592,6 +592,9 @@ function eventDeleteFromNewDOM(category) {
     if (allCategories[index]) {
       categoriesContainer.children[index].classList.add('active');
       printElementsAndForm(allCategories[index]);
+    } else if (allCategories[index - 1]) {
+      categoriesContainer.children[index - 1].classList.add('active');
+      printElementsAndForm(allCategories[index - 1]);
     } else {
       itemsContainer.innerHTML = '';
     }
@@ -683,7 +686,7 @@ function categoryItem(item) {
       </div>
       <div class="mb-3 d-flex justify-content-between">
         <button type="button" class="back-button w-100 rounded border-0">الرجوع</button>
-        <button type="submit" class="edit-item-button w-100 rounded border-0">تعديل</button>
+        <button type="button" class="edit-item-button w-100 rounded border-0">تعديل</button>
       </div>
     </form>
   </div>`;
@@ -734,6 +737,17 @@ function printElementsAndForm(data) {
       activateEditItem(ele);
     });
   });
+
+  // back buttons to items
+  let backToItemButtons = document.querySelectorAll('.back-button');
+  if (backToItemButtons) backToItemButtons.forEach(ele => {
+    ele.addEventListener('click', (e) => {
+      backFromEditForm(ele);
+    });
+  });
+
+  // edit categories items data when click on edit button
+  editCategoryItem();
 };
 if (allCategories[0]) printElementsAndForm(allCategories[0]);
 
@@ -841,8 +855,7 @@ if (deleteItemElements) deleteItemElements.forEach(ele => {
   });
 });
 
-// activate edit item button and edit data then save it or go back
-const editItemButtons = document.querySelectorAll('.control .edit-item');
+// activate edit item button to edit data then save it or go back
 function activateEditItem(element) {
   const itemId = +element.parentElement.parentElement.parentElement.dataset.id;
   let categoriesArray = JSON.parse(localStorage.getItem('menu-categories'));
@@ -877,31 +890,68 @@ function activateEditItem(element) {
   inputName.value = categoriesArray[categoryIndex].content[itemIndexInCategory].name;
   inputQuantity.value = categoriesArray[categoryIndex].content[itemIndexInCategory].quantity;
   inputPrice.value = categoriesArray[categoryIndex].content[itemIndexInCategory].price;
+}
+
+// deactivate edit item button and don't edit data then go back to card
+function backFromEditForm(element) {
+  const itemId = +element.parentElement.parentElement.parentElement.dataset.id;
+
+  // select form and element to toggle active
+  const formElement = document.querySelector(`[data-id="${itemId}"] form`);
+  const cardElement = document.querySelector(`[data-id="${itemId}"] .item`);
 
   // get back after clicking on back button
-  const backElement = document.querySelectorAll(`.back-button`);
+  formElement.classList.toggle('active');
+  cardElement.classList.toggle('active');
+}
 
-  backElement.forEach(ele => {
-    ele.addEventListener('click', () => {
-      formElement.classList.toggle('active');
-      cardElement.classList.toggle('active');
+// edit item data when clicking on edit button and save it in local storage
+function editCategoryItem() {
+  const editButtons = document.querySelectorAll(`.edit-item-button`);
+
+  if (editButtons) editButtons.forEach(button => {
+    button.addEventListener('click', (e) => {
+      const itemId = +button.parentElement.parentElement.parentElement.dataset.id;
+      let categoriesArray = JSON.parse(localStorage.getItem('menu-categories'));
+      let itemIndexInCategory;
+      let categoryIndex;
+
+      for (let i = 0; i < categoriesArray.length; i++) {
+        for (let n = 0; n < categoriesArray[i].content.length; n++) {
+          if (categoriesArray[i].content[n].id === itemId) {
+            itemIndexInCategory = n;
+            categoryIndex = i;
+            break;
+          }
+        }
+      }
+
+      // select form and parentElement to toggle active
+      const formElement = document.querySelector(`[data-id="${itemId}"] form`);
+      const cardElement = document.querySelector(`[data-id="${itemId}"] .item`);
+
+      // collect all new data from inputs
+      const newName = document.querySelector(`[data-id="${itemId}"] #edit-item-name`).value.trim();
+      const newQuantity = document.querySelector(`[data-id="${itemId}"] #edit-item-quantity`).value.trim();
+      const newPrice = document.querySelector(`[data-id="${itemId}"] #edit-item-price`).value.trim();
+
+      if (newName && newQuantity && newPrice) {
+        categoriesArray[categoryIndex].content[itemIndexInCategory] = {
+          id: itemId,
+          name: newName,
+          price: newPrice,
+          quantity: newQuantity
+        };
+        localStorage.setItem('menu-categories', JSON.stringify(categoriesArray));
+        allCategories = categoriesArray;
+
+        formElement.classList.toggle('active');
+        cardElement.classList.toggle('active');
+        printElementsAndForm(allCategories[categoryIndex]);
+      }
     });
   });
-
-  // edit item in category content and save it
-  // categoriesArray[categoryIndex].content[itemIndexInCategory] = {
-  //   id: itemId,
-  //   name: newName,
-  //   price: newPrice,
-  //   quantity: newQuantity
-  // };
-  // localStorage.setItem('menu-categories', JSON.stringify(categoriesArray));
-  // allCategories = categoriesArray;
-
-  // if (newName && newQuantity && newPrice) {
-  //   console.log('new name is: ', newName);
-  //   console.log('new quantity is: ', newQuantity);
-  //   console.log('new price is: ', newPrice);
-  // }
 }
+
+//=================================================//
 
