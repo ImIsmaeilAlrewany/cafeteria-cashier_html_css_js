@@ -113,7 +113,7 @@ if (!localStorage.getItem('cafeteria-tables')) {
 
 // show up tables restoring from local storage
 const output = tables.map((t) => {
-  return `<a class="table m-2 rounded text-center overflow-hidden text-decoration-none" href="#" data-id="${t.id}" role="button">
+  return `<a class="table m-2 rounded text-center overflow-hidden text-decoration-none" data-id="${t.id}" role="button">
     <i class="fa-solid fa-chair"></i>
     <span class="ms-2">${t.name}</span>
   </a>`;
@@ -156,6 +156,9 @@ const collectAndCreate = (submit, input, warningMes, outputEle, callback) => {
         let allCategories = JSON.parse(localStorage.getItem('menu-categories'));
         outputEle.innerHTML = outputEle.innerHTML + (output || '');
 
+        // reselect tables and add event to the new ones
+        selectTable();
+
         // print category data after adding a new one
         const category = document.querySelector('#category');
         if (category) category.classList.add('active');
@@ -196,7 +199,7 @@ if (addTableButton)
     tables.push({ id: id, name: data });
     localStorage.setItem('cafeteria-tables', JSON.stringify(tables));
 
-    return `<a class="table m-2 rounded text-center overflow-hidden text-decoration-none" href="#" data-id="${id}" role="button">
+    return `<a class="table m-2 rounded text-center overflow-hidden text-decoration-none" data-id="${id}" role="button">
     <i class="fa-solid fa-chair"></i>
     <span class="ms-2">${data}</span>
   </a>`;
@@ -954,4 +957,17 @@ function editCategoryItem() {
 }
 
 //=================================================//
+
+// work on order page starting with taking the table name
+function selectTable() {
+  const allTables = document.querySelectorAll('.table');
+  const tablesInStorage = JSON.parse(localStorage.getItem('cafeteria-tables'));
+  allTables.forEach((table, index) => {
+    table.addEventListener('click', () => {
+      sessionStorage.setItem('selected-table', JSON.stringify(tablesInStorage[index]));
+      table.href = '/order.html';
+    });
+  });
+}
+selectTable();
 
