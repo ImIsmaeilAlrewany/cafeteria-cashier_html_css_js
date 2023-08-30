@@ -12,6 +12,10 @@
     // check if client is logged in
     const isLoggedIn = JSON.parse(sessionStorage.getItem('isLoggedIn'));
     if (!isLoggedIn) location.href = './login.html';
+
+    // check if the online user/client is admin or not
+    const onlineClient = JSON.parse(sessionStorage.getItem('onlineClient'));
+    if (onlineClient.name !== 'admin') location.href = './index.html';
   </script>
 </head>
 
