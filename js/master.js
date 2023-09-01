@@ -1051,8 +1051,47 @@ function addOrder() {
       tables[tableIndex].order.push({ id, name, quantity: 1, price });
       localStorage.setItem('cafeteria-tables', JSON.stringify(tables));
       sessionStorage.setItem('selected-table', JSON.stringify(tables[tableIndex]));
+
+      // display the new add order to orders table
+      displayOrders();
     });
   });
 }
 addOrder();
+
+// work on display all orders in the orders place in page (in table)
+function displayOrders() {
+  const tableBody = document.querySelector('.orders table tbody');
+  const tableData = JSON.parse(sessionStorage.getItem('selected-table'));
+
+  if (tableData.order.length) {
+    tableBody.innerHTML = '';
+    tableData.order.forEach((ele, index) => {
+      const tr = document.createElement('tr');
+      tr.setAttribute('data-id', ele.id);
+
+      const th = document.createElement('td');
+      th.className = 'py-2 px-3 text-nowrap text-center';
+      th.setAttribute('scope', 'row');
+      th.textContent = index + 1;
+      tr.append(th);
+
+      const elementData = [ele.name, ele.price, ele.quantity, ele.price, '+', '-', 'x'];
+      for (let i = 0; i < elementData.length; i++) {
+        const td = document.createElement('td');
+        td.className = 'py-2 px-3 text-nowrap text-center';
+        td.textContent = elementData[i];
+
+        if (elementData[i] == '+' || elementData[i] == '-' || elementData[i] == 'x') td.setAttribute('role', 'button');
+
+        // push all these elements inside tr element
+        tr.appendChild(td);
+      }
+
+      // push tr element inside table body
+      tableBody.appendChild(tr);
+    });
+  }
+}
+displayOrders();
 

@@ -318,14 +318,16 @@ body {
 /* start scrollbar styles */
 
 .menu .categories::-webkit-scrollbar,
-.order-menu .menu-categories::-webkit-scrollbar {
+.order-menu .menu-categories::-webkit-scrollbar,
+.orders .table-container::-webkit-scrollbar {
   scroll-behavior: smooth;
   background-color: #fff;
   border-radius: 6px;
 }
 
 .menu .categories::-webkit-scrollbar-thumb,
-.order-menu .menu-categories::-webkit-scrollbar-thumb {
+.order-menu .menu-categories::-webkit-scrollbar-thumb,
+.orders .table-container::-webkit-scrollbar-thumb {
   background-color: var(--primary);
   border-radius: 6px;
 }
@@ -434,7 +436,18 @@ body {
 
 /* start work on chosen-orders */
 
+.orders .table-container table {
+  color: var(--background);
+  border-color: var(--gray);
+}
 
+.orders .table-container table th {
+  font-size: 14px;
+}
+
+.orders .table-container table td {
+  font-size: 13px;
+}
 
 /* end work on chosen-orders */
 
