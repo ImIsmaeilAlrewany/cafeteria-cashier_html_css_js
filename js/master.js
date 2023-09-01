@@ -1059,6 +1059,25 @@ function addOrder() {
 }
 addOrder();
 
+// decrement and increment function to the order
+const incrementQuantity = (tableData) => {
+  const addElements = document.querySelectorAll('[data-functionality="add"]');
+  let clickedElement;
+
+  addElements.forEach((ele, index) => {
+    ele.addEventListener('click', () => {
+      clickedElement = ele.parentElement;
+
+      console.log(index);
+      console.log(clickedElement.children[3]);
+      console.log(clickedElement.children[4]);
+      console.log(tableData); // this is in session storage
+      console.log(tables); // this is in local storage
+      console.log(allCategories);
+    });
+  });
+};
+
 // work on display all orders in the orders place in page (in table)
 function displayOrders() {
   const tableBody = document.querySelector('.orders table tbody');
@@ -1070,19 +1089,19 @@ function displayOrders() {
       const tr = document.createElement('tr');
       tr.setAttribute('data-id', ele.id);
 
-      const th = document.createElement('td');
-      th.className = 'py-2 px-3 text-nowrap text-center';
-      th.setAttribute('scope', 'row');
-      th.textContent = index + 1;
-      tr.append(th);
-
-      const elementData = [ele.name, ele.price, ele.quantity, ele.price, '+', '-', 'x'];
+      const elementData = [index + 1, ele.name, `${ele.price} جنية`, ele.quantity, `${ele.price} جنية`, '+', '-', 'x'];
       for (let i = 0; i < elementData.length; i++) {
         const td = document.createElement('td');
         td.className = 'py-2 px-3 text-nowrap text-center';
         td.textContent = elementData[i];
 
-        if (elementData[i] == '+' || elementData[i] == '-' || elementData[i] == 'x') td.setAttribute('role', 'button');
+        if (elementData[i] == '+' || elementData[i] == '-' || elementData[i] == 'x') {
+          td.setAttribute('role', 'button');
+
+          if (elementData[i] == '+') td.dataset.functionality = 'add';
+          if (elementData[i] == '-') td.dataset.functionality = 'sub';
+          if (elementData[i] == 'x') td.dataset.functionality = 'del';
+        }
 
         // push all these elements inside tr element
         tr.appendChild(td);
@@ -1092,6 +1111,8 @@ function displayOrders() {
       tableBody.appendChild(tr);
     });
   }
+
+  incrementQuantity(tableData);
 }
 displayOrders();
 
