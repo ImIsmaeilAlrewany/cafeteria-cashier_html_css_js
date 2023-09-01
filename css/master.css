@@ -317,13 +317,15 @@ body {
 
 /* start scrollbar styles */
 
-.menu .categories::-webkit-scrollbar {
+.menu .categories::-webkit-scrollbar,
+.order-menu .menu-categories::-webkit-scrollbar {
   scroll-behavior: smooth;
   background-color: #fff;
   border-radius: 6px;
 }
 
-.menu .categories::-webkit-scrollbar-thumb {
+.menu .categories::-webkit-scrollbar-thumb,
+.order-menu .menu-categories::-webkit-scrollbar-thumb {
   background-color: var(--primary);
   border-radius: 6px;
 }
@@ -393,3 +395,47 @@ body {
 }
 
 /* end menu and categories page styles */
+
+/* start order page styles */
+
+/* start work on order-menu */
+
+.order-menu .section-label,
+.orders .section-label {
+  background-color: var(--secondary);
+  color: var(--background);
+  padding: 12px 16px;
+}
+
+.order-menu .menu-categories li,
+.order-menu .category-items li {
+  width: 200px;
+  height: 80px;
+  color: var(--background);
+  flex-shrink: 0;
+}
+
+.order-menu .menu-categories li.active {
+  border: 1px solid var(--background);
+}
+
+.order-menu .category-items li {
+  background-color: var(--background);
+  color: var(--text);
+  width: 100px;
+  font-size: 13px;
+}
+
+.order-menu .category-items li h6 {
+  font-size: 15px;
+}
+
+/* end work on order-menu */
+
+/* start work on chosen-orders */
+
+
+
+/* end work on chosen-orders */
+
+/* end order page styles */

@@ -100,6 +100,7 @@ let tables = [
   // {
   //   id: generateId(),
   //   name: "طاولة 1",
+  //   order: []
   // }
 ];
 
@@ -196,7 +197,7 @@ const collectAndCreate = (submit, input, warningMes, outputEle, callback) => {
 if (addTableButton)
   collectAndCreate(addTableButton, addTableInput, { arr: tables, ele: tableModalWarning }, tablesContainer, (data) => {
     const id = generateId();
-    tables.push({ id: id, name: data });
+    tables.push({ id: id, name: data, order: [] });
     localStorage.setItem('cafeteria-tables', JSON.stringify(tables));
 
     return `<a class="table m-2 rounded text-center overflow-hidden text-decoration-none" data-id="${id}" role="button">
@@ -970,4 +971,88 @@ function selectTable() {
   });
 }
 selectTable();
+
+// add order page section label depends on the table data
+const sectionLabel = document.querySelector('.order-menu h2 span');
+const tableData = JSON.parse(sessionStorage.getItem('selected-table'));
+
+if (sectionLabel) sectionLabel.innerHTML = tableData.name;
+
+// display all categories in order menu in order page
+const categoriesListElement = document.querySelector('.order-menu .menu-categories');
+const displayCategories = allCategories.map((category, index) => {
+  if (category) return `
+  <li class="m-0 me-3 p-0 shadow rounded d-flex align-items-center justify-content-center ${index === 0 ? 'active' : ''}" role="button" data-id="${category.id}">${category.name}</li>`;
+  else return `
+  <li class="m-0 p-0 d-flex justify-content-center align-items-center w-100 rounded">لا يوجد أصناف</li>`;
+});
+if (categoriesListElement)
+  categoriesListElement.innerHTML = displayCategories.join(' ');
+
+// display first category content in order menu in order page
+const itemsListElement = document.querySelector('.order-menu .category-items');
+const itemsElementArray = (array) => {
+  return array.map(item => {
+    if (item) return `
+  <li class="m-0 p-3 shadow rounded d-flex align-items-center justify-content-center flex-column overflow-hidden" role="button" data-id="${item.id}">
+    <h6 class="m-0 mb-2 p-0">${item.name}</h6>
+    <p class="m-0 p-0 align-self-end">السعر: ${item.price}</p>
+  </li>`;
+    else return `
+  <li class="m-0 p-0 d-flex justify-content-center align-items-center w-100 rounded">قم بإضافة الأقسام أولا ثم ما تحتوية</li>`;
+  });
+};
+if (itemsListElement)
+  itemsListElement.innerHTML = itemsElementArray(allCategories[0].content).join(' ');
+
+// change the selected category and display its items
+const listItemElements = document.querySelectorAll('.order-menu .menu-categories li');
+if (listItemElements) listItemElements.forEach((element, index) => {
+  element.addEventListener('click', () => {
+    listItemElements.forEach(ele => {
+      ele.classList.remove('active');
+    });
+
+    element.classList.add('active');
+    itemsListElement.innerHTML = itemsElementArray(allCategories[index].content).join(' ');
+
+    addOrder();
+  });
+});
+
+// add orders to the table by clicking on items
+function addOrder() {
+  const allItemsInList = document.querySelectorAll('.order-menu .category-items li');
+  let categoryIndex;
+  let itemIndex;
+  let tableIndex;
+
+  allItemsInList.forEach(item => {
+    item.addEventListener('click', () => {
+      for (let i = 0; i < allCategories.length; i++) {
+        for (let n = 0; n < allCategories[i].content.length; n++) {
+          if (allCategories[i].content[n].id == item.dataset.id) {
+            categoryIndex = i;
+            itemIndex = n;
+          }
+        }
+      }
+
+      // first get all item data and decrement the quantity
+      const { id, name, price } = allCategories[categoryIndex].content[itemIndex];
+      allCategories[categoryIndex].content[itemIndex].quantity--;
+      localStorage.setItem('menu-categories', JSON.stringify(allCategories));
+
+      // second add the selected item into table order array
+      const table = JSON.parse(sessionStorage.getItem('selected-table'));
+      for (let i = 0; i < tables.length; i++) {
+        if (table.id === tables[i].id) tableIndex = i;
+      }
+      tables[tableIndex].order.push({ id, name, quantity: 1, price });
+      localStorage.setItem('cafeteria-tables', JSON.stringify(tables));
+      sessionStorage.setItem('selected-table', JSON.stringify(tables[tableIndex]));
+    });
+  });
+}
+addOrder();
 
