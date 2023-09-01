@@ -1048,7 +1048,7 @@ function addOrder() {
       for (let i = 0; i < tables.length; i++) {
         if (table.id === tables[i].id) tableIndex = i;
       }
-      tables[tableIndex].order.push({ id, name, quantity: 1, price });
+      tables[tableIndex].order.push({ id, name, quantity: 1, total: price, price });
       localStorage.setItem('cafeteria-tables', JSON.stringify(tables));
       sessionStorage.setItem('selected-table', JSON.stringify(tables[tableIndex]));
 
@@ -1059,7 +1059,7 @@ function addOrder() {
 }
 addOrder();
 
-// decrement and increment function to the order
+// increment function to the order quantity and total price
 const incrementQuantity = (tableData) => {
   const addElements = document.querySelectorAll('[data-functionality="add"]');
   let clickedElement;
@@ -1082,6 +1082,7 @@ const incrementQuantity = (tableData) => {
 function displayOrders() {
   const tableBody = document.querySelector('.orders table tbody');
   const tableData = JSON.parse(sessionStorage.getItem('selected-table'));
+  let totalArray = [];
 
   if (tableData.order.length) {
     tableBody.innerHTML = '';
@@ -1089,7 +1090,7 @@ function displayOrders() {
       const tr = document.createElement('tr');
       tr.setAttribute('data-id', ele.id);
 
-      const elementData = [index + 1, ele.name, `${ele.price} جنية`, ele.quantity, `${ele.price} جنية`, '+', '-', 'x'];
+      const elementData = [index + 1, ele.name, `${ele.price} جنية`, ele.quantity, `${ele.total} جنية`, '+', '-', 'x'];
       for (let i = 0; i < elementData.length; i++) {
         const td = document.createElement('td');
         td.className = 'py-2 px-3 text-nowrap text-center';
@@ -1107,9 +1108,36 @@ function displayOrders() {
         tr.appendChild(td);
       }
 
+      // save all elements price in an array will be totalArray
+      totalArray.push(ele.total);
+
       // push tr element inside table body
       tableBody.appendChild(tr);
     });
+
+    // add the last tr in the table which it will be the total
+    const tableFoot = document.querySelector('.orders table tfoot');
+    const tr = document.createElement('tr');
+    const tdData = [
+      '#',
+      'صافي الفاتورة',
+      totalArray.reduce((total, val) => +total + +val) + ' جنية'
+    ];
+
+    for (let i = 0; i < tdData.length; i++) {
+      const td = document.createElement('td');
+      td.className = 'py-2 px-3 text-nowrap';
+      td.textContent = tdData[i];
+      td.style.fontWeight = 'bold';
+      td.style.fontSize = '14px';
+
+      if (i === 1) td.setAttribute('colspan', '6');
+
+      tr.appendChild(td);
+    }
+
+    tableFoot.innerHTML = '';
+    tableFoot.appendChild(tr);
   }
 
   incrementQuantity(tableData);
