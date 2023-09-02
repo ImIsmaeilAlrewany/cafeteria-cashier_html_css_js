@@ -1032,7 +1032,7 @@ function findIdInArrayInArray(array, secondArray, id) {
   let indexes = [];
 
   for (let i = 0; i < array.length; i++) {
-    for (let n = 0; n < array[i].content.length; n++) {
+    for (let n = 0; n < array[i][secondArray].length; n++) {
       if (+array[i][secondArray][n].id === +id) {
         indexes = [i, n];
       }
@@ -1051,12 +1051,86 @@ const incrementQuantity = (tableData) => {
     ele.addEventListener('click', () => {
       clickedElement = ele.parentElement;
 
-      console.log(index);
-      console.log(clickedElement.children[3]);
-      console.log(clickedElement.children[4]);
-      console.log(tableData); // this is in session storage
-      console.log(tables); // this is in local storage
-      console.log(allCategories);
+      // change table data and save it
+      +tableData.order[index].quantity++;
+      tableData.order[index].total = +tableData.order[index].price * +tableData.order[index].quantity;
+      sessionStorage.setItem('selected-table', JSON.stringify(tableData));
+      tables[findIdInArrayInArray(tables, 'order', clickedElement.dataset.id)[0]] = tableData;
+      localStorage.setItem('cafeteria-tables', JSON.stringify(tables));
+
+      // change data in categories and save it
+      const [categoryIndex, itemIndex] = findIdInArrayInArray(allCategories, 'content', clickedElement.dataset.id);
+      allCategories[categoryIndex].content[itemIndex].quantity--;
+      localStorage.setItem('menu-categories', JSON.stringify(allCategories));
+
+      // change DOM data by calling the function again
+      displayOrders();
+    });
+  });
+};
+
+// decrement function to the order quantity and total price
+const decrementQuantity = (tableData) => {
+  const addElements = document.querySelectorAll('[data-functionality="sub"]');
+  let clickedElement;
+
+  addElements.forEach((ele, index) => {
+    ele.addEventListener('click', () => {
+      clickedElement = ele.parentElement;
+
+      // change table data and save it
+      +tableData.order[index].quantity--;
+
+      // check if the order becomes zero it must be deleted
+      if (+tableData.order[index].quantity <= 0) {
+        tableData.order[index].quantity++;
+        deleteFunction(index, tableData, clickedElement);
+      } else {
+        tableData.order[index].total = +tableData.order[index].total - +tableData.order[index].price;
+        sessionStorage.setItem('selected-table', JSON.stringify(tableData));
+        tables[findIdInArrayInArray(tables, 'order', clickedElement.dataset.id)[0]] = tableData;
+        localStorage.setItem('cafeteria-tables', JSON.stringify(tables));
+
+        // change data in categories and save it
+        const [categoryIndex, itemIndex] = findIdInArrayInArray(allCategories, 'content', clickedElement.dataset.id);
+        allCategories[categoryIndex].content[itemIndex].quantity++;
+        localStorage.setItem('menu-categories', JSON.stringify(allCategories));
+      }
+
+      // change DOM data by calling the function again
+      displayOrders();
+    });
+  });
+};
+
+// delete function to the order from session and local storage and DOM
+
+// I made this function because I am gonna use it in decrement function
+function deleteFunction(index, tableData, clickedElement) {
+  // change data in categories and save it
+  const [categoryIndex, itemIndex] = findIdInArrayInArray(allCategories, 'content', clickedElement.dataset.id);
+  allCategories[categoryIndex].content[itemIndex].quantity = +allCategories[categoryIndex].content[itemIndex].quantity + +tableData.order[index].quantity;
+  console.log(tableData.order[index].quantity);
+  localStorage.setItem('menu-categories', JSON.stringify(allCategories));
+
+  // delete order at all from table
+  tableData.order.splice(index, 1);
+  sessionStorage.setItem('selected-table', JSON.stringify(tableData));
+  tables[findIdInArrayInArray(tables, 'order', clickedElement.dataset.id)[0]] = tableData;
+  localStorage.setItem('cafeteria-tables', JSON.stringify(tables));
+}
+
+const deleteOrder = (tableData) => {
+  const addElements = document.querySelectorAll('[data-functionality="del"]');
+  let clickedElement;
+
+  addElements.forEach((ele, index) => {
+    ele.addEventListener('click', () => {
+      clickedElement = ele.parentElement;
+      deleteFunction(index, tableData, clickedElement);
+
+      // change DOM data by calling the function again
+      displayOrders();
     });
   });
 };
@@ -1122,9 +1196,16 @@ function displayOrders() {
 
     tableFoot.innerHTML = '';
     tableFoot.appendChild(tr);
+  } else {
+    tableBody.innerHTML = `<tr>
+      <th colspan="8" class="py-2 px-3 text-nowrap text-center">لا يوجد طلبات لعرضها</th>
+    </tr>`;
+    tableFoot.innerHTML = '';
   }
 
   incrementQuantity(tableData);
+  decrementQuantity(tableData);
+  deleteOrder(tableData);
 }
 if (document.querySelector('.orders table tbody')) displayOrders();
 
