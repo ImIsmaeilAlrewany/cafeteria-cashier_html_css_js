@@ -570,11 +570,7 @@ function eventDeleteFromNewDOM(category) {
     let data_id = category.getAttribute('data-id');
     let categoriesList = JSON.parse(localStorage.getItem('menu-categories'));
     let idsList = JSON.parse(localStorage.getItem('allIds'));
-    let index;
-
-    for (let i = 0; i < categoriesList.length; i++) {
-      if (categoriesList[i].id === +data_id) index = i;
-    }
+    let index = findIdInArray(categoriesList, data_id);
 
     categoriesList = categoriesList.filter(val => parseInt(val.id) != parseInt(data_id));
     idsList = idsList.filter(id => id != data_id);
@@ -621,14 +617,7 @@ function eventEditToNewDOM(category) {
     const category = e.target.parentElement.parentElement;
     let categoriesList = JSON.parse(localStorage.getItem('menu-categories'));
     let data_id = category.getAttribute('data-id');
-    let categoryIndex;
-
-    for (let i = 0; i < categoriesList.length; i++) {
-      if (categoriesList[i].id == data_id) {
-        categoryIndex = i;
-        break;
-      }
-    }
+    let categoryIndex = findIdInArray(categoriesList, data_id);
 
     // open modal to edit the category
     editModal.classList.toggle('active');
@@ -825,19 +814,8 @@ function deleteItemFromCategory(element) {
   let idsList = JSON.parse(localStorage.getItem('allIds'));
 
   let itemIndexInCategory;
-  let categoryId;
   let categoryIndex;
-
-  for (let i = 0; i < categoriesArray.length; i++) {
-    for (let n = 0; n < categoriesArray[i].content.length; n++) {
-      if (categoriesArray[i].content[n].id === itemId) {
-        itemIndexInCategory = n;
-        categoryId = categoriesArray[i].id;
-        categoryIndex = i;
-        break;
-      }
-    }
-  }
+  [categoryIndex, itemIndexInCategory] = findIdInArrayInArray(categoriesArray, 'content', itemId);
 
   // delete item from category content and save it
   categoriesArray[categoryIndex].content.splice(itemIndexInCategory, 1);
@@ -864,19 +842,8 @@ function activateEditItem(element) {
   const itemId = +element.parentElement.parentElement.parentElement.dataset.id;
   let categoriesArray = JSON.parse(localStorage.getItem('menu-categories'));
   let itemIndexInCategory;
-  let categoryId;
   let categoryIndex;
-
-  for (let i = 0; i < categoriesArray.length; i++) {
-    for (let n = 0; n < categoriesArray[i].content.length; n++) {
-      if (categoriesArray[i].content[n].id === itemId) {
-        itemIndexInCategory = n;
-        categoryId = categoriesArray[i].id;
-        categoryIndex = i;
-        break;
-      }
-    }
-  }
+  [categoryIndex, itemIndexInCategory] = findIdInArrayInArray(categoriesArray, 'content', itemId);
 
   // select form and parentElement to toggle active
   const formElement = document.querySelector(`[data-id="${itemId}"] form`);
@@ -919,16 +886,7 @@ function editCategoryItem() {
       let categoriesArray = JSON.parse(localStorage.getItem('menu-categories'));
       let itemIndexInCategory;
       let categoryIndex;
-
-      for (let i = 0; i < categoriesArray.length; i++) {
-        for (let n = 0; n < categoriesArray[i].content.length; n++) {
-          if (categoriesArray[i].content[n].id === itemId) {
-            itemIndexInCategory = n;
-            categoryIndex = i;
-            break;
-          }
-        }
-      }
+      [categoryIndex, itemIndexInCategory] = findIdInArrayInArray(categoriesArray, 'content', itemId);
 
       // select form and parentElement to toggle active
       const formElement = document.querySelector(`[data-id="${itemId}"] form`);
@@ -1029,35 +987,60 @@ function addOrder() {
 
   allItemsInList.forEach(item => {
     item.addEventListener('click', () => {
-      for (let i = 0; i < allCategories.length; i++) {
-        for (let n = 0; n < allCategories[i].content.length; n++) {
-          if (allCategories[i].content[n].id == item.dataset.id) {
-            categoryIndex = i;
-            itemIndex = n;
-          }
-        }
-      }
+      [categoryIndex, itemIndex] = findIdInArrayInArray(allCategories, 'content', item.dataset.id);
 
       // first get all item data and decrement the quantity
       const { id, name, price } = allCategories[categoryIndex].content[itemIndex];
-      allCategories[categoryIndex].content[itemIndex].quantity--;
-      localStorage.setItem('menu-categories', JSON.stringify(allCategories));
+      let unique = true;
 
-      // second add the selected item into table order array
-      const table = JSON.parse(sessionStorage.getItem('selected-table'));
-      for (let i = 0; i < tables.length; i++) {
-        if (table.id === tables[i].id) tableIndex = i;
+      // check if this item is already added in order to not repeat it
+      JSON.parse(sessionStorage.getItem('selected-table')).order.forEach(ele => {
+        if (ele.id == id) unique = false;
+      });
+
+      if (unique) {
+        allCategories[categoryIndex].content[itemIndex].quantity--;
+        localStorage.setItem('menu-categories', JSON.stringify(allCategories));
+
+        // second add the selected item into table order array
+        const table = JSON.parse(sessionStorage.getItem('selected-table'));
+        tableIndex = findIdInArray(tables, table.id);
+        tables[tableIndex].order.push({ id, name, quantity: 1, total: price, price });
+        localStorage.setItem('cafeteria-tables', JSON.stringify(tables));
+        sessionStorage.setItem('selected-table', JSON.stringify(tables[tableIndex]));
+
+        // display the new add order to orders table
+        displayOrders();
       }
-      tables[tableIndex].order.push({ id, name, quantity: 1, total: price, price });
-      localStorage.setItem('cafeteria-tables', JSON.stringify(tables));
-      sessionStorage.setItem('selected-table', JSON.stringify(tables[tableIndex]));
-
-      // display the new add order to orders table
-      displayOrders();
     });
   });
 }
 addOrder();
+
+// common function to find Id in array by getting array and id
+function findIdInArray(array, id) {
+  let index;
+  for (let i = 0; i < array.length; i++) {
+    if (+array[i].id === +id) index = i;
+  }
+
+  return index;
+}
+
+// common function to find Id in array inside array by getting array and id
+function findIdInArrayInArray(array, secondArray, id) {
+  let indexes = [];
+
+  for (let i = 0; i < array.length; i++) {
+    for (let n = 0; n < array[i].content.length; n++) {
+      if (+array[i][secondArray][n].id === +id) {
+        indexes = [i, n];
+      }
+    }
+  }
+
+  return indexes;
+}
 
 // increment function to the order quantity and total price
 const incrementQuantity = (tableData) => {
@@ -1132,6 +1115,7 @@ function displayOrders() {
       td.style.fontSize = '14px';
 
       if (i === 1) td.setAttribute('colspan', '6');
+      else td.classList.add('text-center');
 
       tr.appendChild(td);
     }
@@ -1142,5 +1126,8 @@ function displayOrders() {
 
   incrementQuantity(tableData);
 }
-displayOrders();
+if (document.querySelector('.orders table tbody')) displayOrders();
+
+
+
 
