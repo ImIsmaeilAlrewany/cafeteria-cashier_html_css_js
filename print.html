@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title></title>
+  <link rel="stylesheet" href="./css/all.min.css">
+  <link rel="stylesheet" href="./css/bootstrap.rtl.min.css">
+  <link rel="stylesheet" href="./css/master.css">
+  <script>
+    // check if client is logged in
+    const isLoggedIn = JSON.parse(sessionStorage.getItem('isLoggedIn'));
+    if (!isLoggedIn) location.href = './login.html';
+
+    // get table data from session storage
+    const data = JSON.parse(sessionStorage.getItem('selected-table'));
+    if (data) document.title = `Al-cashier ${data.name} Orders Print`;
+    else document.title = 'Al-cashier Orders Print';
+  </script>
+</head>
+
+<body>
+
+  <div class="container">
+    <main class="row my-3">
+
+      <!-- start print orders table -->
+
+      <section class="orders col-12">
+        <div class="table-container table-responsive py-3 pe-1">
+          <table class="w-100 table-bordered m-0">
+            <thead>
+              <tr>
+                <th class="py-2 px-3 text-nowrap text-center" scope="col">#</th>
+                <th class="py-2 px-3 text-nowrap text-center" scope="col">الصنف</th>
+                <th class="py-2 px-3 text-nowrap text-center" scope="col">السعر</th>
+                <th class="py-2 px-3 text-nowrap text-center" scope="col">الكمية</th>
+                <th class="py-2 px-3 text-nowrap text-center" scope="col">الإجمالي</th>
+              </tr>
+            </thead>
+            <tbody class="table-group-divider"></tbody>
+            <tfoot class="table-group-divider"></tfoot>
+          </table>
+        </div>
+      </section>
+
+      <!-- end print orders table -->
+
+    </main>
+  </div>
+
+  <script src="./js/all.min.js"></script>
+  <script src="./js/bootstrap.bundle.min.js"></script>
+  <script src="./js/master.js"></script>
+</body>
+
+</html>

@@ -449,6 +449,23 @@ body {
   font-size: 13px;
 }
 
+.orders .action-buttons button {
+  color: var(--background);
+  padding: 8px 12px;
+}
+
+.orders .action-buttons button:nth-child(1) {
+  background-color: var(--accent);
+}
+
+.orders .action-buttons button:nth-child(2) {
+  background-color: #03A9F4;
+}
+
+.orders .action-buttons button:nth-child(3) {
+  background-color: var(--green);
+}
+
 /* end work on chosen-orders */
 
 /* end order page styles */

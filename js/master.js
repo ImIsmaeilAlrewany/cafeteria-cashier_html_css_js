@@ -49,11 +49,11 @@ const changeVar = (colors, mode) => {
   }
 };
 
-light.addEventListener('click', () => {
+if (light) light.addEventListener('click', () => {
   changeVar(colors.light, 'light');
 });
 
-dark.addEventListener('click', () => {
+if (dark) dark.addEventListener('click', () => {
   changeVar(colors.dark, 'dark');
 });
 
@@ -1138,6 +1138,7 @@ const deleteOrder = (tableData) => {
 // work on display all orders in the orders place in page (in table)
 function displayOrders() {
   const tableBody = document.querySelector('.orders table tbody');
+  const tableFoot = document.querySelector('.orders table tfoot');
   const tableData = JSON.parse(sessionStorage.getItem('selected-table'));
   let totalArray = [];
 
@@ -1173,7 +1174,6 @@ function displayOrders() {
     });
 
     // add the last tr in the table which it will be the total
-    const tableFoot = document.querySelector('.orders table tfoot');
     const tr = document.createElement('tr');
     const tdData = [
       '#',
@@ -1209,6 +1209,48 @@ function displayOrders() {
 }
 if (document.querySelector('.orders table tbody')) displayOrders();
 
+// work on order page buttons remove table button
+const removeTable = document.querySelector('.orders .remove-table');
+if (removeTable) removeTable.addEventListener('click', () => {
+  // what if I already ordered some items and want to delete
+  // in this case I must increment quantity in menu categories for each item
+  const table = JSON.parse(sessionStorage.getItem('selected-table'));
 
+  if (table.order.length > 0)
+    table.order.forEach(element => {
+      const [categoryIndex, itemIndex] = findIdInArrayInArray(allCategories, 'content', element.id);
+      allCategories[categoryIndex].content[itemIndex].quantity += +element.quantity;
+      localStorage.setItem('menu-categories', JSON.stringify(allCategories));
+    });
+
+  // delete table from session storage and local storage from tables array
+  // redirect to index page to select another table or add a new one
+  const index = findIdInArray(tables, table.id);
+  sessionStorage.removeItem('selected-table');
+  tables.splice(index, 1);
+  localStorage.setItem('cafeteria-tables', JSON.stringify(tables));
+  location.href = '/index.html';
+});
+
+// work on order page buttons order table button
+const orderTable = document.querySelector('.orders .order-order');
+if (orderTable) orderTable.addEventListener('click', () => {
+  // check if there is no orders it won't work at all
+  const table = JSON.parse(sessionStorage.getItem('selected-table'));
+  if (table.order.length > 0) {
+    // this is chat GPT idea
+    var iframe = document.createElement('iframe');
+    iframe.style.display = 'none';
+    iframe.src = '/print.html';
+    document.body.appendChild(iframe);
+
+    iframe.onload = function () {
+      setTimeout(function () {
+        iframe.contentWindow.print();
+        document.body.removeChild(iframe);
+      }, 1000); // Adjust the delay as needed
+    };
+  }
+});
 
 
