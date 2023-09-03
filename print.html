@@ -28,6 +28,9 @@
       <!-- start print orders table -->
 
       <section class="orders col-12">
+        <div class="print-label text-center">
+          <h2 class="m-0 p-0 fs-1 fw-bold">الكاشير</h2>
+        </div>
         <div class="table-container table-responsive py-3 pe-1">
           <table class="w-100 table-bordered m-0">
             <thead>
@@ -39,10 +42,11 @@
                 <th class="py-2 px-3 text-nowrap text-center" scope="col">الإجمالي</th>
               </tr>
             </thead>
-            <tbody class="table-group-divider"></tbody>
-            <tfoot class="table-group-divider"></tfoot>
+            <tbody class="print-body table-group-divider"></tbody>
+            <tfoot class="print-foot table-group-divider"></tfoot>
           </table>
         </div>
+        <div class="cashier-name"></div>
       </section>
 
       <!-- end print orders table -->
@@ -53,6 +57,25 @@
   <script src="./js/all.min.js"></script>
   <script src="./js/bootstrap.bundle.min.js"></script>
   <script src="./js/master.js"></script>
+  <script>
+    // set cashier name
+    const cashierName = document.querySelector('.cashier-name');
+    const cashierData = JSON.parse(sessionStorage.getItem('onlineClient'));
+    cashierName.textContent = `اسم الكاشير: ${cashierData.name}`;
+
+    // because I use a general function to display table data
+    // this here will remove unneeded elements
+    const bodyTrs = document.querySelectorAll('.orders table .print-body tr');
+    bodyTrs.forEach(tr => {
+      document.querySelectorAll(`[data-id="${tr.dataset.id}"] td`).forEach((td, index) => {
+        if (index > 4) td.remove();
+      });
+    });
+
+    // also this element colspan is more than I want
+    const footTd = document.querySelector('[colspan = "6"]');
+    footTd.setAttribute('colspan', '3');
+  </script>
 </body>
 
 </html>

@@ -468,4 +468,27 @@ body {
 
 /* end work on chosen-orders */
 
+/* start print page style while printing */
+
+@media print {
+  .print-label h2 {
+    font-family: 'Vibes', cursive;
+    letter-spacing: 1px;
+  }
+
+  table,
+  table tr,
+  table .print-body,
+  table .print-foot {
+    border-color: #ccc;
+  }
+
+  table th,
+  table td {
+    color: #212121;
+  }
+}
+
+/* end print page style while printing */
+
 /* end order page styles */

@@ -1136,7 +1136,7 @@ const deleteOrder = (tableData) => {
 };
 
 // work on display all orders in the orders place in page (in table)
-function displayOrders() {
+function displayOrders(columns) {
   const tableBody = document.querySelector('.orders table tbody');
   const tableFoot = document.querySelector('.orders table tfoot');
   const tableData = JSON.parse(sessionStorage.getItem('selected-table'));
@@ -1238,6 +1238,14 @@ if (orderTable) orderTable.addEventListener('click', () => {
   // check if there is no orders it won't work at all
   const table = JSON.parse(sessionStorage.getItem('selected-table'));
   if (table.order.length > 0) {
+    // get time now to save it in table in session and local storage
+    const dateAndTime = new Date().toLocaleString();
+    const tableIndex = findIdInArray(tables, table.id);
+    table.orderTime = dateAndTime;
+    sessionStorage.setItem('selected-table', JSON.stringify(table));
+    tables[tableIndex] = table;
+    localStorage.setItem('cafeteria-tables', JSON.stringify(tables));
+
     // this is chat GPT idea
     var iframe = document.createElement('iframe');
     iframe.style.display = 'none';
