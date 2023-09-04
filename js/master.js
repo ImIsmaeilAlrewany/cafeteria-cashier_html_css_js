@@ -1223,6 +1223,27 @@ if (removeTable) removeTable.addEventListener('click', () => {
       localStorage.setItem('menu-categories', JSON.stringify(allCategories));
     });
 
+  // save table in canceled tables in local storage
+  const onlineClient = JSON.parse(sessionStorage.getItem('onlineClient'));
+  const canceledTables = JSON.parse(localStorage.getItem('canceled-tables')) || [];
+  const dateAndTime = new Date().toLocaleString();
+  const dateOnly = dateAndTime.slice(0, dateAndTime.indexOf(','));
+
+  // the canceled tables will be like this [{date: '', data: [{}]}]
+  let [isNewDay, objectIndex] = [true];
+  canceledTables.forEach((table, index) => {
+    if (table.date === dateOnly) {
+      isNewDay = false;
+      objectIndex = index;
+    }
+  });
+  if (!isNewDay) {
+    canceledTables[objectIndex].data.push({ table: table, cashier: onlineClient.name, cancelTime: dateAndTime });
+  } else {
+    canceledTables.push({ date: dateOnly, data: [{ table: table, cashier: onlineClient.name, cancelTime: dateAndTime }] });
+  }
+  localStorage.setItem('canceled-tables', JSON.stringify(canceledTables));
+
   // delete table from session storage and local storage from tables array
   // redirect to index page to select another table or add a new one
   const index = findIdInArray(tables, table.id);
@@ -1258,6 +1279,46 @@ if (orderTable) orderTable.addEventListener('click', () => {
         document.body.removeChild(iframe);
       }, 1000); // Adjust the delay as needed
     };
+  }
+});
+
+// work on order page buttons remove table button
+const payOrder = document.querySelector('.orders .pay-order');
+if (payOrder) payOrder.addEventListener('click', () => {
+  // check if there is no orders it won't work at all
+  const table = JSON.parse(sessionStorage.getItem('selected-table'));
+  const onlineClient = JSON.parse(sessionStorage.getItem('onlineClient'));
+  const dateAndTime = new Date().toLocaleString();
+  const dateOnly = dateAndTime.slice(0, dateAndTime.indexOf(','));
+
+  if (table.order.length > 0 && table.orderTime) {
+    // find paid orders in local storage and add the new ones to it then save
+    const paidOrders = JSON.parse(localStorage.getItem('paid-orders')) || [];
+    const totalPrice = table.order.map(object => +object.total).reduce((accumulator, currentValue) => accumulator + currentValue);
+    const ordersNumber = table.order.map(object => +object.quantity).reduce((accumulator, currentValue) => accumulator + currentValue);
+
+    // the paid orders will be like this [{date: '', data: [{}]}]
+    let [isNewDay, objectIndex] = [true];
+    paidOrders.forEach((table, index) => {
+      if (table.date === dateOnly) {
+        isNewDay = false;
+        objectIndex = index;
+      }
+    });
+    if (!isNewDay) {
+      paidOrders[objectIndex].data.push({ cashier: onlineClient.name, table: table, paidTime: dateAndTime, ordersNumber, totalPrice });
+    } else {
+      paidOrders.push({ date: dateOnly, data: [{ cashier: onlineClient.name, table: table, paidTime: dateAndTime, ordersNumber, totalPrice }] });
+    }
+    localStorage.setItem('paid-orders', JSON.stringify(paidOrders));
+
+    // delete table from session storage and local storage from tables array
+    // redirect to index page to select another table or add a new one
+    const index = findIdInArray(tables, table.id);
+    sessionStorage.removeItem('selected-table');
+    tables.splice(index, 1);
+    localStorage.setItem('cafeteria-tables', JSON.stringify(tables));
+    location.href = '/index.html';
   }
 });
 
