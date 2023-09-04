@@ -1228,21 +1228,38 @@ if (removeTable) removeTable.addEventListener('click', () => {
   const canceledTables = JSON.parse(localStorage.getItem('canceled-tables')) || [];
   const dateAndTime = new Date().toLocaleString();
   const dateOnly = dateAndTime.slice(0, dateAndTime.indexOf(','));
+  const getMonth = (string) => {
+    return string.slice(dateOnly.indexOf('/') + 1, dateOnly.lastIndexOf('/'));
+  };
 
   // the canceled tables will be like this [{date: '', data: [{}]}]
-  let [isNewDay, objectIndex] = [true];
+  let [isNewDay, objectIndex] = [true, null];
+  let isNewMonth = true;
   canceledTables.forEach((table, index) => {
-    if (table.date === dateOnly) {
-      isNewDay = false;
-      objectIndex = index;
-    }
+    if (table.date === dateOnly) isNewDay = false;
+    else isNewDay = true;
+
+    if (table.date === dateOnly) objectIndex = index;
+
+    if (getMonth(table.date) === getMonth(dateOnly)) isNewMonth = false;
+    else isNewMonth = true;
   });
-  if (!isNewDay) {
-    canceledTables[objectIndex].data.push({ table: table, cashier: onlineClient.name, cancelTime: dateAndTime });
+  if (!isNewMonth) {
+    if (isNewDay) {
+      canceledTables.push({ date: dateOnly, data: [{ table: table, cashier: onlineClient.name, cancelTime: dateAndTime }] });
+    } else {
+      canceledTables[objectIndex].data.push({ table: table, cashier: onlineClient.name, cancelTime: dateAndTime });
+    }
   } else {
+    localStorage.removeItem('canceled-tables');
     canceledTables.push({ date: dateOnly, data: [{ table: table, cashier: onlineClient.name, cancelTime: dateAndTime }] });
   }
   localStorage.setItem('canceled-tables', JSON.stringify(canceledTables));
+
+  // delete table id from all ids list in local storage and save it
+  let idsList = JSON.parse(localStorage.getItem('allIds'));
+  idsList = idsList.filter(id => id != table.id);
+  localStorage.setItem('allIds', JSON.stringify(idsList));
 
   // delete table from session storage and local storage from tables array
   // redirect to index page to select another table or add a new one
@@ -1296,21 +1313,38 @@ if (payOrder) payOrder.addEventListener('click', () => {
     const paidOrders = JSON.parse(localStorage.getItem('paid-orders')) || [];
     const totalPrice = table.order.map(object => +object.total).reduce((accumulator, currentValue) => accumulator + currentValue);
     const ordersNumber = table.order.map(object => +object.quantity).reduce((accumulator, currentValue) => accumulator + currentValue);
+    const getMonth = (string) => {
+      return string.slice(dateOnly.indexOf('/') + 1, dateOnly.lastIndexOf('/'));
+    };
 
     // the paid orders will be like this [{date: '', data: [{}]}]
-    let [isNewDay, objectIndex] = [true];
+    let [isNewDay, objectIndex] = [true, null];
+    let isNewMonth = true;
     paidOrders.forEach((table, index) => {
-      if (table.date === dateOnly) {
-        isNewDay = false;
-        objectIndex = index;
-      }
+      if (table.date === dateOnly) isNewDay = false;
+      else isNewDay = true;
+
+      if (table.date === dateOnly) objectIndex = index;
+
+      if (getMonth(table.date) === getMonth(dateOnly)) isNewMonth = false;
+      else isNewMonth = true;
     });
-    if (!isNewDay) {
-      paidOrders[objectIndex].data.push({ cashier: onlineClient.name, table: table, paidTime: dateAndTime, ordersNumber, totalPrice });
+    if (!isNewMonth) {
+      if (isNewDay) {
+        paidOrders.push({ date: dateOnly, data: [{ cashier: onlineClient.name, table: table, paidTime: dateAndTime, ordersNumber, totalPrice }] });
+      } else {
+        paidOrders[objectIndex].data.push({ cashier: onlineClient.name, table: table, paidTime: dateAndTime, ordersNumber, totalPrice });
+      }
     } else {
+      localStorage.removeItem('paid-orders');
       paidOrders.push({ date: dateOnly, data: [{ cashier: onlineClient.name, table: table, paidTime: dateAndTime, ordersNumber, totalPrice }] });
     }
     localStorage.setItem('paid-orders', JSON.stringify(paidOrders));
+
+    // delete table id from all ids list in local storage and save it
+    let idsList = JSON.parse(localStorage.getItem('allIds'));
+    idsList = idsList.filter(id => id != table.id);
+    localStorage.setItem('allIds', JSON.stringify(idsList));
 
     // delete table from session storage and local storage from tables array
     // redirect to index page to select another table or add a new one
@@ -1321,5 +1355,8 @@ if (payOrder) payOrder.addEventListener('click', () => {
     location.href = '/index.html';
   }
 });
+
+//================================================//
+
 
 
