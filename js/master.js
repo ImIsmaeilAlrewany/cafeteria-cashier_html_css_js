@@ -960,7 +960,7 @@ const itemsElementArray = (array) => {
   <li class="m-0 p-0 d-flex justify-content-center align-items-center w-100 rounded">قم بإضافة الأقسام أولا ثم ما تحتوية</li>`;
   });
 };
-if (itemsListElement)
+if (itemsListElement && allCategories.length > 0)
   itemsListElement.innerHTML = itemsElementArray(allCategories[0].content).join(' ');
 
 // change the selected category and display its items
