@@ -1267,7 +1267,7 @@ if (removeTable) removeTable.addEventListener('click', () => {
   sessionStorage.removeItem('selected-table');
   tables.splice(index, 1);
   localStorage.setItem('cafeteria-tables', JSON.stringify(tables));
-  location.href = '/index.html';
+  location.href = 'index.html';
 });
 
 // work on order page buttons order table button
@@ -1352,7 +1352,7 @@ if (payOrder) payOrder.addEventListener('click', () => {
     sessionStorage.removeItem('selected-table');
     tables.splice(index, 1);
     localStorage.setItem('cafeteria-tables', JSON.stringify(tables));
-    location.href = '/index.html';
+    location.href = 'index.html';
   }
 });
 
