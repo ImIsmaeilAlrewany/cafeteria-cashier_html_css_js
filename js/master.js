@@ -924,7 +924,7 @@ function selectTable() {
   allTables.forEach((table, index) => {
     table.addEventListener('click', () => {
       sessionStorage.setItem('selected-table', JSON.stringify(tablesInStorage[index]));
-      table.href = '/order.html';
+      table.href = 'order.html';
     });
   });
 }
