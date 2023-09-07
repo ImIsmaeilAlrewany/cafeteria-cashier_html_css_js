@@ -1287,7 +1287,7 @@ if (orderTable) orderTable.addEventListener('click', () => {
     // this is chat GPT idea
     var iframe = document.createElement('iframe');
     iframe.style.display = 'none';
-    iframe.src = '/print.html';
+    iframe.src = 'print.html';
     document.body.appendChild(iframe);
 
     iframe.onload = function () {
