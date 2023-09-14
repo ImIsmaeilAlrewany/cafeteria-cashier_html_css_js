@@ -492,3 +492,51 @@ body {
 /* end print page style while printing */
 
 /* end order page styles */
+
+/* start notification style */
+
+.notification {
+  background-color: var(--accent);
+  color: var(--background);
+  font-size: 14px;
+  pointer-events: none;
+  left: 0;
+  top: 50%;
+  animation: notification 3s linear;
+}
+
+@keyframes notification {
+  0% {
+    transform: translateY(150%);
+    opacity: 0;
+  }
+
+  20% {
+    transform: translateY(100%);
+    opacity: .5;
+  }
+
+  40% {
+    transform: translateY(50%);
+    opacity: 1;
+  }
+
+  60% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+
+  75% {
+    opacity: 1;
+  }
+
+  85% {
+    opacity: .7;
+  }
+
+  100% {
+    opacity: .3;
+  }
+}
+
+/* end notification style */
