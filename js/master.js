@@ -1,17 +1,4 @@
-// start with slide menu
-const bars = document.getElementById('bars');
-const slideMenu = document.getElementById('slide-menu');
-
-// ***custom function to toggle active class
-function toggleActive(button, element) {
-  button.addEventListener('click', () => {
-    element.classList.toggle('active');
-  });
-};
-
-if (bars) toggleActive(bars, slideMenu);
-
-//====================================================//
+import toggleActive from "./layouts/toggleActive.js";
 
 // start with changing mode (light - dark)
 const light = document.getElementById('light');
