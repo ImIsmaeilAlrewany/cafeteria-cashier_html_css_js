@@ -1,4 +1,6 @@
 import selectTable from "./selectTable.js";
+import { selectCategory, eventDeleteFromNewDOM, eventEditToNewDOM, deleteItemFromCategory } from '../menu.js';
+import printElementsAndForm from "./printElementsAndForm.js";
 
 // get data and create elements function
 const collectAndCreate = (submit, input, warningMes, outputEle, callback) => {
