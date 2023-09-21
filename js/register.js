@@ -1,0 +1,90 @@
+import collectData from "./layouts/collectData.js";
+
+// start work with adding new clients (register)
+const register = document.getElementById('register');
+const registerInputs = document.querySelectorAll('.register .form-control');
+const registerWarnings = document.querySelectorAll('.register .form-text');
+
+// first because we use local storage and there is no database
+// when we use this application on any other browser will directly go to login
+// but because at that time there will be no account data in local storage
+// we need to add admin account globally when website opens
+// if there is already data nothing will happen but if there is no data will add it
+if (!JSON.parse(localStorage.getItem('clients')))
+  localStorage.setItem('clients', JSON.stringify([{
+    name: 'admin',
+    phone: '',
+    password: '1234admin'
+  }]));
+
+// all warning messages if client entered wrong data
+const warningMessages = [
+  'مسموح فقط الحروف وأزيد من ثلاث حروف',
+  'مسموح فقط أرقام الهاتف',
+  'لا يقل عن 7 وعلى الأقل حرف أو رمز'
+];
+
+// submit data and check if it correct then save it
+if (register) register.addEventListener('submit', (e) => {
+  const data = collectData(registerInputs);
+  let dataCorrect = false;
+  let dataUnique = false;
+  let clients = [];
+
+  // get any data in local storage first
+  if (localStorage.getItem('clients')) {
+    const savedData = localStorage.getItem('clients');
+    clients.push(...JSON.parse(savedData));
+  }
+
+  // check name, phone and password if are correct
+  if (data.name.length < 3 || Number(data.name)) {
+    e.preventDefault();
+    dataCorrect = false;
+    registerWarnings[0].innerHTML = warningMessages[0];
+  } else {
+    registerWarnings[0].innerHTML = '';
+
+    if (data.phone.length != 11 || !Number(data.phone)) {
+      e.preventDefault();
+      dataCorrect = false;
+      registerWarnings[1].innerHTML = warningMessages[1];
+    } else {
+      registerWarnings[1].innerHTML = '';
+
+      if (data.password.length < 7 || Number(data.password)) {
+        e.preventDefault();
+        dataCorrect = false;
+        registerWarnings[2].innerHTML = warningMessages[2];
+      } else {
+        dataCorrect = true;
+        registerWarnings[2].innerHTML = '';
+      }
+    }
+  }
+
+  // check if data is unique
+  if (clients.length !== 0)
+    for (let i = 0; i < clients.length; i++) {
+      if (clients[i].name === data.name || clients[i].phone === data.phone) {
+        dataUnique = false;
+        break;
+      } else {
+        dataUnique = true;
+      }
+    }
+  else dataUnique = true;
+
+  if (!dataUnique) {
+    e.preventDefault();
+    registerWarnings.forEach(w => {
+      w.innerHTML = 'الإسم أو رقم الهاتف استخدم من قبل';
+    });
+  }
+
+  // if data correct save it in local storage
+  if (dataUnique && dataCorrect) {
+    clients.push(data);
+    localStorage.setItem('clients', JSON.stringify(clients));
+  }
+});
