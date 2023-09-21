@@ -1,61 +1,5 @@
 import toggleActive from "./layouts/toggleActive.js";
 
-// start with changing mode (light - dark)
-const light = document.getElementById('light');
-const dark = document.getElementById('dark');
-
-// container of colors
-const colors = {
-  light: {
-    "--primary": "#0069D9",
-    "--secondary": "#03A9F4",
-    "--accent": "#FF4081",
-    "--background": "#FFFFFF",
-    "--text": "#212121",
-    "--secondary-hover": "#57bfef",
-    "--gray": "#ccc",
-    "--accent-hover": "#f15389"
-  },
-  dark: {
-    "--primary": "#003049",
-    "--secondary": "#0369A8",
-    "--accent": "#FF8C00",
-    "--background": "#121212",
-    "--text": "#F0F0F0",
-    "--secondary-hover": "#035486",
-    "--gray": "#333",
-    "--accent-hover": "#f9a43c"
-  }
-};
-
-// ***change css variables function and save in local storage
-const changeVar = (colors, mode) => {
-  for (const prop in colors) {
-    document.documentElement.style.setProperty(prop, colors[prop]);
-    localStorage.setItem('mode', mode);
-  }
-};
-
-if (light) light.addEventListener('click', () => {
-  changeVar(colors.light, 'light');
-});
-
-if (dark) dark.addEventListener('click', () => {
-  changeVar(colors.dark, 'dark');
-});
-
-// check mode while loading pages
-// I use this event listener in document to change mode before I see the default one
-document.addEventListener('DOMContentLoaded', () => {
-  const colorsMode = localStorage.getItem('mode');
-
-  if (colorsMode)
-    if (colorsMode === 'light') changeVar(colors.light, 'light');
-    else changeVar(colors.dark, 'dark');
-});
-
-//===================================================//
-
 // generate ids function
 let allIds = [];
 if (localStorage.getItem('allIds'))
@@ -997,7 +941,7 @@ function addOrder() {
         sessionStorage.setItem('selected-table', JSON.stringify(tables[tableIndex]));
 
         // display the new add order to orders table
-        displayOrders();
+        displayOrders(true);
       }
     });
   });
@@ -1051,7 +995,7 @@ const incrementQuantity = (tableData) => {
       localStorage.setItem('menu-categories', JSON.stringify(allCategories));
 
       // change DOM data by calling the function again
-      displayOrders();
+      displayOrders(true);
     });
   });
 };
@@ -1085,7 +1029,7 @@ const decrementQuantity = (tableData) => {
       }
 
       // change DOM data by calling the function again
-      displayOrders();
+      displayOrders(true);
     });
   });
 };
@@ -1117,15 +1061,23 @@ const deleteOrder = (tableData) => {
       deleteFunction(index, tableData, clickedElement);
 
       // change DOM data by calling the function again
-      displayOrders();
+      displayOrders(true);
     });
   });
 };
 
 // work on display all orders in the orders place in page (in table)
-function displayOrders(columns) {
-  const tableBody = document.querySelector('.orders table tbody');
-  const tableFoot = document.querySelector('.orders table tfoot');
+function displayOrders(edit) {
+  let tableBody;
+  let tableFoot;
+  if (edit) {
+    tableBody = document.querySelector('.orders-display table tbody');
+    tableFoot = document.querySelector('.orders-display table tfoot');
+  } else {
+    tableBody = document.querySelector('.orders table tbody');
+    tableFoot = document.querySelector('.orders table tfoot');
+  }
+
   const tableData = JSON.parse(sessionStorage.getItem('selected-table'));
   let totalArray = [];
 
@@ -1135,7 +1087,10 @@ function displayOrders(columns) {
       const tr = document.createElement('tr');
       tr.setAttribute('data-id', ele.id);
 
-      const elementData = [index + 1, ele.name, `${ele.price} جنية`, ele.quantity, `${ele.total} جنية`, '+', '-', 'x'];
+      const elementData = [index + 1, ele.name, `${ele.price} جنية`, ele.quantity, `${ele.total} جنية`];
+      // check if edit add last three elements
+      if (edit) elementData.push('+', '-', 'x');
+
       for (let i = 0; i < elementData.length; i++) {
         const td = document.createElement('td');
         td.className = 'py-2 px-3 text-nowrap text-center';
@@ -1175,7 +1130,9 @@ function displayOrders(columns) {
       td.style.fontWeight = 'bold';
       td.style.fontSize = '14px';
 
-      if (i === 1) td.setAttribute('colspan', '6');
+      if (i === 1)
+        if (edit) td.setAttribute('colspan', '6');
+        else td.setAttribute('colspan', '3');
       else td.classList.add('text-center');
 
       tr.appendChild(td);
@@ -1194,10 +1151,10 @@ function displayOrders(columns) {
   decrementQuantity(tableData);
   deleteOrder(tableData);
 }
-if (document.querySelector('.orders table tbody')) displayOrders();
+if (document.querySelector('.orders-display table tbody')) displayOrders(true);
 
 // work on order page buttons remove table button
-const removeTable = document.querySelector('.orders .remove-table');
+const removeTable = document.querySelector('.orders-display .remove-table');
 if (removeTable) removeTable.addEventListener('click', () => {
   // what if I already ordered some items and want to delete
   // in this case I must increment quantity in menu categories for each item
@@ -1258,7 +1215,8 @@ if (removeTable) removeTable.addEventListener('click', () => {
 });
 
 // work on order page buttons order table button
-const orderTable = document.querySelector('.orders .order-order');
+const orderTable = document.querySelector('.orders-display .order-order');
+if (document.querySelector('.orders table')) displayOrders(false);
 if (orderTable) orderTable.addEventListener('click', () => {
   // check if there is no orders it won't work at all
   const table = JSON.parse(sessionStorage.getItem('selected-table'));
@@ -1290,7 +1248,7 @@ if (orderTable) orderTable.addEventListener('click', () => {
 });
 
 // work on order page buttons remove table button
-const payOrder = document.querySelector('.orders .pay-order');
+const payOrder = document.querySelector('.orders-display .pay-order');
 if (payOrder) payOrder.addEventListener('click', () => {
   // check if there is no orders it won't work at all
   const table = JSON.parse(sessionStorage.getItem('selected-table'));

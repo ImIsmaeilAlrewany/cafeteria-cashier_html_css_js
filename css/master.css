@@ -319,7 +319,7 @@ body {
 
 .menu .categories::-webkit-scrollbar,
 .order-menu .menu-categories::-webkit-scrollbar,
-.orders .table-container::-webkit-scrollbar {
+.orders-display .table-container::-webkit-scrollbar {
   scroll-behavior: smooth;
   background-color: #fff;
   border-radius: 6px;
@@ -327,7 +327,7 @@ body {
 
 .menu .categories::-webkit-scrollbar-thumb,
 .order-menu .menu-categories::-webkit-scrollbar-thumb,
-.orders .table-container::-webkit-scrollbar-thumb {
+.orders-display .table-container::-webkit-scrollbar-thumb {
   background-color: var(--primary);
   border-radius: 6px;
 }
@@ -403,7 +403,7 @@ body {
 /* start work on order-menu */
 
 .order-menu .section-label,
-.orders .section-label {
+.orders-display .section-label {
   background-color: var(--secondary);
   color: var(--background);
   padding: 12px 16px;
@@ -436,33 +436,35 @@ body {
 
 /* start work on chosen-orders */
 
-.orders .table-container table {
+.orders-display .table-container table {
   color: var(--background);
   border-color: var(--gray);
 }
 
+.orders-display .table-container table th,
 .orders .table-container table th {
   font-size: 14px;
 }
 
+.orders-display .table-container table td,
 .orders .table-container table td {
   font-size: 13px;
 }
 
-.orders .action-buttons button {
+.orders-display .action-buttons button {
   color: var(--background);
   padding: 8px 12px;
 }
 
-.orders .action-buttons button:nth-child(1) {
+.orders-display .action-buttons button:nth-child(1) {
   background-color: var(--accent);
 }
 
-.orders .action-buttons button:nth-child(2) {
+.orders-display .action-buttons button:nth-child(2) {
   background-color: #03A9F4;
 }
 
-.orders .action-buttons button:nth-child(3) {
+.orders-display .action-buttons button:nth-child(3) {
   background-color: var(--green);
 }
 
