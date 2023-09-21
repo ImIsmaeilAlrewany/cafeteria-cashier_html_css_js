@@ -1,20 +1,5 @@
 import toggleActive from "./layouts/toggleActive.js";
-
-// generate ids function
-let allIds = [];
-if (localStorage.getItem('allIds'))
-  allIds = JSON.parse(localStorage.getItem('allIds'));
-
-const generateId = () => {
-  const generate = () => Math.floor(Math.random() * (999999 - 0)) + 100000;
-
-  const id = generate();
-  for (let i = 0; i < allIds.length; i++) if (allIds[i] === id) generateId();
-
-  allIds.push(id);
-  localStorage.setItem('allIds', JSON.stringify(allIds));
-  return id;
-};
+import generateId from "./layouts/generateId.js";
 
 //===================================================//
 
@@ -27,13 +12,7 @@ const closeTableModal = document.getElementById('close-table-button');
 const tablesContainer = document.getElementById('tables-container');
 const tableModalWarning = document.querySelector('#tables-modal #warning-text');
 
-let tables = [
-  // {
-  //   id: generateId(),
-  //   name: "طاولة 1",
-  //   order: []
-  // }
-];
+let tables = [];
 
 if (!localStorage.getItem('cafeteria-tables')) {
   // save tables in local storage
