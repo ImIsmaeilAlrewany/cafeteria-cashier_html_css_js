@@ -319,7 +319,8 @@ body {
 
 .menu .categories::-webkit-scrollbar,
 .order-menu .menu-categories::-webkit-scrollbar,
-.orders-display .table-container::-webkit-scrollbar {
+.orders-display .table-container::-webkit-scrollbar,
+.report .options::-webkit-scrollbar {
   scroll-behavior: smooth;
   background-color: #fff;
   border-radius: 6px;
@@ -327,7 +328,8 @@ body {
 
 .menu .categories::-webkit-scrollbar-thumb,
 .order-menu .menu-categories::-webkit-scrollbar-thumb,
-.orders-display .table-container::-webkit-scrollbar-thumb {
+.orders-display .table-container::-webkit-scrollbar-thumb,
+.report .options::-webkit-scrollbar-thumb {
   background-color: var(--primary);
   border-radius: 6px;
 }
@@ -542,3 +544,27 @@ body {
 }
 
 /* end notification style */
+
+/* start report file style */
+
+/* start work on report options (menu) */
+
+.report .options li {
+  color: var(--background);
+  padding: 12px 16px;
+}
+
+.report .options li {
+  width: 200px;
+  height: 80px;
+  color: var(--background);
+  flex-shrink: 0;
+}
+
+.report .options li.active {
+  border: 1px solid var(--background);
+}
+
+/* end work on report options (menu) */
+
+/* end report file style */

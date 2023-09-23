@@ -1,5 +1,6 @@
 import findIdInArray from './layouts/findIdInArray.js';
 import findIdInArrayInArray from './layouts/findIdInArrayInArray.js';
+import selectFromMenu from './layouts/selectFromMenu.js';
 
 // get all tables that are saved in local storage
 let tables = JSON.parse(localStorage.getItem('cafeteria-tables')) || [];
@@ -43,17 +44,10 @@ if (itemsListElement && allCategories.length > 0)
 
 // change the selected category and display its items
 const listItemElements = document.querySelectorAll('.order-menu .menu-categories li');
-if (listItemElements) listItemElements.forEach((element, index) => {
-  element.addEventListener('click', () => {
-    listItemElements.forEach(ele => {
-      ele.classList.remove('active');
-    });
+if (listItemElements) selectFromMenu(listItemElements, (index) => {
+  itemsListElement.innerHTML = itemsElementArray(allCategories[index].content).join(' ');
 
-    element.classList.add('active');
-    itemsListElement.innerHTML = itemsElementArray(allCategories[index].content).join(' ');
-
-    addOrder();
-  });
+  addOrder();
 });
 
 // add orders to the table by clicking on items

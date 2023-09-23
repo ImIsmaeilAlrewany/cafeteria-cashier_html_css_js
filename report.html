@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Al-cashier Report Page</title>
+  <link rel="stylesheet" href="./css/all.min.css">
+  <link rel="stylesheet" href="./css/bootstrap.rtl.min.css">
+  <link rel="stylesheet" href="./css/master.css">
+  <script>
+    // check if client is logged in
+    const isLoggedIn = JSON.parse(sessionStorage.getItem('isLoggedIn'));
+    if (!isLoggedIn) location.href = './login.html';
+
+    // check if the online user/client is admin or not
+    const onlineClient = JSON.parse(sessionStorage.getItem('onlineClient'));
+    if (onlineClient.name !== 'admin') location.href = './index.html';
+  </script>
+</head>
+
+<body class="bg-primary">
+
+  <!-- start navbar -->
+
+  <nav class="navbar p-0">
+    <div class="container-fluid p-3">
+      <h1 class="logo m-0 fw-bold">الكاشير</h1>
+      <div class="nav-options d-flex align-items-center">
+        <div class="mode me-3 rounded d-flex align-items-center">
+          <div id="dark" class="dark-mode" role="button">
+            <i class="fa-regular fa-moon"></i>
+          </div>
+          <div id="light" class="light-mode" role="button">
+            <i class="fa-regular fa-sun"></i>
+          </div>
+        </div>
+        <div class="slider position-relative">
+          <div id="bars" class="bars fs-1 d-flex align-items-center" role="button">
+            <i class="fa-solid fa-bars"></i>
+          </div>
+          <aside id="slide-menu" class="menu position-fixed py-3 text-center">
+            <ul class="m-0 list-unstyled d-flex align-items-center flex-column">
+              <li class="w-100 p-2">
+                <a class="text-decoration-none" href="./index.html" role="button">الصفحة الرئيسية</a>
+              </li>
+              <li class="w-100 p-2">
+                <a class="text-decoration-none" href="./profile.html" role="button">تعديل الحساب</a>
+              </li>
+              <li class="w-100 p-2">
+                <a class="text-decoration-none" href="./register.html" role="button">إضافة حساب</a>
+              </li>
+              <li class="w-100 p-2">
+                <a class="text-decoration-none" href="./menu.html" role="button">قائمة الطعام</a>
+              </li>
+              <li class="w-100 p-2">
+                <a class="text-decoration-none active" href="./report.html" role="button">التقارير اليومية</a>
+              </li>
+              <li class="w-100 p-2">
+                <a id="logout" class="text-decoration-none" role="button">إنهاء الشيفت</a>
+              </li>
+            </ul>
+          </aside>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- end navbar -->
+
+  <!-- start report options -->
+
+  <div class="container">
+    <section class="report">
+      <ul class="options list-unstyled m-0 py-3 d-flex overflow-auto">
+        <li class="m-0 me-3 p-0 shadow rounded d-flex align-items-center justify-content-center active" role="button">
+          نظرة عامة</li>
+        <li class="m-0 me-3 p-0 shadow rounded d-flex align-items-center justify-content-center" role="button">طاولات
+          تمت</li>
+        <li class="m-0 me-3 p-0 shadow rounded d-flex align-items-center justify-content-center" role="button">طاولات
+          ملغاة</li>
+        <li class="m-0 me-3 p-0 shadow rounded d-flex align-items-center justify-content-center" role="button">وشك
+          النفاذ</li>
+        <li class="m-0 me-3 p-0 shadow rounded d-flex align-items-center justify-content-center" role="button">الكاشير
+        </li>
+      </ul>
+    </section>
+  </div>
+
+  <!-- end report options -->
+
+  <script src="./js/all.min.js"></script>
+  <script src="./js/bootstrap.bundle.min.js"></script>
+  <script type="module" src="./js/report.js"></script>
+  <script type="module" src="./js/layouts/slider.js"></script>
+  <script src="./js/layouts/mode.js"></script>
+  <script src="./js/layouts/notification.js"></script>
+</body>
+
+</html>
