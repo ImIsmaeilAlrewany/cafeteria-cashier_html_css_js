@@ -8,11 +8,7 @@
   <link rel="stylesheet" href="./css/all.min.css">
   <link rel="stylesheet" href="./css/bootstrap.rtl.min.css">
   <link rel="stylesheet" href="./css/master.css">
-  <script>
-    // check if client is logged in
-    const isLoggedIn = JSON.parse(sessionStorage.getItem('isLoggedIn'));
-    if (!isLoggedIn) location.href = './login.html';
-  </script>
+  <script src="./js/layouts/isLoggedIn.js"></script>
 </head>
 
 <body class="bg-primary">

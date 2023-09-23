@@ -8,11 +8,8 @@
   <link rel="stylesheet" href="./css/all.min.css">
   <link rel="stylesheet" href="./css/bootstrap.rtl.min.css">
   <link rel="stylesheet" href="./css/master.css">
+  <script src="./js/layouts/isLoggedIn.js"></script>
   <script>
-    // check if client is logged in
-    const isLoggedIn = JSON.parse(sessionStorage.getItem('isLoggedIn'));
-    if (!isLoggedIn) location.href = './login.html';
-
     // get table data from session storage
     const data = JSON.parse(sessionStorage.getItem('selected-table'));
     if (data) document.title = `Al-cashier ${data.name} Orders Print`;
