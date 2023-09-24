@@ -349,17 +349,22 @@ if (orderTable) orderTable.addEventListener('click', () => {
     // in this solution a problem which is when I open website locally won't work
     // so I always need a host to work properly lik liveServer or gitHub host
     // Error(Blocked a frame with origin "null" from accessing a cross-origin frame)
-    var iframe = document.createElement('iframe');
-    iframe.style.display = 'none';
-    iframe.src = 'print.html';
-    document.body.appendChild(iframe);
+    // var iframe = document.createElement('iframe');
+    // iframe.style.display = 'none';
+    // iframe.src = 'print.html';
+    // document.body.appendChild(iframe);
 
-    iframe.onload = function () {
-      setTimeout(function () {
-        iframe.contentWindow.print();
-        document.body.removeChild(iframe);
-      }, 1000); // Adjust the delay as needed
-    };
+    // iframe.onload = function () {
+    //   setTimeout(function () {
+    //     iframe.contentWindow.print();
+    //     document.body.removeChild(iframe);
+    //   }, 1000); // Adjust the delay as needed
+    // };
+    setTimeout(() => {
+      const data = window.open('print.html', '_blank', 'width=0,height=0');
+      data.print('print.html');
+      setTimeout(() => data.close(), 1000);
+    }, 1000);
   }
 });
 
