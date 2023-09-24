@@ -5,6 +5,18 @@ const login = document.getElementById('login');
 const loginInputs = document.querySelectorAll('#login .form-control');
 const loginWarnings = document.querySelectorAll('#login .form-text');
 
+// first because we use local storage and there is no database
+// when we use this application on any other browser will directly go to login
+// but because at that time there will be no account data in local storage
+// we need to add admin account globally when website opens
+// if there is already data nothing will happen but if there is no data will add it
+if (!JSON.parse(localStorage.getItem('clients')))
+  localStorage.setItem('clients', JSON.stringify([{
+    name: 'admin',
+    phone: '',
+    password: '1234admin'
+  }]));
+
 // submit data and check if it correct then login and save in session storage
 if (login) login.addEventListener('submit', (e) => {
   const data = collectData(loginInputs);

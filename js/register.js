@@ -5,18 +5,6 @@ const register = document.getElementById('register');
 const registerInputs = document.querySelectorAll('.register .form-control');
 const registerWarnings = document.querySelectorAll('.register .form-text');
 
-// first because we use local storage and there is no database
-// when we use this application on any other browser will directly go to login
-// but because at that time there will be no account data in local storage
-// we need to add admin account globally when website opens
-// if there is already data nothing will happen but if there is no data will add it
-if (!JSON.parse(localStorage.getItem('clients')))
-  localStorage.setItem('clients', JSON.stringify([{
-    name: 'admin',
-    phone: '',
-    password: '1234admin'
-  }]));
-
 // all warning messages if client entered wrong data
 const warningMessages = [
   'مسموح فقط الحروف وأزيد من ثلاث حروف',
