@@ -9,54 +9,18 @@
   <link rel="stylesheet" href="./css/bootstrap.rtl.min.css">
   <link rel="stylesheet" href="./css/master.css">
   <script src="./js/layouts/isLoggedIn.js"></script>
+  <script src="./js/layouts/includeHTML.js"></script>
+  <script>
+    includeHTML('./layouts/navbar.html', 'nav');
+    const path = 'home';
+  </script>
 </head>
 
 <body class="bg-primary">
 
   <!-- start navbar -->
 
-  <nav class="navbar p-0">
-    <div class="container-fluid p-3">
-      <h1 class="logo m-0 fw-bold">الكاشير</h1>
-      <div class="nav-options d-flex align-items-center">
-        <div class="mode me-3 rounded d-flex align-items-center">
-          <div id="dark" class="dark-mode" role="button">
-            <i class="fa-regular fa-moon"></i>
-          </div>
-          <div id="light" class="light-mode" role="button">
-            <i class="fa-regular fa-sun"></i>
-          </div>
-        </div>
-        <div class="slider position-relative">
-          <div id="bars" class="bars fs-1 d-flex align-items-center" role="button">
-            <i class="fa-solid fa-bars"></i>
-          </div>
-          <aside id="slide-menu" class="menu position-fixed py-3 text-center">
-            <ul class="m-0 list-unstyled d-flex align-items-center flex-column">
-              <li class="w-100 p-2">
-                <a class="active text-decoration-none" href="./index.html" role="button">الصفحة الرئيسية</a>
-              </li>
-              <li class="w-100 p-2">
-                <a class="text-decoration-none" href="./profile.html" role="button">تعديل الحساب</a>
-              </li>
-              <li class="w-100 p-2">
-                <a class="text-decoration-none" href="./register.html" role="button">إضافة حساب</a>
-              </li>
-              <li class="w-100 p-2">
-                <a class="text-decoration-none" href="./menu.html" role="button">قائمة الطعام</a>
-              </li>
-              <li class="w-100 p-2">
-                <a class="text-decoration-none" href="./report.html" role="button">التقارير اليومية</a>
-              </li>
-              <li class="w-100 p-2">
-                <a id="logout" class="text-decoration-none" role="button">إنهاء الشيفت</a>
-              </li>
-            </ul>
-          </aside>
-        </div>
-      </div>
-    </div>
-  </nav>
+  <nav class="navbar p-0 sticky-top"></nav>
 
   <!-- end navbar -->
 
@@ -94,7 +58,7 @@
   <script src="./js/bootstrap.bundle.min.js"></script>
   <script type="module" src="./js/index.js"></script>
   <script type="module" src="./js/layouts/slider.js"></script>
-  <script src="./js/layouts/mode.js"></script>
+  <script type="module" src="./js/layouts/mode.js"></script>
   <script src="./js/layouts/notification.js"></script>
 </body>
 
