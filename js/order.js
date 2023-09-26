@@ -360,10 +360,12 @@ if (orderTable) orderTable.addEventListener('click', () => {
     //     document.body.removeChild(iframe);
     //   }, 1000); // Adjust the delay as needed
     // };
+
     setTimeout(() => {
       const data = window.open('print.html', '_blank', 'width=0,height=0');
       data.print('print.html');
-      setTimeout(() => data.close(), 1000);
+      // new Error in mobile browsers the page close before loading
+      // setTimeout(() => data.close(), 1000);
     }, 1000);
   }
 });

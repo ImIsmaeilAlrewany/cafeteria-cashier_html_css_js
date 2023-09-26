@@ -474,24 +474,25 @@ body {
 
 /* start print page style while printing */
 
-@media print {
-  .print-label h2 {
-    font-family: 'Vibes', cursive;
-    letter-spacing: 1px;
-  }
-
-  table,
-  table tr,
-  table .print-body,
-  table .print-foot {
-    border-color: #ccc;
-  }
-
-  table th,
-  table td {
-    color: #212121;
-  }
+/* @media print { */
+.print .print-label h2 {
+  font-family: 'Vibes', cursive;
+  letter-spacing: 1px;
 }
+
+.print table,
+.print table tr,
+.print table .print-body,
+.print table .print-foot {
+  border-color: #ccc;
+}
+
+.print table th,
+.print table td {
+  color: #212121;
+}
+
+/* } */
 
 /* end print page style while printing */
 
