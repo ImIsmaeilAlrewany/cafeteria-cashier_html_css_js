@@ -568,4 +568,21 @@ body {
 
 /* end work on report options (menu) */
 
+/* start work on report-general file styles */
+
+.option-details .general-details {
+  margin: 0 -8px;
+}
+
+.option-details .general-details>div>div {
+  background-color: var(--background);
+  color: var(--text);
+}
+
+.option-details .general-details h6 {
+  font-size: 15px;
+}
+
+/* end work on report-general file styles */
+
 /* end report file style */
