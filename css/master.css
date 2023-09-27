@@ -570,8 +570,20 @@ body {
 
 /* start work on report-general file styles */
 
-.option-details .general-details {
+.option-details .general-details,
+.option-details .general-report-structure {
   margin: 0 -8px;
+}
+
+.option-details .general-report-structure .section-label {
+  background-color: var(--secondary);
+  color: var(--background);
+  padding: 12px 16px;
+}
+
+.option-details .general-details>div {
+  min-width: 155px;
+  min-height: 80px;
 }
 
 .option-details .general-details>div>div {
@@ -580,13 +592,27 @@ body {
 }
 
 .option-details .general-details>div>div .detail-logo {
-  opacity: .75;
+  opacity: .6;
   top: 6px;
   right: 6px;
 }
 
 .option-details .general-details h6 {
   font-size: 15px;
+}
+
+.general-chart canvas {
+  border: 2.5px solid var(--background);
+  max-width: 500px;
+  max-height: 255px;
+}
+
+@media (max-width: 324px) {
+  .option-details .general-details>div {
+    min-width: 200px;
+    min-height: 80px;
+    margin: 16px auto 0;
+  }
 }
 
 /* end work on report-general file styles */

@@ -1,62 +1,80 @@
 <body>
-  <div class="general-details row g-3">
-    <div class="cashiers-number col-6 col-sm-4 col-md-3 col-lg-2 px-2">
-      <div class="p-3 rounded text-center position-relative">
-        <div class="detail-logo position-absolute">
-          <i class="fa-solid fa-cash-register fs-4"></i>
+  <div class="general-report-structure row">
+    <div class="col-12 col-lg-6 px-2">
+      <div class="section-label rounded text-center mt-3">
+        <h2 class="m-0 p-0 fs-6">
+          <i class="fa-solid fa-globe"></i>
+          <span class="ms-2">نظرة عامة على العمل</span>
+        </h2>
+      </div>
+      <div class="general-details row g-3 flex-wrap">
+        <div class="cashiers-number col-6 col-sm-4 col-md-3 col-lg-2 px-2">
+          <div class="p-3 rounded text-center position-relative">
+            <div class="detail-logo position-absolute">
+              <i class="fa-solid fa-cash-register fs-4"></i>
+            </div>
+            <h6 class="p-0 mb-2 text-nowrap">عدد الكاشير</h6>
+            <p class="p-0 m-0"></p>
+          </div>
         </div>
-        <h6 class="p-0 mb-2 text-nowrap">عدد الكاشير</h6>
-        <p class="p-0 m-0"></p>
+        <div class="drinks-number col-6 col-sm-4 col-md-3 col-lg-2 px-2">
+          <div class="p-3 rounded text-center position-relative">
+            <div class="detail-logo position-absolute">
+              <i class="fa-solid fa-mug-hot fs-4"></i>
+            </div>
+            <h6 class="p-0 mb-2 text-nowrap">عدد المشروبات</h6>
+            <p class="p-0 m-0"></p>
+          </div>
+        </div>
+        <div class="daily-income col-6 col-sm-4 col-md-3 col-lg-2 px-2">
+          <div class="p-3 rounded text-center position-relative">
+            <div class="detail-logo position-absolute">
+              <i class="fa-solid fa-sack-dollar fs-4"></i>
+            </div>
+            <h6 class="p-0 mb-2 text-nowrap">دخل اليوم</h6>
+            <p class="p-0 m-0"></p>
+          </div>
+        </div>
+        <div class="done-tables col-6 col-sm-4 col-md-3 col-lg-2 px-2">
+          <div class="p-3 rounded text-center position-relative">
+            <div class="detail-logo position-absolute">
+              <i class="fa-solid fa-circle-check fs-4"></i>
+            </div>
+            <h6 class="p-0 mb-2 text-nowrap">طاولات تمت</h6>
+            <p class="p-0 m-0"></p>
+          </div>
+        </div>
+        <div class="canceled-tables col-6 col-sm-4 col-md-3 col-lg-2 px-2">
+          <div class="p-3 rounded text-center position-relative">
+            <div class="detail-logo position-absolute">
+              <i class="fa-solid fa-circle-xmark fs-4"></i>
+            </div>
+            <h6 class="p-0 mb-2 text-nowrap">طاولات ملغاة</h6>
+            <p class="p-0 m-0"></p>
+          </div>
+        </div>
+        <div class="ordered-orders col-6 col-sm-4 col-md-3 col-lg-2 px-2">
+          <div class="p-3 rounded text-center position-relative">
+            <div class="detail-logo position-absolute">
+              <i class="fa-solid fa-utensils fs-4"></i>
+            </div>
+            <h6 class="p-0 mb-2 text-nowrap">أطعمة مسحوبة</h6>
+            <p class="p-0 m-0"></p>
+          </div>
+        </div>
       </div>
     </div>
-    <div class="drinks-number col-6 col-sm-4 col-md-3 col-lg-2 px-2">
-      <div class="p-3 rounded text-center position-relative">
-        <div class="detail-logo position-absolute">
-          <i class="fa-solid fa-mug-hot fs-4"></i>
-        </div>
-        <h6 class="p-0 mb-2 text-nowrap">عدد المشروبات</h6>
-        <p class="p-0 m-0"></p>
+    <div class="col-12 col-lg-6 px-2">
+      <div class="section-label rounded text-center mt-3">
+        <h2 class="m-0 p-0 fs-6">
+          <i class="fa-solid fa-chart-line"></i>
+          <span class="ms-2">جدول بياني لأرباح الشهر</span>
+        </h2>
+      </div>
+      <div class="general-chart my-3">
+        <canvas id="daily-income-chart" class="bg-light rounded w-100 mx-auto"></canvas>
       </div>
     </div>
-    <div class="daily-income col-6 col-sm-4 col-md-3 col-lg-2 px-2">
-      <div class="p-3 rounded text-center position-relative">
-        <div class="detail-logo position-absolute">
-          <i class="fa-solid fa-sack-dollar fs-4"></i>
-        </div>
-        <h6 class="p-0 mb-2 text-nowrap">دخل اليوم</h6>
-        <p class="p-0 m-0"></p>
-      </div>
-    </div>
-    <div class="done-tables col-6 col-sm-4 col-md-3 col-lg-2 px-2">
-      <div class="p-3 rounded text-center position-relative">
-        <div class="detail-logo position-absolute">
-          <i class="fa-solid fa-circle-check fs-4"></i>
-        </div>
-        <h6 class="p-0 mb-2 text-nowrap">طاولات تمت</h6>
-        <p class="p-0 m-0"></p>
-      </div>
-    </div>
-    <div class="canceled-tables col-6 col-sm-4 col-md-3 col-lg-2 px-2">
-      <div class="p-3 rounded text-center position-relative">
-        <div class="detail-logo position-absolute">
-          <i class="fa-solid fa-circle-xmark fs-4"></i>
-        </div>
-        <h6 class="p-0 mb-2 text-nowrap">طاولات ملغاة</h6>
-        <p class="p-0 m-0"></p>
-      </div>
-    </div>
-    <div class="ordered-orders col-6 col-sm-4 col-md-3 col-lg-2 px-2">
-      <div class="p-3 rounded text-center position-relative">
-        <div class="detail-logo position-absolute">
-          <i class="fa-solid fa-utensils fs-4"></i>
-        </div>
-        <h6 class="p-0 mb-2 text-nowrap">أطعمة مسحوبة</h6>
-        <p class="p-0 m-0"></p>
-      </div>
-    </div>
-  </div>
-  <div class="daily-income-chart">
-
   </div>
   <script>
     // add details to the general report option
@@ -99,5 +117,33 @@
     // now put the details in its paragraph to show it in dom
     const details = [clientsNumber, allDrinks, dailyIncome, doneTables, canceled, ordered];
     detailElements.forEach((ele, ind) => ele.innerHTML = details[ind]);
+
+    // start work on the chart of daily income using chart.js library
+    const ctx = document.getElementById("daily-income-chart").getContext("2d");
+    const labels = paidOrders.map(order => {
+      return order.date.slice(order.date.indexOf('/') + 1, order.date.lastIndexOf('/'));
+    });
+    const data = paidOrders.map(order => {
+      return order.data.map(table => table.totalPrice).reduce((a, c) => a = a + c);
+    });
+
+    const chart = new Chart(ctx, {
+      type: "line",
+      data: {
+        labels,
+        datasets: [
+          {
+            label: "Daily Income",
+            data,
+            borderColor: "rgba(255, 99, 132, 1)",
+            backgroundColor: "rgba(255, 99, 132, 0.2)",
+            tension: 0.5
+          },
+        ],
+      },
+      options: {
+        responsive: true
+      },
+    });
   </script>
 </body>
