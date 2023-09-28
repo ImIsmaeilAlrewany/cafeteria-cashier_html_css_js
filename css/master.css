@@ -575,10 +575,16 @@ body {
   margin: 0 -8px;
 }
 
-.option-details .general-report-structure .section-label {
+.option-details .general-report-structure .section-label,
+.option-details .done-report-structure .section-label {
   background-color: var(--secondary);
   color: var(--background);
   padding: 12px 16px;
+}
+
+.option-details .general-report-structure .section-label svg,
+.option-details .done-report-structure .section-label svg {
+  margin: 2px 0 -2px;
 }
 
 .option-details .general-details>div {
@@ -616,5 +622,30 @@ body {
 }
 
 /* end work on report-general file styles */
+
+/* start work on report-done file styles */
+.done-report-structure table {
+  border-color: var(--gray);
+}
+
+.done-report-structure .show-day .select-day-label,
+.done-report-structure .show-rows .select-row-label,
+.done-report-structure table td {
+  color: var(--background);
+}
+
+.done-report-structure .pagination a {
+  background-color: var(--background);
+  border-color: var(--background);
+  color: var(--text);
+}
+
+.done-report-structure button {
+  background-color: var(--accent);
+  color: var(--background);
+  padding: 4px 12px;
+}
+
+/* end work on report-done file styles */
 
 /* end report file style */

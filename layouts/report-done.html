@@ -1,0 +1,57 @@
+<body>
+  <div class="done-report-structure row">
+    <div class="col-12 col-lg-6">
+      <div class="section-label rounded text-center my-3">
+        <h2 class="m-0 p-0 fs-6">
+          <i class="fa-solid fa-circle-check"></i>
+          <span class="ms-2">كل الطاولات التي تمت</span>
+        </h2>
+      </div>
+      <div class="done-table-container table-responsive">
+        <form class="show-day" action="">
+          <label class="select-day-label" for="done-select-day">اليوم</label>
+          <select id="done-select-day" class="form-select form-select-sm w-auto d-inline-block shadow-none"
+            name="show"></select>
+          <button type="button" class="rounded border-0 done-select-label">عرض</button>
+        </form>
+        <table id="done-table" class="table table-bordered table-hover my-3 mx-0">
+          <thead>
+            <tr>
+              <td class="text-nowrap bg-transparent text-center">إسم الطاولة</td>
+              <td class="text-nowrap bg-transparent text-center">الكاشير</td>
+              <td class="text-nowrap bg-transparent text-center">عدد الطلبات</td>
+              <td class="text-nowrap bg-transparent text-center">إجمالي الدخل</td>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+        <div class="table-footer row m-0">
+          <div class="col-6 px-0">
+            <ul class="pagination pagination-sm m-0 p-0">
+              <li class="page-item">
+                <a id="done-table-next" class="page-link" role="button">التالي</a>
+              </li>
+              <li class="page-item">
+                <a class="page-link">***</a>
+              </li>
+              <li class="page-item">
+                <a id="done-table-prev" class="page-link" role="button">السابق</a>
+              </li>
+            </ul>
+          </div>
+          <div class="col-6 px-0">
+            <form class="show-rows text-end" action="">
+              <label class="select-row-label" for="done-select-row">الصفوف</label>
+              <select id="done-select-row" class="form-select form-select-sm w-auto d-inline-block shadow-none"
+                name="show">
+                <option value="10">10</option>
+                <option value="25">25</option>
+                <option value="50">50</option>
+              </select>
+              <button type="button" class="rounded border-0 done-select-label">أظهر</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+</body>
