@@ -595,9 +595,23 @@ body {
   margin: 2px 0 -2px;
 }
 
+.done-report-structure .done-table-container {
+  overflow-y: hidden;
+}
+
 .done-report-structure table,
 .canceled-report-structure table {
   border-color: var(--gray);
+}
+
+.done-report-structure table td {
+  background-color: transparent;
+  text-align: center;
+  cursor: pointer;
+}
+
+.done-report-structure table thead tr {
+  pointer-events: none;
 }
 
 .done-report-structure .show-day .select-day-label,
@@ -636,6 +650,14 @@ body {
     min-width: 200px;
     min-height: 80px;
     margin: 16px auto 0;
+  }
+}
+
+@media (min-width: 992px) {
+
+  .done-report-structure .done-table-container,
+  .canceled-report-structure .canceled-table-container {
+    margin-bottom: 16px;
   }
 }
 

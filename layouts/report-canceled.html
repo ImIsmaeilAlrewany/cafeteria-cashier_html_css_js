@@ -67,10 +67,10 @@
     </div>
   </div>
   <script>
-    // bring all done tables
+    // bring all canceled tables
     const canceled = JSON.parse(localStorage.getItem('canceled-tables')) || [];
 
-    // start work on the chart of done tables using chart.js library
+    // start work on the chart of canceled tables using chart.js library
     const ctx = document.getElementById("canceled-chart").getContext("2d");
 
     const chart = new Chart(ctx, {

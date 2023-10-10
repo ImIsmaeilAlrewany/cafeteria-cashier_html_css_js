@@ -70,6 +70,36 @@
     // bring all done tables
     const paidOrders = JSON.parse(localStorage.getItem('paid-orders')) || [];
 
+    // select all elements
+    const selectDate = document.getElementById('done-select-day');
+    const tableBody = document.querySelector('#done-table tbody');
+
+    // display all dates in month inside the select box
+    paidOrders.forEach(day => {
+      const option = document.createElement('option');
+      option.textContent = day.date;
+      selectDate.append(option);
+    });
+
+    // display all done tables inside table body
+    const buildTable = (array) => {
+      array.forEach(ele => {
+        const tr = document.createElement('tr');
+        const tdData = [ele.table.name, ele.cashier, ele.ordersNumber, ele.totalPrice];
+
+        // add td data in tr
+        tdData.forEach(d => {
+          const td = document.createElement('td');
+          td.textContent = d;
+          tr.append(td);
+        });
+        tableBody.append(tr);
+      });
+    };
+
+    // show the first date in the done table array
+    buildTable(paidOrders[0].data);
+
     // start work on the chart of done tables using chart.js library
     const ctx = document.getElementById("done-chart").getContext("2d");
 
