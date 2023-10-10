@@ -1,0 +1,69 @@
+<body>
+  <div class="canceled-report-structure row">
+    <div class="col-12 col-lg-6 px-2">
+      <div class="section-label rounded text-center my-3">
+        <h2 class="m-0 p-0 fs-6">
+          <i class="fa-solid fa-circle-xmark fs-6"></i>
+          <span class="ms-2">كل الطاولات التي ألغت</span>
+        </h2>
+      </div>
+      <div class="canceled-table-container table-responsive">
+        <form class="show-day" action="">
+          <label class="select-day-label" for="canceled-select-day">اليوم</label>
+          <select id="canceled-select-day" class="form-select form-select-sm w-auto d-inline-block shadow-none"
+            name="show"></select>
+          <button type="button" class="rounded border-0 done-select-label">عرض</button>
+        </form>
+        <table id="canceled-table" class="table table-bordered table-hover my-3 mx-0">
+          <thead>
+            <tr>
+              <td class="text-nowrap bg-transparent text-center">إسم الطاولة</td>
+              <td class="text-nowrap bg-transparent text-center">الكاشير</td>
+              <td class="text-nowrap bg-transparent text-center">عدد الطلبات</td>
+              <td class="text-nowrap bg-transparent text-center">إجمالي الدخل</td>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+        <div class="table-footer row m-0">
+          <div class="col-6 px-0">
+            <ul class="pagination pagination-sm m-0 p-0">
+              <li class="page-item">
+                <a id="done-table-next" class="page-link" role="button">التالي</a>
+              </li>
+              <li class="page-item">
+                <a class="page-link">***</a>
+              </li>
+              <li class="page-item">
+                <a id="done-table-prev" class="page-link" role="button">السابق</a>
+              </li>
+            </ul>
+          </div>
+          <div class="col-6 px-0">
+            <form class="show-rows text-end" action="">
+              <label class="select-row-label" for="canceled-select-row">الصفوف</label>
+              <select id="canceled-select-row" class="form-select form-select-sm w-auto d-inline-block shadow-none"
+                name="show">
+                <option value="10">10</option>
+                <option value="25">25</option>
+                <option value="50">50</option>
+              </select>
+              <button type="button" class="rounded border-0 done-select-label">أظهر</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-12 col-lg-6 px-2">
+      <div class="section-label rounded text-center mt-3">
+        <h2 class="m-0 p-0 fs-6">
+          <i class="fa-solid fa-chart-line"></i>
+          <span class="ms-2">جدول بياني للطاولات الملغاة في الشهر</span>
+        </h2>
+      </div>
+      <div class="canceled-chart my-3">
+        <canvas id="canceled-chart" class="bg-light rounded w-100 mx-auto"></canvas>
+      </div>
+    </div>
+  </div>
+</body>
