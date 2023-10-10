@@ -66,4 +66,30 @@
       </div>
     </div>
   </div>
+  <script>
+    // bring all done tables
+    const paidOrders = JSON.parse(localStorage.getItem('paid-orders')) || [];
+
+    // start work on the chart of done tables using chart.js library
+    const ctx = document.getElementById("done-chart").getContext("2d");
+
+    const chart = new Chart(ctx, {
+      type: "bar",
+      data: {
+        labels: paidOrders.map(order => new Date(order.date).getDate()),
+        datasets: [
+          {
+            label: "Done Tables",
+            data: paidOrders.map(order => order.data.length),
+            borderColor: "rgba(255, 99, 132, 0.2)",
+            backgroundColor: "rgba(255, 99, 132, 1)",
+            barThickness: 20
+          },
+        ],
+      },
+      options: {
+        responsive: true,
+      },
+    });
+  </script>
 </body>

@@ -66,4 +66,30 @@
       </div>
     </div>
   </div>
+  <script>
+    // bring all done tables
+    const canceled = JSON.parse(localStorage.getItem('canceled-tables')) || [];
+
+    // start work on the chart of done tables using chart.js library
+    const ctx = document.getElementById("canceled-chart").getContext("2d");
+
+    const chart = new Chart(ctx, {
+      type: "bar",
+      data: {
+        labels: canceled.map(c => new Date(c.date).getDate()),
+        datasets: [
+          {
+            label: "Done Tables",
+            data: canceled.map(c => c.data.length),
+            borderColor: "rgba(255, 99, 132, 0.2)",
+            backgroundColor: "rgba(255, 99, 132, 1)",
+            barThickness: 20
+          },
+        ],
+      },
+      options: {
+        responsive: true,
+      },
+    });
+  </script>
 </body>
