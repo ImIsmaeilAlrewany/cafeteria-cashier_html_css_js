@@ -9,10 +9,9 @@
       </div>
       <div class="done-table-container table-responsive">
         <form class="show-day" action="">
-          <label class="select-day-label" for="done-select-day">اليوم</label>
-          <select id="done-select-day" class="form-select form-select-sm w-auto d-inline-block shadow-none"
-            name="show"></select>
-          <button type="button" class="rounded border-0 done-select-label">عرض</button>
+          <label class="select-day-label" for="select-day">اليوم</label>
+          <select id="select-day" class="form-select form-select-sm w-auto d-inline-block shadow-none"></select>
+          <button id="day-button" type="button" class="rounded border-0 done-select-label">عرض</button>
         </form>
         <table id="done-table" class="table table-bordered table-hover my-3 mx-0">
           <thead>
@@ -41,14 +40,13 @@
           </div>
           <div class="col-6 px-0">
             <form class="show-rows text-end" action="">
-              <label class="select-row-label" for="done-select-row">الصفوف</label>
-              <select id="done-select-row" class="form-select form-select-sm w-auto d-inline-block shadow-none"
-                name="show">
+              <label class="select-row-label" for="select-row">الصفوف</label>
+              <select id="select-row" class="form-select form-select-sm w-auto d-inline-block shadow-none">
                 <option value="10">10</option>
                 <option value="25">25</option>
                 <option value="50">50</option>
               </select>
-              <button type="button" class="rounded border-0 done-select-label">أظهر</button>
+              <button id="row-button" type="button" class="rounded border-0 done-select-label">أظهر</button>
             </form>
           </div>
         </div>
@@ -67,11 +65,11 @@
     </div>
   </div>
   <script>
-    // bring all done tables
-    const paidOrders = JSON.parse(localStorage.getItem('paid-orders')) || [];
-
     // select all elements
-    const selectDate = document.getElementById('done-select-day');
+    const selectDate = document.getElementById('select-day');
+    const selectDateButton = document.getElementById('day-button');
+    const selectMany = document.getElementById('select-row');
+    const selectManyButton = document.getElementById('row-button');
     const tableBody = document.querySelector('#done-table tbody');
 
     // display all dates in month inside the select box
@@ -81,24 +79,24 @@
       selectDate.append(option);
     });
 
-    // display all done tables inside table body
-    const buildTable = (array) => {
-      array.forEach(ele => {
-        const tr = document.createElement('tr');
-        const tdData = [ele.table.name, ele.cashier, ele.ordersNumber, ele.totalPrice];
-
-        // add td data in tr
-        tdData.forEach(d => {
-          const td = document.createElement('td');
-          td.textContent = d;
-          tr.append(td);
-        });
-        tableBody.append(tr);
-      });
-    };
-
     // show the first date in the done table array
-    buildTable(paidOrders[0].data);
+    if (paidOrders[0].data.length <= 10) {
+      buildTable(tableBody, paidOrders[0].data, paidOrders[0].data.length);
+    } else {
+      buildTable(tableBody, paidOrders[0].data, +selectMany.value);
+    }
+
+    // show the data depends on the day I have selected
+    showDay(selectDateButton, selectDate, paidOrders, (data) => {
+      if (data.length <= +selectMany.value) {
+        return buildTable(tableBody, data, data.length);
+      } else {
+        return buildTable(tableBody, data, +selectMany.value);
+      }
+    }, tableBody);
+
+    // show rows in table depends on the select box
+    showRows(selectManyButton, selectMany, paidOrders, tableBody);
 
     // start work on the chart of done tables using chart.js library
     const ctx = document.getElementById("done-chart").getContext("2d");

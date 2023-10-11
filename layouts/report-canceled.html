@@ -9,10 +9,9 @@
       </div>
       <div class="canceled-table-container table-responsive">
         <form class="show-day" action="">
-          <label class="select-day-label" for="canceled-select-day">اليوم</label>
-          <select id="canceled-select-day" class="form-select form-select-sm w-auto d-inline-block shadow-none"
-            name="show"></select>
-          <button type="button" class="rounded border-0 done-select-label">عرض</button>
+          <label class="select-day-label" for="select-day">اليوم</label>
+          <select id="select-day" class="form-select form-select-sm w-auto d-inline-block shadow-none"></select>
+          <button id="day-button" type="button" class="rounded border-0 done-select-label">عرض</button>
         </form>
         <table id="canceled-table" class="table table-bordered table-hover my-3 mx-0">
           <thead>
@@ -41,14 +40,13 @@
           </div>
           <div class="col-6 px-0">
             <form class="show-rows text-end" action="">
-              <label class="select-row-label" for="canceled-select-row">الصفوف</label>
-              <select id="canceled-select-row" class="form-select form-select-sm w-auto d-inline-block shadow-none"
-                name="show">
+              <label class="select-row-label" for="select-row">الصفوف</label>
+              <select id="select-row" class="form-select form-select-sm w-auto d-inline-block shadow-none">
                 <option value="10">10</option>
                 <option value="25">25</option>
                 <option value="50">50</option>
               </select>
-              <button type="button" class="rounded border-0 done-select-label">أظهر</button>
+              <button id="row-button" type="button" class="rounded border-0 done-select-label">أظهر</button>
             </form>
           </div>
         </div>
@@ -67,8 +65,38 @@
     </div>
   </div>
   <script>
-    // bring all canceled tables
-    const canceled = JSON.parse(localStorage.getItem('canceled-tables')) || [];
+    // select all elements
+    const selectDate = document.getElementById('select-day');
+    const selectDateButton = document.getElementById('day-button');
+    const selectMany = document.getElementById('select-row');
+    const selectManyButton = document.getElementById('row-button');
+    const tableBody = document.querySelector('#canceled-table tbody');
+
+    // display all dates in month inside the select box
+    canceled.forEach(day => {
+      const option = document.createElement('option');
+      option.textContent = day.date;
+      selectDate.append(option);
+    });
+
+    // show the first date in the done table array
+    if (canceled[0].data.length <= 10) {
+      buildTable(tableBody, canceled[0].data, canceled[0].data.length);
+    } else {
+      buildTable(tableBody, canceled[0].data, +selectMany.value);
+    }
+
+    // show the data depends on the day I have selected
+    showDay(selectDateButton, selectDate, canceled, (data) => {
+      if (data.length <= +selectMany.value) {
+        return buildTable(tableBody, data, data.length);
+      } else {
+        return buildTable(tableBody, data, +selectMany.value);
+      }
+    }, tableBody);
+
+    // show rows in table depends on the select box
+    showRows(selectManyButton, selectMany, canceled, tableBody);
 
     // start work on the chart of canceled tables using chart.js library
     const ctx = document.getElementById("canceled-chart").getContext("2d");

@@ -292,6 +292,9 @@ if (removeTable) removeTable.addEventListener('click', () => {
     return string.slice(dateOnly.indexOf('/') + 1, dateOnly.lastIndexOf('/'));
   };
 
+  const totalPrice = table.order.map(object => +object.total).reduce((accumulator, currentValue) => accumulator + currentValue);
+  const ordersNumber = table.order.map(object => +object.quantity).reduce((accumulator, currentValue) => accumulator + currentValue);
+
   // the canceled tables will be like this [{date: '', data: [{}]}]
   let [isNewDay, objectIndex] = [true, null];
   let isNewMonth = true;
@@ -306,13 +309,13 @@ if (removeTable) removeTable.addEventListener('click', () => {
   });
   if (!isNewMonth) {
     if (isNewDay) {
-      canceledTables.push({ date: dateOnly, data: [{ table: table, cashier: onlineClient.name, cancelTime: dateAndTime }] });
+      canceledTables.push({ date: dateOnly, data: [{ table: table, cashier: onlineClient.name, cancelTime: dateAndTime, totalPrice, ordersNumber }] });
     } else {
-      canceledTables[objectIndex].data.push({ table: table, cashier: onlineClient.name, cancelTime: dateAndTime });
+      canceledTables[objectIndex].data.push({ table: table, cashier: onlineClient.name, cancelTime: dateAndTime, totalPrice, ordersNumber });
     }
   } else {
     localStorage.removeItem('canceled-tables');
-    canceledTables.push({ date: dateOnly, data: [{ table: table, cashier: onlineClient.name, cancelTime: dateAndTime }] });
+    canceledTables.push({ date: dateOnly, data: [{ table: table, cashier: onlineClient.name, cancelTime: dateAndTime, totalPrice, ordersNumber }] });
   }
   localStorage.setItem('canceled-tables', JSON.stringify(canceledTables));
 

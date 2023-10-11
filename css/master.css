@@ -595,7 +595,8 @@ body {
   margin: 2px 0 -2px;
 }
 
-.done-report-structure .done-table-container {
+.done-report-structure .done-table-container,
+.canceled-report-structure .canceled-table-container {
   overflow-y: hidden;
 }
 
@@ -604,13 +605,15 @@ body {
   border-color: var(--gray);
 }
 
-.done-report-structure table td {
+.done-report-structure table td,
+.canceled-report-structure table td {
   background-color: transparent;
   text-align: center;
   cursor: pointer;
 }
 
-.done-report-structure table thead tr {
+.done-report-structure table thead tr,
+.canceled-report-structure table thead tr {
   pointer-events: none;
 }
 
