@@ -53,6 +53,7 @@ if (login) login.addEventListener('submit', (e) => {
       isLoggedIn = false;
       loginWarnings[1].innerHTML = 'الرقم السري غير صحيح';
     } else {
+      // e.preventDefault();
       loginWarnings[1].innerHTML = '';
       isLoggedIn = true;
 
@@ -65,7 +66,7 @@ if (login) login.addEventListener('submit', (e) => {
         date: date.toLocaleDateString(),
         sessions: [
           {
-            start: date.toLocaleString(),
+            start: Date.now(),
             end: ''
           }
         ],
@@ -85,14 +86,11 @@ if (login) login.addEventListener('submit', (e) => {
       if (clientsWork.length > 0) {
         let clientIndex;
         for (let i = 0; i < clientsWork.length; i++) {
-          if (clientsWork[i].clientName === matchedData.name) {
-            clientIndex = i;
-            break;
-          }
+          if (clientsWork[i].clientName === matchedData.name) clientIndex = i;
         }
 
         // after searching on the client I exact
-        if (clientIndex) {
+        if (typeof clientIndex === 'number') {
           // I have found the client data already in local storage
           const workList = clientsWork[clientIndex].work;
           if (new Date(workList[workList.length - 1].date).getMonth() === date.getMonth()) {
@@ -100,9 +98,9 @@ if (login) login.addEventListener('submit', (e) => {
             // we need to check the day
             if (new Date(workList[workList.length - 1].date).getDate() === date.getDate()) {
               // the day is already in
-              workList.sessions.push(
+              workList[workList.length - 1].sessions.push(
                 {
-                  start: date.toLocaleString(),
+                  start: Date.now(),
                   end: ''
                 }
               );
