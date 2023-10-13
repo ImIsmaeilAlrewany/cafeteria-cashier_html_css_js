@@ -5,6 +5,12 @@ const login = document.getElementById('login');
 const loginInputs = document.querySelectorAll('#login .form-control');
 const loginWarnings = document.querySelectorAll('#login .form-text');
 
+// collect all clients work data for full month
+const clientsWork = JSON.parse(localStorage.getItem('clients-work')) || [];
+
+// get the present date
+const date = new Date();
+
 // first because we use local storage and there is no database
 // when we use this application on any other browser will directly go to login
 // but because at that time there will be no account data in local storage
@@ -53,6 +59,40 @@ if (login) login.addEventListener('submit', (e) => {
       // if data matches save client is loggedIn in session storage
       sessionStorage.setItem('isLoggedIn', JSON.stringify(isLoggedIn));
       sessionStorage.setItem('onlineClient', JSON.stringify(matchedData));
+
+      // set clients work data inside local storage
+      if (clientsWork.length > 0) {
+        for (let i = 0; i < clientsWork.length; i++) {
+          if (clientsWork[i].clientName === matchedData.name) {
+
+          }
+          // if (date.toLocaleDateString() === )
+        }
+      } else {
+        clientsWork.push(
+          {
+            clientName: matchedData.name,
+            clientPhone: matchedData.phone,
+            work: [
+              {
+                date: date.toLocaleDateString(),
+                sessions: [
+                  {
+                    start: date.toLocaleTimeString(),
+                    end: ''
+                  }
+                ],
+                workHours: 0,
+                completedTables: 0,
+                canceledTables: 0,
+                products: 0,
+                money: 0
+              }
+            ]
+          }
+        );
+      }
+
       login.submit();
     }
   }
