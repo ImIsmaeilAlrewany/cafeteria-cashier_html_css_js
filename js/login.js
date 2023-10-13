@@ -61,38 +61,68 @@ if (login) login.addEventListener('submit', (e) => {
       sessionStorage.setItem('onlineClient', JSON.stringify(matchedData));
 
       // set clients work data inside local storage
+      const clientWorkNewDayNewMonth = {
+        date: date.toLocaleDateString(),
+        sessions: [
+          {
+            start: date.toLocaleString(),
+            end: ''
+          }
+        ],
+        workHours: 0,
+        completedTables: 0,
+        canceledTables: 0,
+        products: 0,
+        money: 0
+      };
+
+      const clientWorkDataFirstSave = {
+        clientName: matchedData.name,
+        clientPhone: matchedData.phone,
+        work: [clientWorkNewDayNewMonth]
+      };
+
       if (clientsWork.length > 0) {
+        let clientIndex;
         for (let i = 0; i < clientsWork.length; i++) {
           if (clientsWork[i].clientName === matchedData.name) {
-
+            clientIndex = i;
+            break;
           }
-          // if (date.toLocaleDateString() === )
+        }
+
+        // after searching on the client I exact
+        if (clientIndex) {
+          // I have found the client data already in local storage
+          const workList = clientsWork[clientIndex].work;
+          if (new Date(workList[workList.length - 1].date).getMonth() === date.getMonth()) {
+            // here if it is the same month
+            // we need to check the day
+            if (new Date(workList[workList.length - 1].date).getDate() === date.getDate()) {
+              // the day is already in
+              workList.sessions.push(
+                {
+                  start: date.toLocaleString(),
+                  end: ''
+                }
+              );
+            } else {
+              //the day is new
+              workList.push(clientWorkNewDayNewMonth);
+            }
+          } else {
+            // here if they are not the same so we start a new array
+            workList = [clientWorkNewDayNewMonth];
+          }
+        } else {
+          // I didn't find the client in local storage so I am gonna add
+          clientsWork.push(clientWorkDataFirstSave);
         }
       } else {
-        clientsWork.push(
-          {
-            clientName: matchedData.name,
-            clientPhone: matchedData.phone,
-            work: [
-              {
-                date: date.toLocaleDateString(),
-                sessions: [
-                  {
-                    start: date.toLocaleTimeString(),
-                    end: ''
-                  }
-                ],
-                workHours: 0,
-                completedTables: 0,
-                canceledTables: 0,
-                products: 0,
-                money: 0
-              }
-            ]
-          }
-        );
+        clientsWork.push(clientWorkDataFirstSave);
       }
 
+      localStorage.setItem('clients-work', JSON.stringify(clientsWork));
       login.submit();
     }
   }
