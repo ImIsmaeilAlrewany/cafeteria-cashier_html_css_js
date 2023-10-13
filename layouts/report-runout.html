@@ -1,0 +1,82 @@
+<body>
+  <div class="runout-report-structure mx-auto">
+    <div class="section-label rounded text-center my-3">
+      <h2 class="m-0 p-0 fs-6">
+        <i class="fa-solid fa-hourglass-end"></i>
+        <span class="ms-2">كل المنتجات على وشك النفاذ </span>
+      </h2>
+    </div>
+    <div class="runout-table-container table-responsive">
+      <form class="search" action="">
+        <label class="quantity-search-label" for="quantity-search">ضع الكمية</label>
+        <input id="quantity-search" class="form-input border shadow-none rounded">
+        <button id="search-button" type="button" class="rounded border-0 done-select-label">عرض</button>
+      </form>
+      <table id="runout-table" class="table table-bordered table-hover my-3 mx-0">
+        <thead>
+          <tr>
+            <td class="text-nowrap bg-transparent text-center">إسم المنتج</td>
+            <td class="text-nowrap bg-transparent text-center">صنف المنتج</td>
+            <td class="text-nowrap bg-transparent text-center">عدد المنتج</td>
+            <td class="text-nowrap bg-transparent text-center">تعديل</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="text-nowrap bg-transparent text-center" colspan="4">
+              قم بعملية البحث
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <script>
+    // select all elements
+    const quantitySearch = document.getElementById('quantity-search');
+    const searchButton = document.getElementById('search-button');
+    const tableBody = document.querySelector('#runout-table tbody');
+    const menu = JSON.parse(localStorage.getItem('menu-categories')) || [];
+
+    // after adding the correct number click on search and it will show all products
+    // products' quantity under or equal this number
+    searchButton.addEventListener('click', (e) => {
+      let found = false;
+      tableBody.innerHTML = '';
+
+      for (let i = 0; i < menu.length; i++) {
+        for (let n = 0; n < menu[i].content.length; n++) {
+          if (+menu[i].content[n].quantity <= +quantitySearch.value) {
+            found = true;
+            const data = [menu[i].content[n].name, menu[i].name, menu[i].content[n].quantity, '+'];
+            const tr = document.createElement('tr');
+
+            data.forEach(d => {
+              const td = document.createElement('td');
+              td.className = 'text-nowrap bg-transparent text-center';
+              if (d === '+') {
+                td.setAttribute('role', 'button');
+                td.textContent = d;
+                td.onclick = function () { location.href = '../menu.html'; };
+              } else {
+                td.textContent = d;
+                td.style.pointerEvents = 'none';
+              }
+              tr.append(td);
+            });
+
+            tableBody.append(tr);
+          }
+        }
+      }
+
+      if (!found) {
+        tableBody.innerHTML = `<tr>
+            <td class="text-nowrap bg-transparent text-center" colspan="4">
+              لا يوجد منتجات أو لا يوجد ما هو أقل من ذلك
+            </td>
+          </tr>`;
+      }
+    });
+  </script>
+</body>
