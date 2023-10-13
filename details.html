@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Al-cashier Details Page</title>
+  <link rel="stylesheet" href="./css/all.min.css">
+  <link rel="stylesheet" href="./css/bootstrap.rtl.min.css">
+  <link rel="stylesheet" href="./css/master.css">
+  <script src="./js/layouts/isLoggedIn.js"></script>
+  <script src="./js/layouts/isAdmin.js"></script>
+  <script src="./js/layouts/includeHTML.js"></script>
+  <script>
+    includeHTML('./layouts/navbar.html', 'nav');
+    const path = 'details';
+  </script>
+</head>
+
+<body class="bg-primary">
+
+  <!-- start navbar -->
+
+  <nav class="navbar p-0 sticky-top"></nav>
+
+  <!-- end navbar -->
+
+  <!-- start order details show -->
+
+  <div class="container">
+    <dl class="details my-3 list-unstyled">
+      <dt class="fw-normal fs-5">التاريخ</dt>
+      <dd class="mx-3 my-2"></dd>
+      <dt class="fw-normal fs-5">اسم الكاشير</dt>
+      <dd class="mx-3 my-2"></dd>
+      <dt class="fw-normal fs-5">اسم الطاولة</dt>
+      <dd class="mx-3 my-2"></dd>
+      <dt class="fw-normal fs-5">رقم الطاولة</dt>
+      <dd class="mx-3 my-2"></dd>
+      <dt class="fw-normal fs-5">وقت الدفع</dt>
+      <dd class="mx-3 my-2"></dd>
+      <dt class="fw-normal fs-5">عدد الطلبات</dt>
+      <dd class="mx-3 my-2"></dd>
+      <dt class="fw-normal fs-5">إجمالي المبلغ</dt>
+      <dd class="mx-3 my-2"></dd>
+      <dt class="fw-normal fs-5">اسماء المشروبات/الأطعمة</dt>
+      <dd class="mx-3 my-2"></dd>
+    </dl>
+  </div>
+
+  <!-- end order details show -->
+
+  <script src="./js/all.min.js"></script>
+  <script src="./js/bootstrap.bundle.min.js"></script>
+  <script type="module" src="./js/details.js"></script>
+  <script type="module" src="./js/layouts/slider.js"></script>
+  <script type="module" src="./js/layouts/mode.js"></script>
+  <script src="./js/layouts/notification.js"></script>
+</body>
+
+</html>

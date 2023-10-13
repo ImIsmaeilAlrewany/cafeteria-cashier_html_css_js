@@ -687,3 +687,12 @@ body {
 /* end work on report-general file styles */
 
 /* end report file style */
+
+/* start work on details page styles */
+
+.details dt,
+.details dd {
+  color: var(--background);
+}
+
+/* end work on details page styles */

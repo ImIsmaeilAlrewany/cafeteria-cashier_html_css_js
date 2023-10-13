@@ -29,6 +29,12 @@ const buildTable = (table, array, length) => {
       td.textContent = d;
       tr.append(td);
     });
+
+    // this to open details page so I get the table id and get all data around it
+    tr.onclick = function () {
+      sessionStorage.setItem('process-details', JSON.stringify(array[i].table.id));
+      location.href = '../../details.html';
+    };
     table.append(tr);
   }
 };
