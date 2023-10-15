@@ -585,7 +585,8 @@ body {
 .option-details .general-report-structure .section-label,
 .option-details .done-report-structure .section-label,
 .option-details .canceled-report-structure .section-label,
-.option-details .runout-report-structure .section-label {
+.option-details .runout-report-structure .section-label,
+.option-details .cashier-report-structure .section-label {
   background-color: var(--secondary);
   color: var(--background);
   padding: 12px 16px;
@@ -594,7 +595,8 @@ body {
 .option-details .general-report-structure .section-label svg,
 .option-details .done-report-structure .section-label svg,
 .option-details .canceled-report-structure .section-label svg,
-.option-details .runout-report-structure .section-label svg {
+.option-details .runout-report-structure .section-label svg,
+.option-details .cashier-report-structure .section-label svg {
   margin: 2px 0 -2px;
 }
 
@@ -635,7 +637,8 @@ body {
 .canceled-report-structure .show-rows .select-row-label,
 .canceled-report-structure table td,
 .runout-report-structure .quantity-search-label,
-.runout-report-structure table td {
+.runout-report-structure table td,
+.cashier-report-structure .select-day-label {
   color: var(--background);
 }
 
@@ -648,7 +651,8 @@ body {
 
 .done-report-structure button,
 .canceled-report-structure button,
-.runout-report-structure button {
+.runout-report-structure button,
+.cashier-report-structure #day-button {
   background-color: var(--accent);
   color: var(--background);
   padding: 4px 12px;
@@ -666,6 +670,11 @@ body {
   border: 2.5px solid var(--background);
   max-width: 500px;
   max-height: 255px;
+}
+
+.runout-report-structure,
+.cashier-report-structure {
+  max-width: 500px;
 }
 
 @media (max-width: 324px) {
@@ -706,13 +715,18 @@ body {
 
 /* end work on report-general file styles */
 
-/* start runout report file style */
+/* start cashier report file style */
 
-.runout-report-structure {
-  max-width: 500px;
+.cashier-report-structure .accordion .accordion-item button {
+  background-color: var(--secondary);
+  color: var(--background);
 }
 
-/* end runout report file style */
+.cashier-report-structure .accordion .accordion-item .accordion-button:after {
+  filter: invert(100%);
+}
+
+/* end cashier report file style */
 
 /* end report file style */
 
