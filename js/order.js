@@ -285,16 +285,17 @@ if (removeTable) removeTable.addEventListener('click', () => {
 
   // save table in canceled tables in local storage
   const onlineClient = JSON.parse(sessionStorage.getItem('onlineClient'));
-  const canceledTables = JSON.parse(localStorage.getItem('canceled-tables')) || [];
+  let canceledTables = JSON.parse(localStorage.getItem('canceled-tables')) || [];
   const dateAndTime = new Date().toLocaleString();
   const dateOnly = dateAndTime.slice(0, dateAndTime.indexOf(','));
   const getMonth = (string) => {
-    return string.slice(dateOnly.indexOf('/') + 1, dateOnly.lastIndexOf('/'));
+    // return string.slice(dateOnly.indexOf('/') + 1, dateOnly.lastIndexOf('/'));
+    return new Date(string).getMonth + 1;
   };
 
-  let totalPrice;
-  let ordersNumber;
-  if (table.order) {
+  let totalPrice = 0;
+  let ordersNumber = 0;
+  if (table.order.length > 0) {
     totalPrice = table.order.map(object => +object.total).reduce((accumulator, currentValue) => accumulator + currentValue);
     ordersNumber = table.order.map(object => +object.quantity).reduce((accumulator, currentValue) => accumulator + currentValue);
   }
@@ -394,7 +395,7 @@ if (payOrder) payOrder.addEventListener('click', () => {
 
   if (table.order.length > 0 && table.orderTime) {
     // find paid orders in local storage and add the new ones to it then save
-    const paidOrders = JSON.parse(localStorage.getItem('paid-orders')) || [];
+    let paidOrders = JSON.parse(localStorage.getItem('paid-orders')) || [];
     const totalPrice = table.order.map(object => +object.total).reduce((accumulator, currentValue) => accumulator + currentValue);
     const ordersNumber = table.order.map(object => +object.quantity).reduce((accumulator, currentValue) => accumulator + currentValue);
     const getMonth = (string) => {

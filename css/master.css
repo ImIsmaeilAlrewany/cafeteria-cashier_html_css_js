@@ -722,6 +722,10 @@ body {
   color: var(--background);
 }
 
+.cashier-report-structure .general-details>div>div {
+  border: 1px solid var(--text);
+}
+
 .cashier-report-structure .accordion .accordion-item .accordion-button:after {
   filter: invert(100%);
 }

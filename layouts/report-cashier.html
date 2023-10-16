@@ -11,23 +11,148 @@
       <select id="select-day" class="form-select form-select-sm w-auto d-inline-block shadow-none"></select>
       <button id="day-button" type="button" class="rounded border-0 done-select-label">عرض</button>
     </form>
-    <div class="accordion my-3 shadow-none" id="accordionExample">
-      <div class="accordion-item">
+    <div class="accordion my-3 shadow-none" id="accordionExample"></div>
+  </div>
+  <script>
+    // work on the day select 
+    const select = document.querySelector('#select-day');
+    const selectButton = document.querySelector('#day-button');
+    const clientsWork = JSON.parse(localStorage.getItem('clients-work')) || [];
+    let dates = [];
+
+    clientsWork.forEach(client => {
+      client.work.forEach(work => {
+        if (!dates.includes(work.date)) dates.push(work.date);
+      });
+    });
+
+    // loop on dates and create options to put in select day box
+    dates.forEach(date => {
+      const option = document.createElement('option');
+      option.textContent = date;
+      select.append(option);
+    });
+
+    // work on accordion to display data
+    const accordion = document.querySelector('.accordion');
+    const accordionItem = (index, collapsed, name, data = false) => {
+      return `<div class="accordion-item">
         <h2 class="accordion-header">
-          <button class="accordion-button shadow-none" type="button" data-bs-toggle="collapse"
-            data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-            Accordion Item #1
+          <button class="accordion-button shadow-none ${collapsed ? 'collapsed' : ''}" type="button" data-bs-toggle="collapse"
+            data-bs-target="#collapse${index}" aria-expanded="${!collapsed ? true : false}" aria-controls="collapse${index}">
+            ${name}
           </button>
         </h2>
-        <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordionExample">
+        <div id="collapse${index}" class="accordion-collapse collapse ${!collapsed ? 'show' : ''}" data-bs-parent="#accordionExample">
           <div class="accordion-body">
-
+            ${Object.keys(data).length > 0
+          ? `
+          <table id="cashier-table" class="table table-bordered table-hover mb-3 mx-0">
+        <thead>
+          <tr>
+            <td class="text-nowrap bg-transparent text-center">البدأ</td>
+            <td class="text-nowrap bg-transparent text-center">الإنتهاء</td>
+            <td class="text-nowrap bg-transparent text-center">عدد الساعات</td>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      <tfoot>
+        <tr>
+          <td class="text-nowrap bg-transparent text-center" colspan="2">الساعات الكلية</td>
+          <td class="text-nowrap bg-transparent text-center">${data.workHours ? (data.workHours).toFixed(2) : '0'} H</td>
+        </tr >
+      </tfoot >
+      </table >
+      <div class="general-details row g-3 flex-wrap">
+        <div class="orders-number col-6 col-sm-4 col-md-3 col-lg-2 px-2">
+          <div class="p-3 rounded text-center position-relative">
+            <div class="detail-logo position-absolute">
+              <i class="fa-solid fa-mug-hot fs-4"></i>
+            </div>
+            <h6 class="p-0 mb-2 text-nowrap">عدد الطلبات</h6>
+            <p class="p-0 m-0">${data.products || 0}</p>
+          </div>
+        </div>
+        <div class="daily-income col-6 col-sm-4 col-md-3 col-lg-2 px-2">
+          <div class="p-3 rounded text-center position-relative">
+            <div class="detail-logo position-absolute">
+              <i class="fa-solid fa-sack-dollar fs-4"></i>
+            </div>
+            <h6 class="p-0 mb-2 text-nowrap">دخل اليوم</h6>
+            <p class="p-0 m-0">${data.money || 0}</p>
+          </div>
+        </div>
+        <div class="done-tables col-6 col-sm-4 col-md-3 col-lg-2 px-2">
+          <div class="p-3 rounded text-center position-relative">
+            <div class="detail-logo position-absolute">
+              <i class="fa-solid fa-circle-check fs-4"></i>
+            </div>
+            <h6 class="p-0 mb-2 text-nowrap">طاولات تمت</h6>
+            <p class="p-0 m-0">${data.completedTables || 0}</p>
+          </div>
+        </div>
+        <div class="canceled-tables col-6 col-sm-4 col-md-3 col-lg-2 px-2">
+          <div class="p-3 rounded text-center position-relative">
+            <div class="detail-logo position-absolute">
+              <i class="fa-solid fa-circle-xmark fs-4"></i>
+            </div>
+            <h6 class="p-0 mb-2 text-nowrap">طاولات ملغاة</h6>
+            <p class="p-0 m-0">${data.canceledTables || 0}</p>
           </div>
         </div>
       </div>
-    </div>
-  </div>
-  <script>
+    `
+          : `لا توجد بيانات لعرضها في هذا اليوم`
+        }
+            </div>
+        </div>
+      </div>`;
+    };
+    // display data just at the beginning
+    let output = [];
+    let cashiersData = [];
+    const createAccordion = (output, cashiersData) => {
+      clientsWork.forEach((client, index) => {
+        let data = {};
+        for (let i = 0; i < client.work.length; i++) {
+          if (client.work[i].date === select.value) {
+            data = client.work[i];
+            break;
+          }
+        }
 
+        cashiersData.push(data);
+        output.push(accordionItem(index + 1, index === 0 ? false : true, client.clientName, data));
+      });
+      accordion.innerHTML = output.join(' ');
+    };
+    createAccordion(output, cashiersData);
+
+    const createTableRows = (cashiersData) => {
+      // select table body
+      const tableBody = document.querySelectorAll('#cashier-table tbody');
+      tableBody.forEach((table, index) => {
+        let output = [];
+        if (Object.keys(cashiersData[index]).length > 0) {
+          output = cashiersData[index].sessions.map(session => {
+            return `<tr>
+              <td class="text-nowrap bg-transparent text-center">${session.start ? new Date(session.start).toLocaleTimeString() : 'unknown'}</td>
+              <td class="text-nowrap bg-transparent text-center">${session.end ? new Date(session.end).toLocaleTimeString() : 'unknown'}</td>
+              <td class="text-nowrap bg-transparent text-center">${session.start && session.end ? ((session.end - session.start) / 3600000).toFixed(2) : 'unknown'} H</td>
+            </tr>`;
+          });
+        }
+        table.innerHTML = output.join(' ');
+      });
+    };
+    createTableRows(cashiersData);
+
+    // now let's work if I changed the day to show the day data
+    selectButton.addEventListener('click', () => {
+      output = [];
+      cashiersData = [];
+      createAccordion(output, cashiersData);
+      createTableRows(cashiersData);
+    });
   </script>
 </body>
