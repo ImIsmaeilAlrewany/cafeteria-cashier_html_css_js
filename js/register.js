@@ -7,9 +7,9 @@ const registerWarnings = document.querySelectorAll('.register .form-text');
 
 // all warning messages if client entered wrong data
 const warningMessages = [
-  'مسموح فقط الحروف وأزيد من ثلاث حروف',
-  'مسموح فقط أرقام الهاتف',
-  'لا يقل عن 7 وعلى الأقل حرف أو رمز'
+  lang === 'ar' ? 'مسموح فقط الحروف وأزيد من ثلاث حروف' : 'Only Letters And Over Three',
+  lang === 'ar' ? 'مسموح فقط أرقام الهاتف' : 'Only Phone Numbers',
+  lang === 'ar' ? 'لا يقل عن 7 وعلى الأقل حرف أو رمز' : 'At Least 7 Letters And A Symbol'
 ];
 
 // submit data and check if it correct then save it
@@ -66,7 +66,7 @@ if (register) register.addEventListener('submit', (e) => {
   if (!dataUnique) {
     e.preventDefault();
     registerWarnings.forEach(w => {
-      w.innerHTML = 'الإسم أو رقم الهاتف استخدم من قبل';
+      w.innerHTML = lang === 'ar' ? 'الإسم أو رقم الهاتف استخدم من قبل' : 'Name Or Phone Number Used Before';
     });
   }
 

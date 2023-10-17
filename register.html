@@ -62,6 +62,18 @@
   <script type="module" src="./js/layouts/mode.js"></script>
   <script src="./js/layouts/notification.js"></script>
   <script type="module" src="./js/layouts/changeLang.js"></script>
+  <script src="./js/layouts/checkLang.js"></script>
+  <script>
+    const allElements = document.querySelectorAll('*');
+    const englishProfile = {
+      "اسم الكاشير": "Cashier Name",
+      "رقم الهاتف": "Phone Number",
+      "الرقم السري": "Password",
+      "إنشاء حساب": "Create Account"
+    };
+
+    checkLang(allElements, englishProfile);
+  </script>
 </body>
 
 </html>

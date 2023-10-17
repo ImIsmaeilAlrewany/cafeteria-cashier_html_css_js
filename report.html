@@ -69,6 +69,19 @@
   <script type="module" src="./js/layouts/mode.js"></script>
   <script src="./js/layouts/notification.js"></script>
   <script type="module" src="./js/layouts/changeLang.js"></script>
+  <script src="./js/layouts/checkLang.js"></script>
+  <script>
+    const allElements = document.querySelectorAll('*');
+    const englishReport = {
+      "نظرة عامة": "Overview",
+      "طاولات تمت": "Completed Tables",
+      "طاولات ملغاة": "Canceled Tables",
+      "وشك النفاذ": "About Runout",
+      "الكاشير": "Cashier"
+    };
+
+    checkLang(allElements, englishReport);
+  </script>
 </body>
 
 </html>

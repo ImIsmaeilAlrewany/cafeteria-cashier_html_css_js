@@ -53,12 +53,8 @@
           <p class="form-text my-2"></p>
         </div>
         <div class="text-center">
-          <button id="profile-cashier-edit" class="btn green-button shadow-lg" type="submit">
-            تعديل الحساب
-          </button>
-          <button id="profile-cashier-delete" class="btn" type="button">
-            حذف الحساب
-          </button>
+          <button id="profile-cashier-edit" class="btn green-button shadow-lg" type="submit">تعديل الحساب</button>
+          <button id="profile-cashier-delete" class="btn" type="button">حذف الحساب</button>
         </div>
       </form>
     </div>
@@ -73,6 +69,20 @@
   <script type="module" src="./js/layouts/mode.js"></script>
   <script src="./js/layouts/notification.js"></script>
   <script type="module" src="./js/layouts/changeLang.js"></script>
+  <script src="./js/layouts/checkLang.js"></script>
+  <script>
+    const allElements = document.querySelectorAll('*');
+    const englishOrder = {
+      "اسم الكاشير": "Cashier Name",
+      "رقم الهاتف": "Phone Number",
+      "الرقم السري": "Password",
+      "الرقم السري الجديد": "New Password",
+      "تعديل الحساب": "Edit",
+      "حذف الحساب": "Delete"
+    };
+
+    checkLang(allElements, englishOrder);
+  </script>
 </body>
 
 </html>

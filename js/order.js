@@ -21,7 +21,7 @@ const displayCategories = allCategories.map((category, index) => {
   if (category) return `
   <li class="m-0 me-3 p-0 shadow rounded d-flex align-items-center justify-content-center ${index === 0 ? 'active' : ''}" role="button" data-id="${category.id}">${category.name}</li>`;
   else return `
-  <li class="m-0 p-0 d-flex justify-content-center align-items-center w-100 rounded">لا يوجد أصناف</li>`;
+  <li class="m-0 p-0 d-flex justify-content-center align-items-center w-100 rounded">${lang === 'ar' ? 'لا يوجد أصناف' : 'There\'s No Categories'}</li>`;
 });
 if (categoriesListElement)
   categoriesListElement.innerHTML = displayCategories.join(' ');
@@ -33,10 +33,10 @@ const itemsElementArray = (array) => {
     if (item) return `
   <li class="m-0 p-3 shadow rounded d-flex align-items-center justify-content-center flex-column overflow-hidden" role="button" data-id="${item.id}">
     <h6 class="m-0 mb-2 p-0">${item.name}</h6>
-    <p class="m-0 p-0 align-self-end">السعر: ${item.price}</p>
+    <p class="m-0 p-0 align-self-end">${lang === 'ar' ? 'السعر:' : 'Price:'} ${item.price}</p>
   </li>`;
     else return `
-  <li class="m-0 p-0 d-flex justify-content-center align-items-center w-100 rounded">قم بإضافة الأقسام أولا ثم ما تحتوية</li>`;
+  <li class="m-0 p-0 d-flex justify-content-center align-items-center w-100 rounded">${lang === 'ar' ? 'قم بإضافة الأقسام أولا ثم ما تحتوية' : 'Add Categories And Items'}</li>`;
   });
 };
 if (itemsListElement && allCategories.length > 0)
@@ -203,7 +203,7 @@ function displayOrders(edit) {
       const tr = document.createElement('tr');
       tr.setAttribute('data-id', ele.id);
 
-      const elementData = [index + 1, ele.name, `${ele.price} جنية`, ele.quantity, `${ele.total} جنية`];
+      const elementData = [index + 1, ele.name, `${ele.price} ${lang === 'ar' ? 'جنية' : 'LE'}`, ele.quantity, `${ele.total} ${lang === 'ar' ? 'جنية' : 'LE'}`];
       // check if edit add last three elements
       if (edit) elementData.push('+', '-', 'x');
 
@@ -235,8 +235,8 @@ function displayOrders(edit) {
     const tr = document.createElement('tr');
     const tdData = [
       '#',
-      'صافي الفاتورة',
-      totalArray.reduce((total, val) => +total + +val) + ' جنية'
+      lang === 'ar' ? 'صافي الفاتورة' : 'Total Price',
+      totalArray.reduce((total, val) => +total + +val) + ` ${lang === 'ar' ? 'جنية' : 'LE'}`
     ];
 
     for (let i = 0; i < tdData.length; i++) {
@@ -258,7 +258,7 @@ function displayOrders(edit) {
     tableFoot.appendChild(tr);
   } else {
     tableBody.innerHTML = `<tr>
-      <th colspan="8" class="py-2 px-3 text-nowrap text-center">لا يوجد طلبات لعرضها</th>
+      <th colspan="8" class="py-2 px-3 text-nowrap text-center">${lang === 'ar' ? 'لا يوجد طلبات لعرضها' : 'No Orders Yet'}</th>
     </tr>`;
     tableFoot.innerHTML = '';
   }

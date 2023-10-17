@@ -60,9 +60,22 @@
     // set cashier name
     const cashierName = document.querySelector('.cashier-name');
     const cashierData = JSON.parse(sessionStorage.getItem('onlineClient'));
-    cashierName.textContent = `اسم الكاشير: ${cashierData.name}`;
+    cashierName.textContent = `${lang === 'ar' ? 'اسم الكاشير:' : 'Cashier Name:'} ${cashierData.name}`;
   </script>
   <script type="module" src="./js/layouts/changeLang.js"></script>
+  <script src="./js/layouts/checkLang.js"></script>
+  <script>
+    const allElements = document.querySelectorAll('*');
+    const englishPrint = {
+      "الكاشير": "Al-cashier",
+      "الصنف": "Product",
+      "السعر": "Price",
+      "الكمية": "Quantity",
+      "الإجمالي": "Total"
+    };
+
+    checkLang(allElements, englishPrint);
+  </script>
 </body>
 
 </html>

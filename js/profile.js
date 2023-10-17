@@ -10,9 +10,9 @@ const profileWarnings = document.querySelectorAll('#profile .form-text');
 
 // all warning messages if client entered wrong data
 const warningMessages = [
-  'مسموح فقط الحروف وأزيد من ثلاث حروف',
-  'مسموح فقط أرقام الهاتف',
-  'لا يقل عن 7 وعلى الأقل حرف أو رمز'
+  lang === 'ar' ? 'مسموح فقط الحروف وأزيد من ثلاث حروف' : 'Only Letters And Over Three',
+  lang === 'ar' ? 'مسموح فقط أرقام الهاتف' : 'Only Phone Numbers',
+  lang === 'ar' ? 'لا يقل عن 7 وعلى الأقل حرف أو رمز' : 'At Least 7 Letters And A Symbol'
 ];
 
 // set cashier data
@@ -78,13 +78,13 @@ if (profile) profile.addEventListener('submit', (e) => {
       key: 'name',
       condition: data.name.length < 3 || Number(data.name),
       unique: true,
-      uniqueMessage: 'هذا الإسم استخدم من قبل'
+      uniqueMessage: lang === 'ar' ? 'هذا الإسم استخدم من قبل' : 'This Name Is In Use'
     },
     {
       key: 'phone',
       condition: data.phone.length != 11 || !Number(data.phone),
       unique: true,
-      uniqueMessage: 'هذا الرقم استخدم من قبل'
+      uniqueMessage: lang === 'ar' ? 'هذا الرقم استخدم من قبل' : 'This Phone Number Is In Use'
     },
     {
       key: 'password',
@@ -111,7 +111,7 @@ if (profile) profile.addEventListener('submit', (e) => {
 
   } else {
     e.preventDefault();
-    profileWarnings[2].innerHTML = 'الرقم السري خطأ حاول من جديد';
+    profileWarnings[2].innerHTML = lang === 'ar' ? 'الرقم السري خطأ حاول من جديد' : 'Password Is Wrong Try Again';
   }
 
   // after checking all data (unique and correct) time to save it 
