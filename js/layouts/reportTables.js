@@ -21,7 +21,7 @@ const buildTable = (table, array, length) => {
   table.innerHTML = '';
   for (let i = 0; i < length; i++) {
     const tr = document.createElement('tr');
-    const tdData = [array[i].table.name, array[i].cashier, array[i].ordersNumber, array[i].totalPrice + ' جنية'];
+    const tdData = [array[i].table.name, array[i].cashier, array[i].ordersNumber, array[i].totalPrice + ` ${lang === 'ar' ? 'جنية' : 'LE'}`];
 
     // add td data in tr
     tdData.forEach(d => {

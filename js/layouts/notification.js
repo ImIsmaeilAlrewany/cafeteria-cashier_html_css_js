@@ -5,7 +5,7 @@ function displayNotification(item) {
   const p = document.createElement('p');
   div.className = 'notification position-absolute border-0 rounded mx-3 shadow';
   p.className = 'p-3 text-center m-0';
-  p.textContent = `${item} على وشك النفاذ`;
+  p.textContent = `${item} ${lang === 'ar' ? 'على وشك النفاذ' : 'About To Runout'}`;
   div.appendChild(p);
   document.body.appendChild(div);
 

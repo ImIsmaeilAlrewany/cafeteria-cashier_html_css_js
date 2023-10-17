@@ -146,4 +146,20 @@
       },
     });
   </script>
+  <script src="./js/layouts/checkLang.js"></script>
+  <script>
+    const allElements = document.querySelectorAll('*');
+    const englishReportGeneral = {
+      "نظرة عامة على العمل": "Overview On Work",
+      "جدول بياني لأرباح الشهر": "Daily Income Monthly Chart",
+      "عدد الكاشير": "Cashier Number",
+      "عدد المشروبات": "Food/Drinks Number",
+      "دخل اليوم": "Daily Income",
+      "طاولات تمت": "Completed Tables",
+      "طاولات ملغاة": "Canceled Tables",
+      "أطعمة مسحوبة": "Orders Number",
+    };
+
+    checkLang(allElements, englishReportGeneral);
+  </script>
 </body>

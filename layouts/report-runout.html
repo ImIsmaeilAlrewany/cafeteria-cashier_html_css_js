@@ -3,7 +3,7 @@
     <div class="section-label rounded text-center my-3">
       <h2 class="m-0 p-0 fs-6">
         <i class="fa-solid fa-hourglass-end"></i>
-        <span class="ms-2">كل المنتجات على وشك النفاذ </span>
+        <span class="ms-2">كل المنتجات على وشك النفاذ</span>
       </h2>
     </div>
     <div class="runout-table-container table-responsive">
@@ -23,9 +23,7 @@
         </thead>
         <tbody>
           <tr>
-            <td class="text-nowrap bg-transparent text-center" colspan="4">
-              قم بعملية البحث
-            </td>
+            <td class="text-nowrap bg-transparent text-center" colspan="4">قم بعملية البحث</td>
           </tr>
         </tbody>
       </table>
@@ -73,10 +71,26 @@
       if (!found) {
         tableBody.innerHTML = `<tr>
             <td class="text-nowrap bg-transparent text-center" colspan="4">
-              لا يوجد منتجات أو لا يوجد ما هو أقل من ذلك
-            </td>
+              ${lang === 'ar' ? 'لا يوجد منتجات أو لا يوجد ما هو أقل من ذلك' : 'No Products Or No Below This Quantity'}
+              </td>
           </tr>`;
       }
     });
+  </script>
+  <script src="./js/layouts/checkLang.js"></script>
+  <script>
+    const allElements = document.querySelectorAll('*');
+    const englishReportRunout = {
+      "عرض": "Show",
+      "ضع الكمية": "Put Quantity",
+      "كل المنتجات على وشك النفاذ": "All Product About To Runout",
+      "إسم المنتج": "Product Name",
+      "صنف المنتج": "Product Category",
+      "عدد المنتج": "Quantity",
+      "تعديل": "Edit",
+      "قم بعملية البحث": "Search First"
+    };
+
+    checkLang(allElements, englishReportRunout);
   </script>
 </body>

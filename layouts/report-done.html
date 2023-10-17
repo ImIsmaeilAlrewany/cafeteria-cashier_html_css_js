@@ -120,4 +120,24 @@
       },
     });
   </script>
+  <script src="./js/layouts/checkLang.js"></script>
+  <script>
+    const allElements = document.querySelectorAll('*');
+    const englishReportDone = {
+      "كل الطاولات التي تمت": "All Completed Tables",
+      "جدول بياني للطاولات التامة في الشهر": "Completed Tables Monthly Chart",
+      "اليوم": "Day",
+      "عرض": "Show",
+      "إسم الطاولة": "Table Name",
+      "الكاشير": "Cashier",
+      "عدد الطلبات": "Orders Number",
+      "إجمالي الدخل": "Total Price",
+      "التالي": "Next",
+      "السابق": "Previous",
+      "الصفوف": "Rows",
+      "أظهر": "Show"
+    };
+
+    checkLang(allElements, englishReportDone);
+  </script>
 </body>

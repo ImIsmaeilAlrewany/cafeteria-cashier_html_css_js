@@ -50,16 +50,16 @@
           <table id="cashier-table" class="table table-bordered table-hover mb-3 mx-0">
         <thead>
           <tr>
-            <td class="text-nowrap bg-transparent text-center">البدأ</td>
-            <td class="text-nowrap bg-transparent text-center">الإنتهاء</td>
-            <td class="text-nowrap bg-transparent text-center">عدد الساعات</td>
+            <td class="text-nowrap bg-transparent text-center">${lang === 'ar' ? 'البدأ' : 'Start'}</td>
+            <td class="text-nowrap bg-transparent text-center">${lang === 'ar' ? 'الإنتهاء' : 'End'}</td>
+            <td class="text-nowrap bg-transparent text-center">${lang === 'ar' ? 'عدد الساعات' : 'Work Hours'}</td>
           </tr>
         </thead>
         <tbody></tbody>
       <tfoot>
         <tr>
-          <td class="text-nowrap bg-transparent text-center" colspan="2">الساعات الكلية</td>
-          <td class="text-nowrap bg-transparent text-center">${data.workHours ? (data.workHours).toFixed(2) : '0'} H</td>
+          <td class="text-nowrap bg-transparent text-center" colspan="2">${lang === 'ar' ? 'الساعات الكلية' : 'Total Hours'}</td>
+          <td class="text-nowrap bg-transparent text-center">${data.workHours ? (data.workHours).toFixed(2) : '0'} ${lang === 'ar' ? 'س' : 'H'}</td>
         </tr >
       </tfoot >
       </table >
@@ -69,7 +69,7 @@
             <div class="detail-logo position-absolute">
               <i class="fa-solid fa-mug-hot fs-4"></i>
             </div>
-            <h6 class="p-0 mb-2 text-nowrap">عدد الطلبات</h6>
+            <h6 class="p-0 mb-2 text-nowrap">${lang === 'ar' ? 'عدد الطلبات' : 'Orders Number'}</h6>
             <p class="p-0 m-0">${data.products || 0}</p>
           </div>
         </div>
@@ -78,7 +78,7 @@
             <div class="detail-logo position-absolute">
               <i class="fa-solid fa-sack-dollar fs-4"></i>
             </div>
-            <h6 class="p-0 mb-2 text-nowrap">دخل اليوم</h6>
+            <h6 class="p-0 mb-2 text-nowrap">${lang === 'ar' ? 'دخل اليوم' : 'Daily Income'}</h6>
             <p class="p-0 m-0">${data.money || 0}</p>
           </div>
         </div>
@@ -87,7 +87,7 @@
             <div class="detail-logo position-absolute">
               <i class="fa-solid fa-circle-check fs-4"></i>
             </div>
-            <h6 class="p-0 mb-2 text-nowrap">طاولات تمت</h6>
+            <h6 class="p-0 mb-2 text-nowrap">${lang === 'ar' ? 'طاولات تمت' : 'Completed Tables'}</h6>
             <p class="p-0 m-0">${data.completedTables || 0}</p>
           </div>
         </div>
@@ -96,13 +96,13 @@
             <div class="detail-logo position-absolute">
               <i class="fa-solid fa-circle-xmark fs-4"></i>
             </div>
-            <h6 class="p-0 mb-2 text-nowrap">طاولات ملغاة</h6>
+            <h6 class="p-0 mb-2 text-nowrap">${lang === 'ar' ? 'طاولات ملغاة' : 'Canceled Tables'}</h6>
             <p class="p-0 m-0">${data.canceledTables || 0}</p>
           </div>
         </div>
       </div>
     `
-          : `لا توجد بيانات لعرضها في هذا اليوم`
+          : `${lang === 'ar' ? 'لا توجد بيانات لعرضها في هذا اليوم' : 'No Data For This Day Or Cashier Didn\'t Work'}`
         }
             </div>
         </div>
@@ -138,7 +138,7 @@
             return `<tr>
               <td class="text-nowrap bg-transparent text-center">${session.start ? new Date(session.start).toLocaleTimeString() : 'unknown'}</td>
               <td class="text-nowrap bg-transparent text-center">${session.end ? new Date(session.end).toLocaleTimeString() : 'unknown'}</td>
-              <td class="text-nowrap bg-transparent text-center">${session.start && session.end ? ((session.end - session.start) / 3600000).toFixed(2) : 'unknown'} H</td>
+              <td class="text-nowrap bg-transparent text-center">${session.start && session.end ? ((session.end - session.start) / 3600000).toFixed(2) : 'unknown'} ${lang === 'ar' ? 'س' : 'H'}</td>
             </tr>`;
           });
         }
@@ -154,5 +154,16 @@
       createAccordion(output, cashiersData);
       createTableRows(cashiersData);
     });
+  </script>
+  <script src="./js/layouts/checkLang.js"></script>
+  <script>
+    const allElements = document.querySelectorAll('*');
+    const englishReportCashier = {
+      "عرض": "Show",
+      "اليوم": "Day",
+      "كل المعلومات حول الكاشير": "All Information Around Cashiers"
+    };
+
+    checkLang(allElements, englishReportCashier);
   </script>
 </body>

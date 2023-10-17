@@ -120,4 +120,24 @@
       },
     });
   </script>
+  <script src="./js/layouts/checkLang.js"></script>
+  <script>
+    const allElements = document.querySelectorAll('*');
+    const englishReportCanceled = {
+      "كل الطاولات التي ألغت": "All Canceled Tables",
+      "جدول بياني للطاولات الملغاة في الشهر": "Canceled Tables Monthly Chart",
+      "اليوم": "Day",
+      "عرض": "Show",
+      "إسم الطاولة": "Table Name",
+      "الكاشير": "Cashier",
+      "عدد الطلبات": "Orders Number",
+      "إجمالي الدخل": "Total Price",
+      "التالي": "Next",
+      "السابق": "Previous",
+      "الصفوف": "Rows",
+      "أظهر": "Show"
+    };
+
+    checkLang(allElements, englishReportCanceled);
+  </script>
 </body>
