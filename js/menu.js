@@ -158,9 +158,9 @@ function categoryItem(item) {
     <div class="item card text-center pt-3 overflow-hidden mx-auto">
       <div class="card-body d-flex flex-column justify-content-between align-items-center">
         <h5 class="card-title">${item.name}</h5>
-        <h6 class="card-subtitle mb-4 text-body-secondary">الكمية: <span>${item.quantity}</span></h6>
+        <h6 class="card-subtitle mb-4 text-body-secondary">${lang === 'ar' ? 'الكمية:' : 'Quantity:'} <span>${item.quantity}</span></h6>
         <p class="card-text align-self-end">
-          السعر: <span>${item.price}</span>
+          ${lang === 'ar' ? 'السعر:' : 'Price:'} <span>${item.price}</span>
         </p>
       </div>
       <div class="control col-3 row w-100 mx-auto pt-3">
@@ -179,8 +179,8 @@ function categoryItem(item) {
         <input type="text" class="form-control shadow border-0" id="edit-item-price">
       </div>
       <div class="mb-3 d-flex justify-content-between">
-        <button type="button" class="back-button w-100 rounded border-0">الرجوع</button>
-        <button type="button" class="edit-item-button w-100 rounded border-0">تعديل</button>
+        <button type="button" class="back-button w-100 rounded border-0">${lang === 'ar' ? 'الرجوع' : 'Back'}</button>
+        <button type="button" class="edit-item-button w-100 rounded border-0">${lang === 'ar' ? 'تعديل' : 'Edit'}</button>
       </div>
     </form>
   </div>`;
@@ -190,16 +190,16 @@ function formFunction(id) {
   return `<div class="col-sm-6 col-md-4 col-xl-3">
     <form id="add-item" class="add-item text-center p-3 rounded mx-auto" data-id="${id}">
       <div class="my-3">
-        <input type="text" class="form-control shadow border-0" id="item-name" placeholder="اسم السلعة">
+        <input type="text" class="form-control shadow border-0" id="item-name" placeholder="${lang === 'ar' ? 'اسم السلعة' : 'Product Name'}">
       </div>
       <div class="mb-3">
-        <input type="text" class="form-control shadow border-0" id="item-quantity" placeholder="الكمية">
+        <input type="text" class="form-control shadow border-0" id="item-quantity" placeholder="${lang === 'ar' ? 'الكمية' : 'Quantity'}">
       </div>
       <div class="mb-3">
-        <input type="text" class="form-control shadow border-0" id="item-price" placeholder="الثمن">
+        <input type="text" class="form-control shadow border-0" id="item-price" placeholder="${lang === 'ar' ? 'الثمن' : 'Price'}">
       </div>
       <div class="mb-3">
-        <button type="submit" class="add-item-button w-100 rounded border-0">إضافة سلعة جديدة</button>
+        <button type="submit" class="add-item-button w-100 rounded border-0">${lang === 'ar' ? 'إضافة سلعة جديدة' : 'Add New Product'}</button>
       </div>
     </form>
   </div>`;
