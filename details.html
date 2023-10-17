@@ -58,6 +58,22 @@
   <script type="module" src="./js/layouts/mode.js"></script>
   <script src="./js/layouts/notification.js"></script>
   <script type="module" src="./js/layouts/changeLang.js"></script>
+  <script src="./js/layouts/checkLang.js"></script>
+  <script>
+    const allElements = document.querySelectorAll('*');
+    const englishDetails = {
+      "التاريخ": "Date",
+      "اسم الكاشير": "Cashier Name",
+      "اسم الطاولة": "Table Name",
+      "رقم الطاولة": "Table Id",
+      "وقت الدفع": "Paid Time",
+      "عدد الطلبات": "Orders Number",
+      "إجمالي المبلغ": "Total Price",
+      "اسماء المشروبات/الأطعمة": "Food/Drinks Names"
+    };
+
+    checkLang(allElements, englishDetails);
+  </script>
 </body>
 
 </html>

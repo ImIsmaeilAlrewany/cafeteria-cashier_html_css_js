@@ -18,8 +18,12 @@ for (let i = 0; i < doneAndCanceled.length; i++) {
         doneAndCanceled[i].data[n].table.name,
         doneAndCanceled[i].data[n].table.id,
         doneAndCanceled[i].data[n].canceledTime || doneAndCanceled[i].data[n].paidTime || 'none',
-        doneAndCanceled[i].data[n].ordersNumber + ' طلبات',
-        doneAndCanceled[i].data[n].totalPrice + ' جنية',
+        lang === 'ar' ?
+          doneAndCanceled[i].data[n].ordersNumber + ' طلبات' :
+          doneAndCanceled[i].data[n].ordersNumber + ' Orders',
+        lang === 'ar' ?
+          doneAndCanceled[i].data[n].totalPrice + ' جنية' :
+          doneAndCanceled[i].data[n].totalPrice + ' LE',
         doneAndCanceled[i].data[n].table.order.map(o => o.name),
       ];
     }

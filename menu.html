@@ -88,6 +88,16 @@
   <script type="module" src="./js/layouts/mode.js"></script>
   <script src="./js/layouts/notification.js"></script>
   <script type="module" src="./js/layouts/changeLang.js"></script>
+  <script src="./js/layouts/checkLang.js"></script>
+  <script>
+    const allElements = document.querySelectorAll('*');
+    const englishMenu = {
+      "أضف فئة أو صنف": "New Category",
+
+    };
+
+    checkLang(allElements, englishMenu);
+  </script>
 </body>
 
 </html>
