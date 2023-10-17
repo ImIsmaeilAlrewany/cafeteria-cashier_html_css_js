@@ -11,8 +11,9 @@
   <script src="./js/layouts/isLoggedIn.js"></script>
   <script src="./js/layouts/includeHTML.js"></script>
   <script>
-    includeHTML('./layouts/navbar.html', 'nav');
+    includeHTML('./layouts/navbar.html', 'nav', true);
     const path = 'order';
+    const lang = localStorage.getItem('lang');
 
     // get table data from session storage
     const data = JSON.parse(sessionStorage.getItem('selected-table'));
@@ -95,6 +96,7 @@
   <script type="module" src="./js/layouts/slider.js"></script>
   <script type="module" src="./js/layouts/mode.js"></script>
   <script src="./js/layouts/notification.js"></script>
+  <script type="module" src="./js/layouts/changeLang.js"></script>
 </body>
 
 </html>

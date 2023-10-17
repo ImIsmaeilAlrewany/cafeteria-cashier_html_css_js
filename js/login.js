@@ -43,7 +43,10 @@ if (login) login.addEventListener('submit', (e) => {
       } else {
         e.preventDefault();
         isLoggedIn = false;
-        loginWarnings[0].innerHTML = 'هذا الكاشير غير موجود';
+        if (lang === 'ar')
+          loginWarnings[0].innerHTML = 'هذا الكاشير غير موجود';
+        else
+          loginWarnings[0].innerHTML = 'This Cashier Isn\'t Existed';
       }
     }
 
@@ -51,7 +54,10 @@ if (login) login.addEventListener('submit', (e) => {
     if (data.password !== matchedData.password) {
       e.preventDefault();
       isLoggedIn = false;
-      loginWarnings[1].innerHTML = 'الرقم السري غير صحيح';
+      if (lang === 'ar')
+        loginWarnings[1].innerHTML = 'الرقم السري غير صحيح';
+      else
+        loginWarnings[1].innerHTML = 'Password Isn\'t Correct';
     } else {
       // e.preventDefault();
       loginWarnings[1].innerHTML = '';
@@ -60,6 +66,9 @@ if (login) login.addEventListener('submit', (e) => {
       // if data matches save client is loggedIn in session storage
       sessionStorage.setItem('isLoggedIn', JSON.stringify(isLoggedIn));
       sessionStorage.setItem('onlineClient', JSON.stringify(matchedData));
+
+      // set the site language in local storage
+      if (!localStorage.getItem('lang')) localStorage.setItem('lang', 'ar');
 
       // set clients work data inside local storage
       const clientWorkNewDayNewMonth = {

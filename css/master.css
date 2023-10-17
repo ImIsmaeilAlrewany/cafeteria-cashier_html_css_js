@@ -41,7 +41,12 @@ body {
   background-color: var(--accent);
 }
 
-.navbar .nav-options .mode svg {
+.navbar .nav-options .language {
+  background-color: var(--green);
+}
+
+.navbar .nav-options .mode svg,
+.navbar .nav-options .language svg {
   color: #fff;
 }
 
@@ -53,6 +58,14 @@ body {
 .navbar .nav-options .mode .dark-mode {
   padding: 3px 12px;
   border-left: 1px solid #fff;
+}
+
+.navbar .nav-options .language #lang {
+  padding: 3px 12.9px;
+}
+
+.navbar .nav-options .language #lang svg {
+  pointer-events: none;
 }
 
 .navbar .nav-options svg {

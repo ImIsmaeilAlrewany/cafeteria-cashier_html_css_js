@@ -2,6 +2,11 @@
   <div class="container-fluid p-3">
     <h1 class="logo m-0 fw-bold">الكاشير</h1>
     <div class="nav-options d-flex align-items-center">
+      <div class="language me-3 rounded d-flex align-items-center">
+        <div id="lang" class="" data-lang="ar" role="button">
+          <i class="fa-solid fa-e"></i>
+        </div>
+      </div>
       <div class="mode me-3 rounded d-flex align-items-center">
         <div id="dark" class="dark-mode" role="button">
           <i class="fa-regular fa-moon"></i>
@@ -39,4 +44,23 @@
       </div>
     </div>
   </div>
+  <script>
+    const allElements = document.querySelectorAll('*');
+    const englishNavbar = {
+      "الكاشير": "Al-cashier",
+      "الصفحة الرئيسية": "Home Page",
+      "تعديل الحساب": "Edit profile",
+      "إضافة حساب": "New Register",
+      "قائمة الطعام": "Food Menu",
+      "التقارير اليومية": "Daily Reports",
+      "إنهاء الشيفت": "End Shift"
+    };
+
+    if (lang === 'en') {
+      allElements.forEach(ele => {
+        if (Object.keys(englishNavbar).includes(ele.textContent))
+          ele.textContent = englishNavbar[ele.textContent];
+      });
+    }
+  </script>
 </body>

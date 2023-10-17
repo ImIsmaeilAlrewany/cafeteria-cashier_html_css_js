@@ -53,4 +53,3 @@ if (addTableButton)
 
 // verify table button when click on it and go to order page
 selectTable();
-

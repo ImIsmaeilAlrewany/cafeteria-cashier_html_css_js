@@ -17,11 +17,17 @@ const collectAndCreate = (submit, input, warningMes, outputEle, callback) => {
 
       for (let i = 0; i < warningMes.arr.length; i++) {
         if (warningMes.arr[i].name === inputData) {
-          warningMes.ele.innerHTML = 'استخدم من قبل';
+          if (lang === 'ar')
+            warningMes.ele.innerHTML = 'استخدم من قبل';
+          else
+            warningMes.ele.innerHTML = 'Already In Use';
           isWarning = true;
           break;
         } else {
-          warningMes.ele.innerHTML = 'اجعلها كلمتين فقط';
+          if (lang === 'ar')
+            warningMes.ele.innerHTML = 'اجعلها كلمتين فقط';
+          else
+            warningMes.ele.innerHTML = 'Only Two Words';
           isWarning = false;
         }
       }
