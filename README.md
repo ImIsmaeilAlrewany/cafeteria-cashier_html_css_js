@@ -1,4 +1,4 @@
-# cafeteria-cashier_html_css_js
+# Cafeteria cashier
 
 This project is a Cafeteria Cashier website to help Cafeterias' owners manage their business.
 
@@ -47,8 +47,8 @@ I prefer to talk about my project in detail:
 
 ## Things you have to know
 
-* This website does't work on github live host it sends Security Errors.
-* This website doesn't work locally without LiveServer it sends Cors Errors.
+* This website does't work on github live host it sends **Security** Errors.
+* This website doesn't work locally without LiveServer it sends **Cors** Errors.
 
 ## Any bug you met?!
 
