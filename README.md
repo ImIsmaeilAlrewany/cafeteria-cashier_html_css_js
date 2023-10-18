@@ -1,6 +1,6 @@
-# Cafeteria cashier
+# Cafeteria Cashier
 
-This project is a Cafeteria Cashier website to help Cafeterias' owners manage their business.
+This project is a Cafeteria Cashier website to help Cafeterias' owners manage their businesses.
 
 ## What technologies I used?
 
@@ -31,18 +31,20 @@ I prefer to talk about my project in detail:
 * Report has Completed table tab to show a table with data and chart.
 * Report has Canceled table tab to show a table with data and chart.
 * click on table's rows and it will open detail page with all specific details.
-* Report has Runout tab to show a table of the about to runout products depends on search the quantity number.
+* Report has Runout tab to show a table of the about to runout products depends on the quantity you search.
 * Report has Cashier tab to show each cashier work hours and money etc... depends on the day.
 
 ## Watch this video
 
-
+<a href="https://drive.google.com/file/d/1KbLyDka40IgjtbRic0S2OO9Cs-odhqHs/view?usp=share_link" target="_blank">
+<img src="https://drive.google.com/file/d/1KbLyDka40IgjtbRic0S2OO9Cs-odhqHs/view?usp=share_link" alt="watch this quick video" width="240" height="180" border="10">
+</a>
 
 ## Tow to install this project?
 
 1. Download this project from **GitHub** like 7-zip/winRar file.
 2. Extract files and open it using any code-editor.
-3. If you don't have **LiveServer** extension go install it.
+3. If you don't have **LiveServer** extension, Go install it.
 4. Open index.html file using LiveServer.
 
 ## Things you have to know
@@ -52,4 +54,5 @@ I prefer to talk about my project in detail:
 
 ## Any bug you met?!
 
-You can send it as a comment in this FaceBook post:
+You can send it as a comment on this FaceBook post:
+https://www.facebook.com/100080914211574/videos/3131800737115148/
