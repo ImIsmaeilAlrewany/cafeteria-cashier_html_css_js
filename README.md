@@ -56,3 +56,7 @@ I prefer to talk about my project in detail:
 
 You can send it as a comment on this FaceBook post:
 https://www.facebook.com/100080914211574/videos/3131800737115148/
+
+## Website link on Netlify
+
+https://cafeteria-cashier.netlify.app
