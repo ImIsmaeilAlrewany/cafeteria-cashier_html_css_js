@@ -17,30 +17,34 @@ if (sectionLabel) sectionLabel.innerHTML = tableData.name;
 
 // display all categories in order menu in order page
 const categoriesListElement = document.querySelector('.order-menu .menu-categories');
-const displayCategories = allCategories.map((category, index) => {
-  if (category) return `
-  <li class="m-0 me-3 p-0 shadow rounded d-flex align-items-center justify-content-center ${index === 0 ? 'active' : ''}" role="button" data-id="${category.id}">${category.name}</li>`;
-  else return `
+let displayCategories = `
   <li class="m-0 p-0 d-flex justify-content-center align-items-center w-100 rounded">${lang === 'ar' ? 'لا يوجد أصناف' : 'There\'s No Categories'}</li>`;
-});
-if (categoriesListElement)
+
+if (allCategories.length > 0)
+  displayCategories = allCategories.map((category, index) => `
+  <li class="m-0 me-3 p-0 shadow rounded d-flex align-items-center justify-content-center ${index === 0 ? 'active' : ''}" role="button" data-id="${category.id}">${category.name}</li>`);
+
+if (categoriesListElement && allCategories.length > 0)
   categoriesListElement.innerHTML = displayCategories.join(' ');
+
+if (categoriesListElement && allCategories.length <= 0)
+  categoriesListElement.innerHTML = displayCategories;
 
 // display first category content in order menu in order page
 const itemsListElement = document.querySelector('.order-menu .category-items');
 const itemsElementArray = (array) => {
-  return array.map(item => {
-    if (item) return `
+  return array.map(item => `
   <li class="m-0 p-3 shadow rounded d-flex align-items-center justify-content-center flex-column overflow-hidden" role="button" data-id="${item.id}">
     <h6 class="m-0 mb-2 p-0">${item.name}</h6>
     <p class="m-0 p-0 align-self-end">${lang === 'ar' ? 'السعر:' : 'Price:'} ${item.price}</p>
-  </li>`;
-    else return `
-  <li class="m-0 p-0 d-flex justify-content-center align-items-center w-100 rounded">${lang === 'ar' ? 'قم بإضافة الأقسام أولا ثم ما تحتوية' : 'Add Categories And Items'}</li>`;
-  });
+  </li>`);
 };
+
 if (itemsListElement && allCategories.length > 0)
   itemsListElement.innerHTML = itemsElementArray(allCategories[0].content).join(' ');
+
+if (itemsListElement && allCategories.length <= 0)
+  itemsListElement.remove();
 
 // change the selected category and display its items
 const listItemElements = document.querySelectorAll('.order-menu .menu-categories li');
@@ -399,9 +403,9 @@ if (payOrder) payOrder.addEventListener('click', () => {
     const totalPrice = table.order.map(object => +object.total).reduce((accumulator, currentValue) => accumulator + currentValue);
     const ordersNumber = table.order.map(object => +object.quantity).reduce((accumulator, currentValue) => accumulator + currentValue);
     const getMonth = (string) => {
-      return string.slice(dateOnly.indexOf('/') + 1, dateOnly.lastIndexOf('/'));
+      // return string.slice(dateOnly.indexOf('/') + 1, dateOnly.lastIndexOf('/'));
+      return new Date(string).getMonth() + 1;
     };
-
 
     // change the data in clients work to add the paid tables data
     const clientsWork = JSON.parse(localStorage.getItem('clients-work')) || [];

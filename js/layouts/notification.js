@@ -20,9 +20,7 @@ const notificationHandler = (array) => {
   // find all items quantity below 10 and save them in an Array
   menu.forEach(category => {
     category.content.forEach(item => {
-      if (item.quantity <= 10) {
-        array.push(item.name);
-      }
+      if (item) if (item.quantity <= 10) array.push(item.name);
     });
   });
 };

@@ -91,21 +91,23 @@
     clientsNumber = clients.length;
 
     // get all drinks - food - products that are in menu in all categories
-    allDrinks = menu.map(e => e.content.length).reduce((a, c) => a = a + c);
+    if (menu.length > 0)
+      allDrinks = menu.map(e => e.content.length).reduce((a, c) => a = a + c);
 
     // function to compare if today is the day in local storage
     const checkDay = (day) => {
-      return day.date.slice(day.date.indexOf('/') + 1, day.date.lastIndexOf('/')) == date.getDate() ? true : false;
+      return new Date(day.date).getDate() == date.getDate() ? true : false;
     };
 
     // get total price and done tables and the products that ordered in the whole day
     paidOrders.forEach(day => {
       const isDay = checkDay(day);
-      if (isDay) {
-        dailyIncome = day.data.map(e => e.totalPrice).reduce((a, c) => a + c);
-        doneTables = day.data.length;
-        ordered = day.data.map(e => e.ordersNumber).reduce((a, c) => a + c);
-      }
+      if (day.data.length > 0)
+        if (isDay) {
+          dailyIncome = day.data.map(e => e.totalPrice).reduce((a, c) => a + c);
+          doneTables = day.data.length;
+          ordered = day.data.map(e => e.ordersNumber).reduce((a, c) => a + c);
+        }
     });
 
     // get the canceled tables in the whole day
@@ -120,17 +122,15 @@
 
     // start work on the chart of daily income using chart.js library
     const ctx = document.getElementById("daily-income-chart").getContext("2d");
-    const labels = paidOrders.map(order => {
-      return order.date.slice(order.date.indexOf('/') + 1, order.date.lastIndexOf('/'));
-    });
     const data = paidOrders.map(order => {
-      return order.data.map(table => table.totalPrice).reduce((a, c) => a = a + c);
+      if (order.data.length > 0)
+        return order.data.map(table => table.totalPrice).reduce((a, c) => a = a + c);
     });
 
     const chart = new Chart(ctx, {
       type: "line",
       data: {
-        labels,
+        labels: paidOrders.map(order => new Date(order.date).getDate()),
         datasets: [
           {
             label: "Daily Income",

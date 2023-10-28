@@ -22,7 +22,11 @@
               <td class="text-nowrap bg-transparent text-center">إجمالي الدخل</td>
             </tr>
           </thead>
-          <tbody></tbody>
+          <tbody>
+            <tr>
+              <td class="text-nowrap bg-transparent text-center" colspan="4">لا يوجد بيانات</td>
+            </tr>
+          </tbody>
         </table>
         <div class="table-footer row m-0">
           <div class="col-6 px-0">
@@ -73,18 +77,25 @@
     const tableBody = document.querySelector('#canceled-table tbody');
 
     // display all dates in month inside the select box
-    canceled.forEach(day => {
+    if (canceled.length > 0) {
+      canceled.forEach(day => {
+        const option = document.createElement('option');
+        option.textContent = day.date;
+        selectDate.append(option);
+      });
+    } else {
       const option = document.createElement('option');
-      option.textContent = day.date;
+      option.textContent = new Date().toLocaleDateString();
       selectDate.append(option);
-    });
+    }
 
     // show the first date in the done table array
-    if (canceled[0].data.length <= 10) {
-      buildTable(tableBody, canceled[0].data, canceled[0].data.length);
-    } else {
-      buildTable(tableBody, canceled[0].data, +selectMany.value);
-    }
+    if (canceled.length > 0)
+      if (canceled[0].data.length <= 10) {
+        buildTable(tableBody, canceled[0].data, canceled[0].data.length);
+      } else {
+        buildTable(tableBody, canceled[0].data, +selectMany.value);
+      }
 
     // show the data depends on the day I have selected
     showDay(selectDateButton, selectDate, canceled, (data) => {
@@ -108,7 +119,7 @@
         datasets: [
           {
             label: "Done Tables",
-            data: canceled.map(c => c.data.length),
+            data: canceled.map(c => c.data.length) || [],
             borderColor: "rgba(255, 99, 132, 0.2)",
             backgroundColor: "rgba(255, 99, 132, 1)",
             barThickness: 20
@@ -135,7 +146,8 @@
       "التالي": "Next",
       "السابق": "Previous",
       "الصفوف": "Rows",
-      "أظهر": "Show"
+      "أظهر": "Show",
+      "لا يوجد بيانات": "There's No Data"
     };
 
     checkLang(allElements, englishReportCanceled);
